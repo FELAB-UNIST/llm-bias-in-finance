@@ -1,0 +1,37 @@
+{
+    "model_id": "deepseek-ai/DeepSeek-V3",
+    "total_selections": 5122,
+    "preference_result": {
+        "momentum_win_rate": 0.3512,
+        "contrarian_win_rate": 0.6488,
+        "win_rate_std": 0.0091
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.3636,
+            "contrarian_win_rate": 0.6364,
+            "momentum_count": 621,
+            "contrarian_count": 1087
+        },
+        "set_2": {
+            "momentum_win_rate": 0.3482,
+            "contrarian_win_rate": 0.6518,
+            "momentum_count": 594,
+            "contrarian_count": 1112
+        },
+        "set_3": {
+            "momentum_win_rate": 0.3419,
+            "contrarian_win_rate": 0.6581,
+            "momentum_count": 584,
+            "contrarian_count": 1124
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 453.451,
+        "p_value": 0.0,
+        "observed_counts": {
+            "momentum": 1799,
+            "contrarian": 3323
+        }
+    }
+}
