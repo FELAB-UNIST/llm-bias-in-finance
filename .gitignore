@@ -1,3 +1,4 @@
 .env
 __pycache__
 exp_result
+.DS_Store

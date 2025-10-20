@@ -5,7 +5,7 @@
 [![Arxiv](https://img.shields.io/badge/paper-A82F27?style=for-the-badge&logo=arxiv)](https://arxiv.org/pdf/2507.20957) [![Leaderboard](https://img.shields.io/badge/leaderboard-4169E1?style=for-the-badge&logo=chartdotjs)](https://linqalpha.com/leaderboard)
 </div>
 
-This repository contains a suite of experiments designed to identify and analyze potential biases in Large Language Models (LLMs) when making financial investment decisions. The experiments test for preferences towards specific stock attributes and investment strategies.
+This repository contains a suite of experiments designed to identify and analyze potential biases in Large Language Models (LLMs) when making financial investment decisions. The experiments test for bias towards specific stock attributes and investment strategies.
 
 <p align="center">
 <img src="./img/figure1.png" width="45%" alt="Figure 1" />
