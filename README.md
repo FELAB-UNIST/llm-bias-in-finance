@@ -9,9 +9,7 @@ This repository contains a suite of experiments designed to identify and analyze
 
 <p align="center">
 <img src="./img/figure1.png" width="45%" alt="Figure 1" />
-<a href="./img/figure2.pdf" target="_blank">
-  <img src="./img/figure2_preview.png" width="45%" alt="Figure 2 - Click to view PDF" />
-</a>
+<img src="./img/figure2.png" width="45%" alt="Figure 2" />
 </p>
 
 
