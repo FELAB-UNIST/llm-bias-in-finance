@@ -2,7 +2,7 @@
 
 # Your AI, Not Your View: The Bias of LLMs in Investment Analysis
 
-[![Arxiv](https://img.shields.io/badge/paper-A82F27?style=for-the-badge&logo=arxiv)](https://arxiv.org/pdf/2507.20957) [![Leaderboard](https://img.shields.io/badge/leaderboard-4169E1?style=for-the-badge&logo=chartdotjs)](https://linqalpha.com/leaderboard)
+[![Arxiv](https://img.shields.io/badge/paper-A82F27?style=for-the-badge&logo=arxiv)](https://arxiv.org/pdf/2507.20957) [![Leaderboard](https://img.shields.io/badge/leaderboard-4169E1?style=for-the-badge&logo=chartdotjs)](https://linqalpha.com/leaderboard) [![ICAIF](https://img.shields.io/badge/ICAIF_2025-Accepted-green?style=for-the-badge)](https://ai-finance.org/)
 </div>
 
 This repository contains a suite of experiments designed to identify and analyze potential biases in Large Language Models (LLMs) when making financial investment decisions. The experiments test for bias towards specific stock attributes and investment strategies.
@@ -40,13 +40,13 @@ export XAI_API_KEY="your-xai-api-key"
 
 This suite includes two main experiments:
 
-### 1. Attribute Preference Analysis
+### 1. Attribute Bias Analysis
 This experiment investigates whether an LLM exhibits a bias towards stocks with particular attributes, such as their market capitalization or sector. The model is provided with a balanced set of "buy" and "sell" evidence for a given stock and is forced to make a decision. By analyzing the decisions over multiple trials and stocks, we can identify systematic preferences.
 
 -   **`bias_attribute.py`**: Runs the experiment by generating prompts, querying the LLM, and collecting the raw decision data.
 -   **`result_attribute.py`**: Aggregates the data from multiple runs, performs statistical analysis (t-tests) to compare preferences between different groups (e.g., high-preference vs. low-preference sectors), and generates a final summary report in JSON format.
 
-### 2. Strategy Preference Analysis
+### 2. Strategy Bias Analysis
 This experiment aims to determine if an LLM has an inherent preference for a particular investment strategy, specifically "momentum" versus "contrarian" viewpoints. The model is presented with two opposing analyst opinions and asked to choose which one to follow.
 
 -   **`bias_strategy.py`**: Executes the experiment by presenting the LLM with conflicting investment strategies and recording its choices.
@@ -57,7 +57,7 @@ All experiments can be executed using the main shell script `run.sh`.
 
 1.  **Configure the experiment**: Open `run.sh` and modify the configuration variables at the top of the file to suit your needs:
     -   `API_PROVIDER`: "openai", "gemini", or "together".
-    -   `MODEL_ID`: The specific model you want to test (e.g., "gpt-4.1-nano").
+    -   `MODEL_ID`: The specific model you want to test (e.g., "gpt-4.1").
     -   `TEMPERATURE`: The model's generation temperature.
     -   `OUTPUT_DIR`: Directory to save results.
     -   `MAX_WORKERS`: Number of concurrent API calls.
@@ -72,10 +72,11 @@ The script will run both the attribute and strategy preference experiments seque
 
 ## 📊 Results
 
-The final output of the analysis is saved in the `result/` directory as two JSON files:
+The final output of the analysis is saved in the `result/` directory as JSON files:
 
 -   `{MODEL_ID}_att_result.json`: Contains the analysis for the attribute preference experiment, including preference means/standard deviations by sector and market cap, and t-test results.
 -   `{MODEL_ID}_str_result.json`: Contains the analysis for the strategy preference experiment, including win rates for momentum vs. contrarian strategies and the Chi-squared test result.
+-   `{MODEL_ID}_att_metrics.json`: Contains performance metrics per experiment set, including API cost and latency information for each run.
 
 
 ## 📚 Citation
