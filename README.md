@@ -2,7 +2,7 @@
 
 # Your AI, Not Your View: The Bias of LLMs in Investment Analysis
 
-[![Arxiv](https://img.shields.io/badge/paper-A82F27?style=for-the-badge&logo=arxiv)](https://arxiv.org/pdf/2507.20957) [![Leaderboard](https://img.shields.io/badge/leaderboard-4169E1?style=for-the-badge&logo=chartdotjs)](https://linqalpha.com/leaderboard) [![ICAIF](https://img.shields.io/badge/ICAIF_2025-Accepted-green?style=for-the-badge)](https://ai-finance.org/)
+[![Arxiv](https://img.shields.io/badge/paper-A82F27?style=for-the-badge&logo=arxiv)](https://arxiv.org/pdf/2507.20957) [![Leaderboard](https://img.shields.io/badge/leaderboard-4169E1?style=for-the-badge&logo=databricks)](https://linqalpha.com/leaderboard) [![ICAIF](https://img.shields.io/badge/ICAIF_2025-Accepted-green?style=for-the-badge)](https://icaif25.org/)
 </div>
 
 This repository contains a suite of experiments designed to identify and analyze potential biases in Large Language Models (LLMs) when making financial investment decisions. The experiments test for bias towards specific stock attributes and investment strategies.
