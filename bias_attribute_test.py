@@ -57,7 +57,7 @@ def run_experiment(llm_client: LLMClient,
     ticker_df = pd.read_csv(ticker_path)
     qual_evidence_df = pd.read_csv(qual_evidence_path)
     quant_evidence_df = pd.read_csv(quant_evidence_path)
-    
+    ticker_df = ticker_df[:1].copy()
     evidence_df = pd.merge(
         qual_evidence_df,
         quant_evidence_df,

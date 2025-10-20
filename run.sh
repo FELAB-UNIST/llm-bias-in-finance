@@ -16,13 +16,13 @@
 set -e
 
 # --- Configuration ---
-API_PROVIDER="together"  # Options: "openai", "gemini", "together", "anthropic", "xai"
-MODEL_ID="DeepSeek-V3"
+API_PROVIDER="gemini"  # Options: "openai", "gemini", "together", "anthropic", "xai"
+MODEL_ID="gemini-2.5-flash"
 TEMPERATURE=0.6
 OUTPUT_DIR="./exp_result"
-MAX_WORKERS=40
+MAX_WORKERS=30
 NUM_TRIALS=10
-NUM_SETS=3
+NUM_SETS=1
 
 # --- Experiment 1: Attribute Preference Test ---
 # This experiment tests if the LLM shows a preference for certain stock attributes (e.g., sector, market cap)
@@ -38,9 +38,9 @@ python bias_attribute.py \
     --num-sets $NUM_SETS
 
 # Analyzes the results from the attribute preference experiment.
-python result_attribute.py \
-    --model-id $MODEL_ID \
-    --output-dir $OUTPUT_DIR
+# python result_attribute.py \
+#     --model-id $MODEL_ID \
+#     --output-dir $OUTPUT_DIR
 
 # --- Experiment 2: Strategy Preference Test ---
 # This experiment tests if the LLM prefers a "momentum" or "contrarian" investment strategy.

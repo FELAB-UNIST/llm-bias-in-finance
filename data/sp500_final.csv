@@ -1,0 +1,428 @@
+ticker,marketcap,observed_days,name,sector
+AES,14817320948,1257,The AES Corporation,Utilities
+SJM,13557049664,1257,The J. M. Smucker Company,Consumer Defensive
+HON,125808556747,1257,Honeywell International Inc.,Industrials
+ED,31250125974,1257,"Consolidated Edison, Inc.",Utilities
+JKHY,12280978585,1257,"Jack Henry & Associates, Inc.",Technology
+INTC,187075000381,1257,Intel Corporation,Technology
+O,55601951898,1257,Realty Income Corporation,Real Estate
+AKAM,14430651015,1257,"Akamai Technologies, Inc.",Technology
+AMT,106687197811,1257,American Tower Corporation,Real Estate
+IBM,132767489017,1257,International Business Machines Corporation,Technology
+BSX,73443122043,1257,Boston Scientific Corporation,Healthcare
+BIIB,37611332774,1257,Biogen Inc.,Healthcare
+WM,62749467475,1257,"Waste Management, Inc.",Industrials
+UPS,120381207344,1257,"United Parcel Service, Inc.",Industrials
+MCK,40689879725,1257,McKesson Corporation,Healthcare
+ITW,64908743390,1257,Illinois Tool Works Inc.,Industrials
+JNJ,384770658580,1257,Johnson & Johnson,Healthcare
+VTR,22218841778,1257,"Ventas, Inc.",Real Estate
+HPE,19790011028,1257,Hewlett Packard Enterprise Company,Technology
+EFX,26387350129,1257,Equifax Inc.,Industrials
+AMD,168036575313,1257,"Advanced Micro Devices, Inc.",Technology
+CBOE,13956079500,1257,"Cboe Global Markets, Inc.",Financial Services
+HRL,23477925657,1257,Hormel Foods Corporation,Consumer Defensive
+AOS,7655031697,1257,A. O. Smith Corporation,Industrials
+AAPL,2300593800981,1257,Apple Inc.,Technology
+WFC,144256638730,1257,Wells Fargo & Company,Financial Services
+IRM,16078013182,1257,Iron Mountain Incorporated,Real Estate
+ALL,34102183356,1257,The Allstate Corporation,Financial Services
+WDC,13883885397,1257,Western Digital Corporation,Technology
+LKQ,11662613213,1257,LKQ Corporation,Consumer Cyclical
+MTB,23446238828,1257,M&T Bank Corporation,Financial Services
+FANG,34605907353,1257,"Diamondback Energy, Inc.",Energy
+HCA,56060059696,1257,"HCA Healthcare, Inc.",Healthcare
+KEY,18200842626,1257,KeyCorp,Financial Services
+DGX,14911374695,1257,Quest Diagnostics Incorporated,Healthcare
+EQIX,72596322675,1257,"Equinix, Inc.",Real Estate
+CL,65058226161,1257,Colgate-Palmolive Company,Consumer Defensive
+KO,249210545601,1257,The Coca-Cola Company,Consumer Defensive
+JCI,38615819387,1257,Johnson Controls International plc,Industrials
+COP,108129181333,1257,ConocoPhillips,Energy
+GL,8248399969,1257,Globe Life Inc.,Financial Services
+MS,133052588282,1257,Morgan Stanley,Financial Services
+CAG,15853635839,1257,"Conagra Brands, Inc.",Consumer Defensive
+AVGO,344320558320,1257,Broadcom Inc.,Technology
+ROP,49009868568,1257,"Roper Technologies, Inc.",Industrials
+WBA,30861072180,1257,"Walgreens Boots Alliance, Inc.",Healthcare
+KLAC,53969969704,1257,KLA Corporation,Technology
+MDT,124594179700,1257,Medtronic plc,Healthcare
+LDOS,13757234801,1257,"Leidos Holdings, Inc.",Technology
+OXY,44295457999,1257,Occidental Petroleum Corporation,Energy
+URI,25139076320,1257,"United Rentals, Inc.",Industrials
+NVR,15886498285,1257,"NVR, Inc.",Consumer Cyclical
+NI,12753460216,1257,NiSource Inc.,Utilities
+D,57348415599,1257,"Dominion Energy, Inc.",Utilities
+DVA,7994013181,1257,DaVita Inc.,Healthcare
+BR,19120366450,1257,"Broadridge Financial Solutions, Inc.",Technology
+CHTR,65967031994,1257,"Charter Communications, Inc.",Communication Services
+MDLZ,82377394113,1257,"Mondelez International, Inc.",Consumer Defensive
+EVRG,13767919216,1257,"Evergy, Inc.",Utilities
+MA,336512029146,1257,Mastercard Incorporated,Financial Services
+CPB,14016084309,1257,Campbell Soup Company,Consumer Defensive
+KR,29126013778,1257,The Kroger Co.,Consumer Defensive
+CE,13864507659,1257,Celanese Corporation,Basic Materials
+SBAC,29639902488,1257,SBA Communications Corporation,Real Estate
+PCAR,37562469472,1257,PACCAR Inc,Industrials
+LUV,22038739556,1257,Southwest Airlines Co.,Industrials
+BA,147432026066,1257,The Boeing Company,Industrials
+RL,4686374410,1257,Ralph Lauren Corporation,Consumer Cyclical
+DG,40763372905,1257,Dollar General Corporation,Consumer Defensive
+CCI,63501317401,1257,Crown Castle Inc.,Real Estate
+DHI,30728424110,1257,"D.R. Horton, Inc.",Consumer Cyclical
+ADP,87044708963,1257,"Automatic Data Processing, Inc.",Industrials
+MGM,9871396024,1257,MGM Resorts International,Consumer Cyclical
+ABBV,239323703800,1257,AbbVie Inc.,Healthcare
+MAR,46071104803,1257,"Marriott International, Inc.",Consumer Cyclical
+GWW,28600466376,1257,"W.W. Grainger, Inc.",Industrials
+ROL,18285082444,1257,"Rollins, Inc.",Consumer Cyclical
+AIG,31656270023,1257,"American International Group, Inc.",Financial Services
+APA,10258211670,1257,APA Corporation,Energy
+CMS,18517636512,1257,CMS Energy Corporation,Utilities
+USB,70880868330,1257,U.S. Bancorp,Financial Services
+OKE,38142246190,1257,"ONEOK, Inc.",Energy
+GRMN,23567332936,1257,Garmin Ltd.,Technology
+ALB,19459019554,1257,Albemarle Corporation,Basic Materials
+FOXA,7272957407,1257,Fox Corporation,Communication Services
+LMT,99396094782,1257,Lockheed Martin Corporation,Industrials
+ICE,66564932737,1257,"Intercontinental Exchange, Inc.",Financial Services
+STZ,39976419246,1257,"Constellation Brands, Inc.",Consumer Defensive
+IQV,35947369983,1257,IQVIA Holdings Inc.,Healthcare
+SLB,51696671465,1257,Schlumberger Limited,Energy
+AEP,47176707534,1257,"American Electric Power Company, Inc.",Utilities
+BKNG,83765273065,1257,Booking Holdings Inc.,Consumer Cyclical
+EIX,25315564202,1257,Edison International,Utilities
+EMR,50429822568,1257,Emerson Electric Co.,Industrials
+ARE,26112641544,1257,"Alexandria Real Estate Equities, Inc.",Real Estate
+CHD,22218918231,1257,"Church & Dwight Co., Inc.",Consumer Defensive
+VLO,32122690550,1257,Valero Energy Corporation,Energy
+CVX,230072337864,1257,Chevron Corporation,Energy
+SYK,100663909729,1257,Stryker Corporation,Healthcare
+WMT,411217354926,1257,Walmart Inc.,Consumer Defensive
+AZO,34536739844,1257,"AutoZone, Inc.",Consumer Cyclical
+PH,43950518914,1257,Parker-Hannifin Corporation,Industrials
+GILD,89618188613,1257,"Gilead Sciences, Inc.",Healthcare
+HSY,28067703344,1257,The Hershey Company,Consumer Defensive
+AWK,28285122257,1257,"American Water Works Company, Inc.",Utilities
+SBUX,107397728620,1257,Starbucks Corporation,Consumer Cyclical
+K,21648448540,1257,Kellogg Company,Consumer Defensive
+LEN,23146573420,1257,Lennar Corporation,Consumer Cyclical
+CAT,108597879261,1257,Caterpillar Inc.,Industrials
+CCL,20908532203,1257,Carnival Corporation & plc,Consumer Cyclical
+BLK,113139922553,1257,"BlackRock, Inc.",Financial Services
+BAC,260862317279,1257,Bank of America Corporation,Financial Services
+BDX,70031008712,1257,"Becton, Dickinson and Company",Healthcare
+FAST,31425498398,1257,Fastenal Company,Industrials
+EMN,10718448485,1257,Eastman Chemical Company,Basic Materials
+IVZ,7929852037,1257,Invesco Ltd.,Financial Services
+ALLE,10098112161,1257,Allegion plc,Industrials
+SPG,39158766389,1257,"Simon Property Group, Inc.",Real Estate
+CMI,32408499610,1257,Cummins Inc.,Industrials
+COST,232164086392,1257,Costco Wholesale Corporation,Consumer Defensive
+ODFL,31391990494,1257,"Old Dominion Freight Line, Inc.",Industrials
+GM,39804480148,1257,General Motors Company,Consumer Cyclical
+FIS,52453732258,1257,"Fidelity National Information Services, Inc.",Technology
+SPGI,118057462937,1257,S&P Global Inc.,Financial Services
+XOM,358344696021,1257,Exxon Mobil Corporation,Energy
+HSIC,9083248156,1257,"Henry Schein, Inc.",Healthcare
+COF,75864161925,1257,Capital One Financial Corporation,Financial Services
+PRU,34109180746,1257,"Prudential Financial, Inc.",Financial Services
+CI,69629552037,1257,Cigna Corporation,Healthcare
+ORLY,42108263433,1257,"O'Reilly Automotive, Inc.",Consumer Cyclical
+NVDA,936366290618,1257,NVIDIA Corporation,Technology
+MO,76747926205,1257,"Altria Group, Inc.",Consumer Defensive
+NCLH,9086245286,1257,Norwegian Cruise Line Holdings Ltd.,Consumer Cyclical
+ANSS,27387103251,1257,"ANSYS, Inc.",Technology
+KMX,13718310738,1257,"CarMax, Inc.",Consumer Cyclical
+PSA,49813408650,1257,Public Storage,Real Estate
+MSCI,37279942543,1257,MSCI Inc.,Financial Services
+AEE,22197244312,1257,Ameren Corporation,Utilities
+V,389311657640,1257,Visa Inc.,Financial Services
+LYV,19565036131,1257,"Live Nation Entertainment, Inc.",Communication Services
+DFS,25867721324,1257,Discover Financial Services,Financial Services
+MKTX,13026420152,1257,MarketAxess Holdings Inc.,Financial Services
+EBAY,23869952066,1257,eBay Inc.,Consumer Cyclical
+LOW,111209570401,1257,"Lowe's Companies, Inc.",Consumer Cyclical
+UHS,8054087318,1257,"Universal Health Services, Inc.",Healthcare
+NEE,151678623042,1257,"NextEra Energy, Inc.",Utilities
+CRM,212524998234,1257,"Salesforce, Inc.",Technology
+ALGN,25985956510,1257,"Align Technology, Inc.",Healthcare
+CNP,17326277895,1257,"CenterPoint Energy, Inc.",Utilities
+HAS,10543706685,1257,"Hasbro, Inc.",Consumer Cyclical
+PHM,13047970414,1257,"PulteGroup, Inc.",Consumer Cyclical
+VRSN,18986865366,1257,"VeriSign, Inc.",Technology
+TRV,38168603681,1257,"The Travelers Companies, Inc.",Financial Services
+MET,40873838902,1257,"MetLife, Inc.",Financial Services
+ROST,37128372248,1257,"Ross Stores, Inc.",Consumer Cyclical
+CLX,20268567565,1257,The Clorox Company,Consumer Defensive
+TTWO,27227692531,1257,"Take-Two Interactive Software, Inc.",Technology
+MRK,235742363446,1257,"Merck & Co., Inc.",Healthcare
+HST,11454349232,1257,"Host Hotels & Resorts, Inc.",Real Estate
+DTE,23231701018,1257,DTE Energy Company,Utilities
+FRT,8925702487,1257,Federal Realty Investment Trust,Real Estate
+NDAQ,31701761432,1257,"Nasdaq, Inc.",Financial Services
+PPG,30485311272,1257,"PPG Industries, Inc.",Basic Materials
+TJX,85220017134,1257,"The TJX Companies, Inc.",Consumer Cyclical
+FE,22278114738,1257,FirstEnergy Corp.,Utilities
+KMI,39234170227,1257,"Kinder Morgan, Inc.",Energy
+KIM,13122876080,1257,Kimco Realty Corporation,Real Estate
+MU,82978547122,1257,"Micron Technology, Inc.",Technology
+WY,23328640546,1257,Weyerhaeuser Company,Real Estate
+BK,35125349843,1257,The Bank of New York Mellon Corporation,Financial Services
+TFX,12980591150,1257,Teleflex Incorporated,Healthcare
+ABT,189701565145,1257,Abbott Laboratories,Healthcare
+NSC,52851448484,1257,Norfolk Southern Corporation,Industrials
+FTV,17465214637,1257,Fortive Corporation,Technology
+SRE,46860859607,1257,Sempra,Utilities
+DRI,15818576659,1257,"Darden Restaurants, Inc.",Consumer Cyclical
+EOG,53814820326,1257,"EOG Resources, Inc.",Energy
+PGR,77033545865,1257,The Progressive Corporation,Financial Services
+ROK,29727258756,1257,"Rockwell Automation, Inc.",Industrials
+FMC,11990562438,1257,FMC Corporation,Basic Materials
+ZTS,76370877608,1257,Zoetis Inc.,Healthcare
+STX,16002000275,1257,Seagate Technology Holdings plc,Technology
+DOW,37794371197,1257,Dow Inc.,Basic Materials
+PEP,220635601297,1257,"PepsiCo, Inc.",Consumer Defensive
+MCO,60042639488,1257,Moody's Corporation,Financial Services
+CME,72000759999,1257,CME Group Inc.,Financial Services
+EXR,31702264937,1257,Extra Space Storage Inc.,Real Estate
+NOC,59788612942,1257,Northrop Grumman Corporation,Industrials
+IT,23058445019,1257,"Gartner, Inc.",Technology
+OMC,15155725678,1257,Omnicom Group Inc.,Communication Services
+VRTX,78043126944,1257,Vertex Pharmaceuticals Incorporated,Healthcare
+ANET,48273239190,1257,"Arista Networks, Inc.",Technology
+LW,11227705372,1257,"Lamb Weston Holdings, Inc.",Consumer Defensive
+IFF,28413592712,1257,International Flavors & Fragrances Inc.,Basic Materials
+DVN,25582800300,1257,Devon Energy Corporation,Energy
+ETN,70522632425,1257,Eaton Corporation plc,Industrials
+GPN,34337626865,1257,Global Payments Inc.,Industrials
+PWR,21283915936,1257,"Quanta Services, Inc.",Industrials
+ESS,17048655455,1257,"Essex Property Trust, Inc.",Real Estate
+VRSK,28744764256,1257,"Verisk Analytics, Inc.",Industrials
+NTAP,15509981378,1257,"NetApp, Inc.",Technology
+IPG,10993566028,1257,"The Interpublic Group of Companies, Inc.",Communication Services
+PLD,109661565766,1257,"Prologis, Inc.",Real Estate
+MAS,12346050957,1257,Masco Corporation,Industrials
+SO,75005454453,1257,The Southern Company,Utilities
+AMAT,101373288230,1257,"Applied Materials, Inc.",Technology
+L,12210739263,1257,Loews Corporation,Financial Services
+IDXX,37440417383,1257,"IDEXX Laboratories, Inc.",Healthcare
+BAX,31873512054,1257,Baxter International Inc.,Healthcare
+AMGN,135676292655,1257,Amgen Inc.,Healthcare
+ATO,17454991286,1257,Atmos Energy Corporation,Utilities
+IEX,15407024265,1257,IDEX Corporation,Industrials
+T,142779580739,1257,AT&T Inc.,Communication Services
+MPC,30153314795,1257,Marathon Petroleum Corporation,Energy
+QCOM,148852173871,1257,QUALCOMM Incorporated,Technology
+CTAS,46152527392,1257,Cintas Corporation,Industrials
+KMB,44440399357,1257,Kimberly-Clark Corporation,Consumer Defensive
+WAT,17668207293,1257,Waters Corporation,Healthcare
+BKR,26920687822,1257,Baker Hughes Company,Energy
+STE,19879631833,1257,STERIS plc,Healthcare
+PSX,39321183366,1257,Phillips 66,Energy
+SNPS,54680340795,1257,"Synopsys, Inc.",Technology
+YUM,33187206708,1257,"Yum! Brands, Inc.",Consumer Cyclical
+EXC,36963413947,1257,Exelon Corporation,Utilities
+WRB,15475284970,1257,W. R. Berkley Corporation,Financial Services
+BWA,7887352623,1257,BorgWarner Inc.,Consumer Cyclical
+DLTR,24612895621,1257,"Dollar Tree, Inc.",Consumer Defensive
+RMD,30647461640,1257,ResMed Inc.,Healthcare
+ES,28491515718,1257,Eversource Energy,Utilities
+SHW,66401398553,1257,The Sherwin-Williams Company,Basic Materials
+NFLX,200106842969,1257,"Netflix, Inc.",Communication Services
+MLM,23023671465,1257,"Martin Marietta Materials, Inc.",Basic Materials
+NRG,8865812341,1257,"NRG Energy, Inc.",Utilities
+LLY,350775722832,1257,Eli Lilly and Company,Healthcare
+UNP,128509285584,1257,Union Pacific Corporation,Industrials
+NTRS,18177895152,1257,Northern Trust Corporation,Financial Services
+MOS,10899045415,1257,The Mosaic Company,Basic Materials
+HIG,20126948735,1257,"The Hartford Financial Services Group, Inc.",Financial Services
+TSN,19189386447,1257,"Tyson Foods, Inc.",Consumer Defensive
+PAYX,39758948446,1257,"Paychex, Inc.",Industrials
+INCY,14352681157,1257,Incyte Corporation,Healthcare
+ADI,82895843942,1257,"Analog Devices, Inc.",Technology
+ECL,56090171978,1257,Ecolab Inc.,Basic Materials
+ADBE,200510228293,1257,Adobe Inc.,Technology
+TSCO,21241419758,1257,Tractor Supply Company,Consumer Cyclical
+GIS,36441998140,1257,"General Mills, Inc.",Consumer Defensive
+UDR,14320294628,1257,"UDR, Inc.",Real Estate
+BEN,13575808438,1257,"Franklin Resources, Inc.",Financial Services
+MSFT,2186927792219,1257,Microsoft Corporation,Technology
+DIS,219870690451,1257,The Walt Disney Company,Communication Services
+TAP,9944756504,1257,Molson Coors Beverage Company,Consumer Defensive
+SYY,35996299071,1257,Sysco Corporation,Consumer Defensive
+GS,104910797667,1257,"The Goldman Sachs Group, Inc.",Financial Services
+HUM,50750806386,1257,Humana Inc.,Healthcare
+META,653944203866,1257,"Meta Platforms, Inc.",Communication Services
+PFE,218006361753,1257,Pfizer Inc.,Healthcare
+LH,17093399278,1257,Laboratory Corporation of America Holdings,Healthcare
+REGN,74390557764,1257,"Regeneron Pharmaceuticals, Inc.",Healthcare
+HLT,34095463004,1257,Hilton Worldwide Holdings Inc.,Consumer Cyclical
+AFL,34828789098,1257,Aflac Incorporated,Financial Services
+WELL,53137668311,1257,Welltower Inc.,Real Estate
+CBRE,24132258409,1257,"CBRE Group, Inc.",Real Estate
+CPRT,35277161885,1257,"Copart, Inc.",Consumer Cyclical
+MCHP,38894843640,1257,Microchip Technology Incorporated,Technology
+MCD,178777750093,1257,McDonald's Corporation,Consumer Cyclical
+HD,311107400033,1257,"The Home Depot, Inc.",Consumer Cyclical
+UNH,407608442366,1257,UnitedHealth Group Incorporated,Healthcare
+TEL,37595953612,1257,TE Connectivity Ltd.,Technology
+TDG,42565630820,1257,TransDigm Group Incorporated,Industrials
+C,105481191220,1257,Citigroup Inc.,Financial Services
+NWS,3895243420,1257,News Corporation,Communication Services
+FFIV,9882694033,1257,"F5, Inc.",Technology
+RJF,19056523433,1257,"Raymond James Financial, Inc.",Financial Services
+AVB,27524435843,1257,"AvalonBay Communities, Inc.",Real Estate
+A,36112201581,1257,"Agilent Technologies, Inc.",Healthcare
+DUK,76203410158,1257,Duke Energy Corporation,Utilities
+MTD,25760739224,1257,Mettler-Toledo International Inc.,Healthcare
+MKC,21124490090,1257,"McCormick & Company, Incorporated",Consumer Defensive
+PNC,61620786463,1257,"The PNC Financial Services Group, Inc.",Financial Services
+AMZN,1556958676633,1257,"Amazon.com, Inc.",Consumer Cyclical
+SCHW,115310942791,1257,The Charles Schwab Corporation,Financial Services
+EXPD,14690045876,1257,"Expeditors International of Washington, Inc.",Industrials
+IP,22276344233,1257,International Paper Company,Consumer Cyclical
+EW,50853036834,1257,Edwards Lifesciences Corporation,Healthcare
+ZBH,25093316520,1257,"Zimmer Biomet Holdings, Inc.",Healthcare
+PEG,31530831109,1257,Public Service Enterprise Group Incorporated,Utilities
+LIN,153905679644,1257,Linde plc,Basic Materials
+EL,50446394962,1257,The Estée Lauder Companies Inc.,Consumer Defensive
+MMC,79387704285,1257,"Marsh & McLennan Companies, Inc.",Financial Services
+CTSH,34712200269,1257,Cognizant Technology Solutions Corporation,Technology
+HES,32422796421,1257,Hess Corporation,Energy
+CF,10890152388,1257,"CF Industries Holdings, Inc.",Basic Materials
+KHC,42201457317,1257,The Kraft Heinz Company,Consumer Defensive
+CINF,16842994502,1257,Cincinnati Financial Corporation,Financial Services
+AMCR,24882822564,1257,Amcor plc,Consumer Cyclical
+AXP,116151518307,1257,American Express Company,Financial Services
+AON,60096486748,1257,Aon plc,Financial Services
+DOV,19789589184,1257,Dover Corporation,Industrials
+TXT,11860391619,1257,Textron Inc.,Industrials
+CB,78317776819,1257,Chubb Limited,Financial Services
+DLR,46296792344,1257,"Digital Realty Trust, Inc.",Real Estate
+TPR,7409501847,1257,"Tapestry, Inc.",Consumer Cyclical
+HAL,23989878792,1257,Halliburton Company,Energy
+PFG,15235587519,1257,"Principal Financial Group, Inc.",Financial Services
+TMUS,158464799740,1257,"T-Mobile US, Inc.",Communication Services
+FDX,55880630129,1257,FedEx Corporation,Industrials
+F,46927810017,1257,Ford Motor Company,Consumer Cyclical
+GPC,18169157890,1257,Genuine Parts Company,Consumer Cyclical
+APTV,22541025679,1257,Aptiv PLC,Consumer Cyclical
+SWK,19697370097,1257,"Stanley Black & Decker, Inc.",Industrials
+RCL,24791399403,1257,Royal Caribbean Cruises Ltd.,Consumer Cyclical
+PKG,13032901488,1257,Packaging Corporation of America,Consumer Cyclical
+HBAN,19164966974,1257,Huntington Bancshares Incorporated,Financial Services
+SYF,14254886631,1257,Synchrony Financial,Financial Services
+TFC,58803699403,1257,Truist Financial Corporation,Financial Services
+HII,8405391684,1257,"Huntington Ingalls Industries, Inc.",Industrials
+REG,10962895247,1257,Regency Centers Corporation,Real Estate
+NOW,116765854026,1257,"ServiceNow, Inc.",Technology
+JNPR,9907803111,1257,"Juniper Networks, Inc.",Technology
+PYPL,126346674050,1257,"PayPal Holdings, Inc.",Financial Services
+CMG,48045899619,1257,"Chipotle Mexican Grill, Inc.",Consumer Cyclical
+GLW,29967878552,1257,Corning Incorporated,Technology
+DHR,159999126753,1257,Danaher Corporation,Healthcare
+LYB,28957815287,1257,LyondellBasell Industries N.V.,Basic Materials
+CAH,17340661993,1257,"Cardinal Health, Inc.",Healthcare
+GE,84019381509,1257,General Electric Company,Industrials
+WYNN,9689326115,1257,"Wynn Resorts, Limited",Consumer Cyclical
+AVY,14038884942,1257,Avery Dennison Corporation,Industrials
+SWKS,18461338254,1257,"Skyworks Solutions, Inc.",Technology
+PM,147327794310,1257,Philip Morris International Inc.,Consumer Defensive
+NWSA,7682374670,1257,News Corporation,Communication Services
+FITB,22302494360,1257,Fifth Third Bancorp,Financial Services
+BXP,13804172163,1257,"Boston Properties, Inc.",Real Estate
+AIZ,7623634539,1257,"Assurant, Inc.",Financial Services
+CVS,97160834755,1257,CVS Health Corporation,Healthcare
+AJG,45835324975,1257,Arthur J. Gallagher & Co.,Financial Services
+CTVA,32995769805,1257,"Corteva, Inc.",Basic Materials
+VZ,199980600237,1257,Verizon Communications Inc.,Communication Services
+SNA,11862347297,1257,Snap-on Incorporated,Industrials
+ULTA,16779271591,1257,"Ulta Beauty, Inc.",Consumer Cyclical
+DE,92081667516,1257,Deere & Company,Industrials
+AME,31257145848,1257,"AMETEK, Inc.",Industrials
+STT,21863028900,1257,State Street Corporation,Financial Services
+EQR,26288403959,1257,Equity Residential,Real Estate
+CMCSA,164020888353,1257,Comcast Corporation,Communication Services
+TROW,29532634202,1257,"T. Rowe Price Group, Inc.",Financial Services
+JPM,410800406667,1257,JPMorgan Chase & Co.,Financial Services
+MSI,42908757479,1257,"Motorola Solutions, Inc.",Technology
+JBHT,16492843886,1257,"J.B. Hunt Transport Services, Inc.",Industrials
+AMP,28023982678,1257,"Ameriprise Financial, Inc.",Financial Services
+PNW,9273467671,1257,Pinnacle West Capital Corporation,Utilities
+TMO,193799232402,1257,Thermo Fisher Scientific Inc.,Healthcare
+WMB,37458839836,1257,"The Williams Companies, Inc.",Energy
+CNC,35331440607,1257,Centene Corporation,Healthcare
+NKE,135256476550,1257,"NIKE, Inc.",Consumer Cyclical
+ADSK,50676093311,1257,"Autodesk, Inc.",Technology
+CFG,15936200282,1257,"Citizens Financial Group, Inc.",Financial Services
+LHX,39242066870,1257,"L3Harris Technologies, Inc.",Industrials
+WEC,29292778161,1257,"WEC Energy Group, Inc.",Utilities
+MMM,64820082071,1257,3M Company,Industrials
+ADM,31240039025,1257,Archer-Daniels-Midland Company,Consumer Defensive
+XEL,37632872246,1257,Xcel Energy Inc.,Utilities
+DD,28967459218,1257,"DuPont de Nemours, Inc.",Basic Materials
+KEYS,24953625418,1257,"Keysight Technologies, Inc.",Technology
+LNT,14015888207,1257,Alliant Energy Corporation,Utilities
+CDW,23323133691,1257,CDW Corporation,Technology
+CHRW,11038992526,1257,"C.H. Robinson Worldwide, Inc.",Industrials
+EXPE,15511091309,1257,"Expedia Group, Inc.",Consumer Cyclical
+GD,58058963630,1257,General Dynamics Corporation,Industrials
+HPQ,27144370175,1257,HP Inc.,Technology
+CDNS,49981025881,1257,"Cadence Design Systems, Inc.",Technology
+NUE,27088991614,1257,Nucor Corporation,Basic Materials
+CSCO,195162504013,1257,"Cisco Systems, Inc.",Technology
+DAL,26132961758,1257,"Delta Air Lines, Inc.",Industrials
+IR,23311508437,1257,Ingersoll Rand Inc.,Industrials
+BBY,18990996474,1257,"Best Buy Co., Inc.",Consumer Cyclical
+ORCL,256642010582,1257,Oracle Corporation,Technology
+J,12380192294,1257,Jacobs Engineering Group Inc.,Industrials
+HOLX,15858278992,1257,"Hologic, Inc.",Healthcare
+PPL,20943249127,1257,PPL Corporation,Utilities
+VMC,24600271307,1257,Vulcan Materials Company,Basic Materials
+NEM,58305116923,1257,Newmont Corporation,Basic Materials
+RF,17121519654,1257,Regions Financial Corporation,Financial Services
+TXN,153426133762,1257,Texas Instruments Incorporated,Technology
+RTX,118115528154,1257,RTX Corporation,Industrials
+COO,17995041789,1257,"The Cooper Companies, Inc.",Healthcare
+FOX,7539093269,1257,Fox Corporation,Communication Services
+PNR,10117791886,1257,Pentair plc,Industrials
+RSG,42031173617,1257,"Republic Services, Inc.",Industrials
+MNST,45876507531,1257,Monster Beverage Corporation,Consumer Defensive
+BMY,125700298245,1257,Bristol-Myers Squibb Company,Healthcare
+ACN,182156251322,1257,Accenture plc,Technology
+EA,32973467027,1257,Electronic Arts Inc.,Technology
+LRCX,73649646543,1257,Lam Research Corporation,Technology
+UAL,15386048003,1257,"United Airlines Holdings, Inc.",Industrials
+MHK,8018953944,1257,"Mohawk Industries, Inc.",Consumer Cyclical
+ZBRA,17527320036,1257,Zebra Technologies Corporation,Technology
+WAB,17441743243,1257,Westinghouse Air Brake Technologies Corporation,Industrials
+APD,60355120836,1257,"Air Products and Chemicals, Inc.",Basic Materials
+GOOGL,692694937911,1257,Alphabet Inc.,Communication Services
+TGT,75406110614,1257,Target Corporation,Consumer Defensive
+FCX,49191801639,1257,Freeport-McMoRan Inc.,Basic Materials
+ETR,24102537826,1257,Entergy Corporation,Utilities
+LVS,34214543897,1257,Las Vegas Sands Corp.,Consumer Cyclical
+PG,341054568493,1257,The Procter & Gamble Company,Consumer Defensive
+APH,49009183735,1257,Amphenol Corporation,Technology
+CSX,58542149273,1257,CSX Corporation,Industrials
+ISRG,106768372816,1257,"Intuitive Surgical, Inc.",Healthcare
+GOOG,654251007196,1257,Alphabet Inc.,Communication Services
+MAA,17837934091,1257,"Mid-America Apartment Communities, Inc.",Real Estate
+XYL,25433970973,1257,Xylem Inc.,Industrials
+FTNT,40439248488,1257,"Fortinet, Inc.",Technology
+INTU,130885253579,1257,Intuit Inc.,Technology
+TT,43290169196,1257,Trane Technologies plc,Industrials
+HWM,17450993297,1257,Howmet Aerospace Inc.,Industrials
+CTRA,17594428855,1257,Coterra Energy Inc.,Energy
+WTW,22934401762,1257,Willis Towers Watson Public Limited Company,Financial Services
+PARA,15975855437,1257,Paramount Global,Communication Services
+BALL,19581262588,1257,Ball Corporation,Consumer Cyclical
+ELV,94756491623,1257,Elevance Health Inc.,Healthcare
+GEN,14106813471,1257,Gen Digital Inc.,Technology
+RVTY,15235371712,1257,"Revvity, Inc.",Healthcare
+FI,66657736523,1257,"Fiserv, Inc.",Technology
+EG,12840272373,1257,"Everest Re Group, Ltd.",Financial Services
+COR,29887537150,1257,"Cencora, Inc.",Healthcare
+DOC,18325361883,1257,"Healthpeak Properties, Inc.",Real Estate
+CPAY,17945325947,1257,"Corpay, Inc.",Technology
