@@ -77,12 +77,12 @@ class OpenAIClient(LLMClient):
             try:
                 start_time = time.time()
                 
-                # GPT-5 uses different API
-                if self.model_id == "gpt-5":
+                # GPT-5 series uses different API
+                if self.model_id.startswith("gpt-5"):
                     result = self.client.responses.create(
-                        model="gpt-5",
+                        model=self.model_id,
                         input=prompt,
-                        reasoning={"effort": "low"},
+                        #reasoning={"effort": "low"},
                     )
                     self.last_ttft = time.time() - start_time
                     
