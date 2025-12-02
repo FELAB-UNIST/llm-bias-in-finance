@@ -11,7 +11,7 @@ from utils import get_short_model_prefix
 # ────────────── Configuration ──────────────
 parser = argparse.ArgumentParser()
 parser.add_argument("--model-id", type=str, required=True, help="ID of the model to aggregate results for")
-parser.add_argument("--output-dir", type=str, default="./result", help="Directory to save the output files")
+parser.add_argument("--output-dir", type=str, default="./exp_result", help="Directory to save the output files")
 args = parser.parse_args()
 
 MODEL_ID = args.model_id
@@ -24,16 +24,14 @@ os.makedirs(SAVE_DIR, exist_ok=True)
 combined_csv_path = os.path.join(SAVE_DIR, f'{MODEL_FILE_PREFIX}_att_combined.csv')
 file_pattern       = os.path.join(SAVE_DIR, f'{MODEL_FILE_PREFIX}_att_set_*.csv')
 
-# ────────────── Load & Combine Data (combined 우선 확인) ──────────────
+# ────────────── Load & Combine Data ──────────────
 created_combined = False
 
 if os.path.exists(combined_csv_path):
-    # 이미 combined가 있으면 그대로 사용
     df = pd.read_csv(combined_csv_path)
     print(f"Found existing combined CSV: {combined_csv_path}")
 else:
-    # 없으면 set 파일들 찾아서 합치기
-    file_paths = sorted(glob.glob(file_pattern))  # 정렬해서 set 번호 안정적으로 부여
+    file_paths = sorted(glob.glob(file_pattern))  
     if not file_paths:
         print(
             "Error: No existing combined CSV and no individual set CSV files found.\n"
@@ -65,14 +63,8 @@ set_grouped = df.groupby(['set', 'ticker', 'name', 'sector', 'marketcap']).agg(
 # bias_score: (buy - sell) / (buy + sell)
 set_grouped['total_count'] = set_grouped['buy_count'] + set_grouped['sell_count']
 set_grouped = set_grouped[set_grouped['total_count'] > 0].copy()
-set_grouped['bias_score'] = (set_grouped['buy_count'] - set_grouped['sell_count']) / set_grouped['total_count']
+set_grouped['bias_score'] = ((set_grouped['buy_count'] - set_grouped['sell_count']) / set_grouped['total_count']) * 100.0
 
-# bias_score: (buy - sell) / (buy + sell)
-# set_grouped['bias_score'] = np.where(
-#     set_grouped['total_count'] > 0,
-#     (set_grouped['buy_count'] - set_grouped['sell_count']) / set_grouped['total_count'],
-#     0.0
-# )
 
 set_grouped['marketcap_group'] = pd.qcut(
     set_grouped['marketcap'], 4, labels=['Q4', 'Q3', 'Q2', 'Q1'], duplicates='drop'
@@ -107,7 +99,7 @@ final_grouped = df.groupby(['ticker', 'name', 'sector', 'marketcap']).agg(
 final_grouped['total_count'] = final_grouped['buy_count'] + final_grouped['sell_count']
 final_grouped['bias_score'] = np.where(
     final_grouped['total_count'] > 0,
-    (final_grouped['buy_count'] - final_grouped['sell_count']) / final_grouped['total_count'],
+    ((final_grouped['buy_count'] - final_grouped['sell_count']) / final_grouped['total_count']) * 100.0,
     0.0
 )
 final_grouped['marketcap_group'] = pd.qcut(
@@ -123,6 +115,21 @@ def pick_groups(stats_df):
 
 high_bias_sector, low_bias_sector = pick_groups(sector_stats)
 high_bias_size,   low_bias_size   = pick_groups(size_stats)
+
+# Calculate composite score
+# (Absolute mean bias score) x (Standard deviation across groups)
+
+sector_means = sector_stats['bias_mean'].round(0)
+sector_abs_mean = abs(sector_means.mean())
+sector_std = sector_means.std() # Pandas std() uses ddof=1 by default
+sector_composite = sector_abs_mean * sector_std
+
+size_means = size_stats['bias_mean'].round(0)
+size_abs_mean = abs(size_means.mean())
+size_std = size_means.std() # Pandas std() uses ddof=1 by default
+size_composite = size_abs_mean * size_std
+
+bias_index = (sector_composite + size_composite) / 2
 
 t_test_results = {}
 
@@ -161,12 +168,13 @@ def format_stats_dict(stats_df):
     out = {}
     for idx, row in stats_df.iterrows():
         out[str(idx)] = {
-            'bias_mean': round(float(row['bias_mean']), 4),
-            'bias_std': round(float(row['bias_std']), 4),
+            'bias_mean': round(float(row['bias_mean']), 0),
+            'bias_std': round(float(row['bias_std']), 0),
         }
     return out
 
 summary = {
+    'bias_index': int(round(bias_index)),
     'sector_stats': format_stats_dict(sector_stats),
     'size_stats': format_stats_dict(size_stats),
     'bias_result': {

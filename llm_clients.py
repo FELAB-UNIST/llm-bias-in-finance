@@ -16,9 +16,11 @@ PRICING = {
     # OpenAI
     "gpt-4.1": {"input": 2.00, "output": 8.00},
     "gpt-5": {"input": 1.25, "output": 10.00},
+    "gpt-5.1": {"input": 1.25, "output": 10.00},
 
     # Anthropic
     "claude-sonnet-4-5": {"input": 3.00, "output": 15.00},
+    "claude-opus-4-5": {"input": 5.00, "output": 25.00},
 
     # Google
     "gemini-2.5-flash": {"input": 0.30, "output": 2.50},
@@ -29,7 +31,8 @@ PRICING = {
     "Qwen/Qwen3-235B-A22B-Instruct-2507-tput": {"input": 0.20, "output": 0.60},
     "meta-llama/Llama-4-Scout-17B-16E-Instruct": {"input": 0.18, "output": 0.59},
     "mistralai/Mistral-Small-24B-Instruct-2501": {"input": 0.80, "output": 0.80},
-    
+    "moonshotai/Kimi-K2-Thinking": {"input": 1.20, "output": 4.00},
+
     # XAI
     "grok-4-fast-non-reasoning": {"input": 3.00, "output": 15.00},
 }
@@ -82,7 +85,7 @@ class OpenAIClient(LLMClient):
                     result = self.client.responses.create(
                         model=self.model_id,
                         input=prompt,
-                        #reasoning={"effort": "low"},
+                        reasoning={"effort": "low"},
                     )
                     self.last_ttft = time.time() - start_time
                     
@@ -148,11 +151,22 @@ class GeminiClient(LLMClient):
         self.genai = genai
         self.types = types
 
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            raise ValueError("GEMINI_API_KEY environment variable not set")
+        if "gemini-3-pro" in model_id:
+            try:
+                from example_google import google_client
+                self.client = google_client
+            except ImportError:
+                print("Warning: example_google.py not found, falling back to standard initialization")
+                api_key = os.getenv("GEMINI_API_KEY")
+                if not api_key:
+                    raise ValueError("GEMINI_API_KEY environment variable not set")
+                self.client = genai.Client(api_key=api_key)
+        else:
+            api_key = os.getenv("GEMINI_API_KEY")
+            if not api_key:
+                raise ValueError("GEMINI_API_KEY environment variable not set")
 
-        self.client = genai.Client(api_key=api_key)
+            self.client = genai.Client(api_key=api_key)
 
     def get_response(self, prompt: str) -> str:
         self.last_call_cost = 0.0
@@ -167,15 +181,22 @@ class GeminiClient(LLMClient):
                 first_token_received = False
                 full_response = ""
                 
-                # Gemini doesn't support streaming with usage metadata easily
-                # So we'll use non-streaming for now
+                
+                if "gemini-3-pro" in self.model_id:
+                    config = self.types.GenerateContentConfig(
+                        temperature=self.temperature,
+                        thinking_config=self.types.ThinkingConfig(thinking_level="low")
+                    )
+                else:
+                    config = self.types.GenerateContentConfig(
+                        temperature=self.temperature,
+                        thinking_config=self.types.ThinkingConfig(thinking_budget=0)
+                    )
+
                 resp = self.client.models.generate_content(
                     model=self.model_id,
                     contents=prompt,
-                    config=self.types.GenerateContentConfig(
-                        temperature=self.temperature,
-                        thinking_config=self.types.ThinkingConfig(thinking_budget=0)
-                    ),
+                    config=config,
                 )
                 
                 # Approximate TTFT as we can't get true streaming
@@ -219,35 +240,40 @@ class TogetherClient(LLMClient):
         for attempt in range(MAX_RETRIES):
             try:
                 start_time = time.time()
-                first_token_received = False
-                full_response = ""
                 
-                stream = self.client.chat.completions.create(
+                # Use non-streaming call to avoid 499 errors and simplify usage tracking
+                response = self.client.chat.completions.create(
                     model=self.model_id,
                     messages=[{"role": "user", "content": prompt}],
                     temperature=self.temperature,
-                    stream=True,
+                    stream=False,
+                    max_tokens=30000
                 )
                 
-                for chunk in stream:
-                    if not first_token_received and chunk.choices and chunk.choices[0].delta.content:
-                        self.last_ttft = time.time() - start_time
-                        first_token_received = True
+                self.last_ttft = time.time() - start_time # Approximate TTFT
+                
+                if response.choices and response.choices[0].message.content:
+                    full_response = response.choices[0].message.content.strip()
                     
-                    if chunk.choices and chunk.choices[0].delta.content:
-                        full_response += chunk.choices[0].delta.content
+                    # Get usage if available
+                    if hasattr(response, 'usage') and response.usage:
+                        self.last_input_tokens = response.usage.prompt_tokens
+                        self.last_output_tokens = response.usage.completion_tokens
+                        self.last_call_cost = self.calculate_cost(
+                            self.last_input_tokens,
+                            self.last_output_tokens
+                        )
+                    else:
+                         # Estimate if usage not provided
+                        self.last_input_tokens = len(prompt) // 4
+                        self.last_output_tokens = len(full_response) // 4
+                        self.last_call_cost = self.calculate_cost(
+                            self.last_input_tokens,
+                            self.last_output_tokens
+                        )
+
+                    return full_response
                 
-                # Get token count from non-streaming call (Together doesn't provide usage in streaming)
-                # Estimate based on response length
-                self.last_input_tokens = len(prompt) // 4  # Rough estimate
-                self.last_output_tokens = len(full_response) // 4  # Rough estimate
-                self.last_call_cost = self.calculate_cost(
-                    self.last_input_tokens,
-                    self.last_output_tokens
-                )
-                
-                if full_response:
-                    return full_response.strip()
                 last_error = f"Empty response (Attempt {attempt+1})"
             except Exception as e:
                 last_error = f"Error (Attempt {attempt+1}): {e}"
@@ -277,27 +303,46 @@ class AnthropicClient(LLMClient):
                 first_token_received = False
                 full_response = ""
                 
-                with self.client.messages.stream(
-                    model=self.model_id,
-                    max_tokens=1024,
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=self.temperature,
-                ) as stream:
-                    for text in stream.text_stream:
-                        if not first_token_received:
-                            self.last_ttft = time.time() - start_time
-                            first_token_received = True
-                        full_response += text
+                if "opus-4-5" in self.model_id:
+                    response = self.client.beta.messages.create(
+                        model=self.model_id,
+                        betas=["effort-2025-11-24"],
+                        max_tokens=2048,
+                        messages=[{"role": "user", "content": prompt}],
+                        output_config={"effort": "low"}
+                    )
+                    self.last_ttft = time.time() - start_time
+                    full_response = response.content[0].text
                     
-                    # Get usage from final message
-                    message = stream.get_final_message()
-                    if message.usage:
-                        self.last_input_tokens = message.usage.input_tokens
-                        self.last_output_tokens = message.usage.output_tokens
+                    if response.usage:
+                        self.last_input_tokens = response.usage.input_tokens
+                        self.last_output_tokens = response.usage.output_tokens
                         self.last_call_cost = self.calculate_cost(
                             self.last_input_tokens,
                             self.last_output_tokens
                         )
+                else:
+                    with self.client.messages.stream(
+                        model=self.model_id,
+                        max_tokens=1024,
+                        messages=[{"role": "user", "content": prompt}],
+                        temperature=self.temperature,
+                    ) as stream:
+                        for text in stream.text_stream:
+                            if not first_token_received:
+                                self.last_ttft = time.time() - start_time
+                                first_token_received = True
+                            full_response += text
+                        
+                        # Get usage from final message
+                        message = stream.get_final_message()
+                        if message.usage:
+                            self.last_input_tokens = message.usage.input_tokens
+                            self.last_output_tokens = message.usage.output_tokens
+                            self.last_call_cost = self.calculate_cost(
+                                self.last_input_tokens,
+                                self.last_output_tokens
+                            )
                 
                 if full_response:
                     return full_response.strip()
