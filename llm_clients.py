@@ -25,6 +25,7 @@ PRICING = {
     # Google
     "gemini-2.5-flash": {"input": 0.30, "output": 2.50},
     "gemini-2.5-pro": {"input": 1.25, "output": 10.00},
+    "gemini-3-pro-preview": {"input": 2.00, "output": 12.00},
 
     # Together AI / DeepSeek
     "deepseek-ai/DeepSeek-V3": {"input": 1.25, "output": 1.25},
@@ -39,9 +40,10 @@ PRICING = {
 
 # ────────────── Abstract LLM Client Class ──────────────
 class LLMClient(ABC):
-    def __init__(self, model_id: str, temperature: float = 0.6):
+    def __init__(self, model_id: str, temperature: float = 0.6, reasoning_effort: str = None):
         self.model_id = model_id
         self.temperature = temperature
+        self.reasoning_effort = reasoning_effort
         self.short_model_id = get_short_model_prefix(self.model_id)
         self.last_call_cost = 0.0
         self.last_input_tokens = 0
@@ -61,8 +63,8 @@ class LLMClient(ABC):
 
 # ────────────── OpenAI Client ──────────────
 class OpenAIClient(LLMClient):
-    def __init__(self, model_id: str = "gpt-4.1", temperature: float = 0.6):
-        super().__init__(model_id, temperature)
+    def __init__(self, model_id: str = "gpt-4.1", temperature: float = 0.6, reasoning_effort: str = None):
+        super().__init__(model_id, temperature, reasoning_effort)
         from openai import OpenAI
         api_key = os.getenv("OPENAI_API_KEY")
         if not api_key:
@@ -85,7 +87,7 @@ class OpenAIClient(LLMClient):
                     result = self.client.responses.create(
                         model=self.model_id,
                         input=prompt,
-                        reasoning={"effort": "low"},
+                        reasoning={"effort": self.reasoning_effort or "low"},
                     )
                     self.last_ttft = time.time() - start_time
                     
@@ -144,29 +146,18 @@ class OpenAIClient(LLMClient):
 
 # ────────────── Gemini Client ──────────────
 class GeminiClient(LLMClient):
-    def __init__(self, model_id: str = "gemini-2.5-flash", temperature: float = 0.6):
-        super().__init__(model_id, temperature)
+    def __init__(self, model_id: str = "gemini-2.5-flash", temperature: float = 0.6, reasoning_effort: str = None):
+        super().__init__(model_id, temperature, reasoning_effort)
         from google import genai
         from google.genai import types
         self.genai = genai
         self.types = types
 
-        if "gemini-3-pro" in model_id:
-            try:
-                from example_google import google_client
-                self.client = google_client
-            except ImportError:
-                print("Warning: example_google.py not found, falling back to standard initialization")
-                api_key = os.getenv("GEMINI_API_KEY")
-                if not api_key:
-                    raise ValueError("GEMINI_API_KEY environment variable not set")
-                self.client = genai.Client(api_key=api_key)
-        else:
-            api_key = os.getenv("GEMINI_API_KEY")
-            if not api_key:
-                raise ValueError("GEMINI_API_KEY environment variable not set")
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise ValueError("GEMINI_API_KEY environment variable not set")
 
-            self.client = genai.Client(api_key=api_key)
+        self.client = genai.Client(api_key=api_key)
 
     def get_response(self, prompt: str) -> str:
         self.last_call_cost = 0.0
@@ -185,7 +176,7 @@ class GeminiClient(LLMClient):
                 if "gemini-3-pro" in self.model_id:
                     config = self.types.GenerateContentConfig(
                         temperature=self.temperature,
-                        thinking_config=self.types.ThinkingConfig(thinking_level="low")
+                        thinking_config=self.types.ThinkingConfig(thinking_level=self.reasoning_effort or "low")
                     )
                 else:
                     config = self.types.GenerateContentConfig(
@@ -222,8 +213,8 @@ class GeminiClient(LLMClient):
 
 # ────────────── Together Client ──────────────
 class TogetherClient(LLMClient):
-    def __init__(self, model_id: str = "deepseek-ai/DeepSeek-V3", temperature: float = 0.6):
-        super().__init__(model_id, temperature)
+    def __init__(self, model_id: str = "deepseek-ai/DeepSeek-V3", temperature: float = 0.6, reasoning_effort: str = None):
+        super().__init__(model_id, temperature, reasoning_effort)
         from together import Together
         api_key = os.getenv("TOGETHER_API_KEY")
         if not api_key:
@@ -282,8 +273,8 @@ class TogetherClient(LLMClient):
 
 # ────────────── Anthropic Client ──────────────
 class AnthropicClient(LLMClient):
-    def __init__(self, model_id: str = "claude-sonnet-4-20250514", temperature: float = 0.6):
-        super().__init__(model_id, temperature)
+    def __init__(self, model_id: str = "claude-sonnet-4-20250514", temperature: float = 0.6, reasoning_effort: str = None):
+        super().__init__(model_id, temperature, reasoning_effort)
         from anthropic import Anthropic
         api_key = os.getenv("ANTHROPIC_API_KEY")
         if not api_key:
@@ -309,7 +300,7 @@ class AnthropicClient(LLMClient):
                         betas=["effort-2025-11-24"],
                         max_tokens=2048,
                         messages=[{"role": "user", "content": prompt}],
-                        output_config={"effort": "low"}
+                        output_config={"effort": self.reasoning_effort or "low"}
                     )
                     self.last_ttft = time.time() - start_time
                     full_response = response.content[0].text
@@ -354,8 +345,8 @@ class AnthropicClient(LLMClient):
 
 # ────────────── XAI Client ──────────────
 class XAIClient(LLMClient):
-    def __init__(self, model_id: str = "grok-beta", temperature: float = 0.6):
-        super().__init__(model_id, temperature)
+    def __init__(self, model_id: str = "grok-beta", temperature: float = 0.6, reasoning_effort: str = None):
+        super().__init__(model_id, temperature, reasoning_effort)
         from openai import OpenAI
         api_key = os.getenv("XAI_API_KEY")
         if not api_key:

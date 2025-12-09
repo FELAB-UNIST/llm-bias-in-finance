@@ -1,0 +1,19 @@
+{
+  "model": "claude-opus-4-5",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 29.2044,
+  "average_cost_per_set_usd": 29.2044,
+  "total_input_tokens": 2308076,
+  "total_output_tokens": 706559,
+  "total_tokens": 3014635,
+  "total_time_seconds": 1220.12,
+  "average_time_per_set_seconds": 1220.12,
+  "average_latency_seconds": 6.84,
+  "average_ttft_seconds": 6.84,
+  "min_latency_seconds": 3.13,
+  "max_latency_seconds": 607.57,
+  "min_ttft_seconds": 3.13,
+  "max_ttft_seconds": 607.57,
+  "timestamp": "2025-12-04 21:15:04"
+}

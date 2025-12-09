@@ -51,7 +51,10 @@ def run_experiment(llm_client: LLMClient,
     os.makedirs(output_dir, exist_ok=True)
 
     # Set output path
-    output_path = os.path.join(output_dir, f"{llm_client.short_model_id}_att_set_{set_number}.csv")
+    effort_suffix = ""
+    if hasattr(llm_client, 'reasoning_effort') and llm_client.reasoning_effort:
+        effort_suffix = f"_{llm_client.reasoning_effort}"
+    output_path = os.path.join(output_dir, f"{llm_client.short_model_id}{effort_suffix}_att_set_{set_number}.csv")
 
     # Load data
     ticker_df = pd.read_csv(ticker_path)
@@ -239,24 +242,26 @@ if __name__ == "__main__":
                        help="Number of experiment sets to run")
     parser.add_argument("--num-trials", type=int, default=5,
                        help="Number of trials per experiment set")
+    parser.add_argument("--reasoning-effort", type=str, default=None,
+                       help="Reasoning effort for supported models")
     args = parser.parse_args()
     
     # Create client based on model choice
     if args.api == "openai":
         model_id = args.model_id
-        client = OpenAIClient(model_id=model_id, temperature=args.temperature)
+        client = OpenAIClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
     elif args.api == "gemini":
         model_id = args.model_id
-        client = GeminiClient(model_id=model_id, temperature=args.temperature)
+        client = GeminiClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
     elif args.api == "together":
         model_id = args.model_id
-        client = TogetherClient(model_id=model_id, temperature=args.temperature)
+        client = TogetherClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
     elif args.api == "anthropic":
         model_id = args.model_id
-        client = AnthropicClient(model_id=model_id, temperature=args.temperature)
+        client = AnthropicClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
     elif args.api == "xai":
         model_id = args.model_id
-        client = XAIClient(model_id=model_id, temperature=args.temperature)
+        client = XAIClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
         
     
     all_metrics = []
@@ -272,7 +277,7 @@ if __name__ == "__main__":
         all_metrics.append(metrics)
     
     # Save summary metrics
-    summary_path = os.path.join(args.output_dir, f"{client.short_model_id}_att_metrics.json")
+    summary_path = os.path.join(args.output_dir, f"{client.short_model_id}_{args.reasoning_effort}_att_metrics.json")
     summary = {
         "model": client.short_model_id,
         "total_sets": args.num_sets,

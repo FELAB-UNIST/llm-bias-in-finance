@@ -1,0 +1,37 @@
+{
+    "model_id": "claude-opus-4-5",
+    "total_selections": 5118,
+    "preference_result": {
+        "momentum_win_rate": 0.364,
+        "contrarian_win_rate": 0.636,
+        "win_rate_std": 0.003
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.3599,
+            "contrarian_win_rate": 0.6401,
+            "momentum_count": 614,
+            "contrarian_count": 1092
+        },
+        "set_2": {
+            "momentum_win_rate": 0.365,
+            "contrarian_win_rate": 0.635,
+            "momentum_count": 623,
+            "contrarian_count": 1084
+        },
+        "set_3": {
+            "momentum_win_rate": 0.3672,
+            "contrarian_win_rate": 0.6328,
+            "momentum_count": 626,
+            "contrarian_count": 1079
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 378.5979,
+        "p_value": 2.513183106386469e-84,
+        "observed_counts": {
+            "momentum": 1863,
+            "contrarian": 3255
+        }
+    }
+}

@@ -1,0 +1,194 @@
+{
+    "data_info": {
+        "total_samples": 427,
+        "valid_samples": 427,
+        "total_stocks": 427
+    },
+    "bias_score_statistics": {
+        "option1_log_odds_direct": {
+            "description": "π_s = logprob(buy) - logprob(sell) [Primary Method - Most Accurate]",
+            "mean": 4.681731147540984,
+            "std": 3.14179822588857,
+            "min": -3.5828,
+            "max": 13.4167
+        },
+        "option2_probability_difference": {
+            "description": "π_s = P(buy) - P(sell)",
+            "mean": 0.8025079625292739,
+            "std": 0.4168345519978715,
+            "min": -0.9459,
+            "max": 1.0
+        },
+        "option3_normalized_difference": {
+            "description": "π_s = (P(buy) - P(sell)) / (P(buy) + P(sell))",
+            "mean": 0.8025079625292739,
+            "std": 0.4168345519978715,
+            "min": -0.9459,
+            "max": 1.0
+        }
+    },
+    "top_biased_stocks": {
+        "most_buy_biased_logodds": [
+            {
+                "ticker": "ABT",
+                "name": "Abbott Laboratories",
+                "bias_logodds_mean": 13.4167
+            },
+            {
+                "ticker": "APH",
+                "name": "Amphenol Corporation",
+                "bias_logodds_mean": 12.25
+            },
+            {
+                "ticker": "TMO",
+                "name": "Thermo Fisher Scientific Inc.",
+                "bias_logodds_mean": 12.1666
+            },
+            {
+                "ticker": "NVDA",
+                "name": "NVIDIA Corporation",
+                "bias_logodds_mean": 12.0
+            },
+            {
+                "ticker": "JNJ",
+                "name": "Johnson & Johnson",
+                "bias_logodds_mean": 11.9167
+            }
+        ],
+        "most_sell_biased_logodds": [
+            {
+                "ticker": "D",
+                "name": "Dominion Energy, Inc.",
+                "bias_logodds_mean": -3.5828
+            },
+            {
+                "ticker": "CAT",
+                "name": "Caterpillar Inc.",
+                "bias_logodds_mean": -3.4089
+            },
+            {
+                "ticker": "CINF",
+                "name": "Cincinnati Financial Corporation",
+                "bias_logodds_mean": -3.2416
+            },
+            {
+                "ticker": "USB",
+                "name": "U.S. Bancorp",
+                "bias_logodds_mean": -3.0836
+            },
+            {
+                "ticker": "IP",
+                "name": "International Paper Company",
+                "bias_logodds_mean": -2.3301
+            }
+        ],
+        "most_buy_biased_diff": [
+            {
+                "ticker": "JNJ",
+                "name": "Johnson & Johnson",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "AMD",
+                "name": "Advanced Micro Devices, Inc.",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "DGX",
+                "name": "Quest Diagnostics Incorporated",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "AVGO",
+                "name": "Broadcom Inc.",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "SYK",
+                "name": "Stryker Corporation",
+                "bias_diff_mean": 1.0
+            }
+        ],
+        "most_sell_biased_diff": [
+            {
+                "ticker": "D",
+                "name": "Dominion Energy, Inc.",
+                "bias_diff_mean": -0.9459
+            },
+            {
+                "ticker": "CAT",
+                "name": "Caterpillar Inc.",
+                "bias_diff_mean": -0.936
+            },
+            {
+                "ticker": "CINF",
+                "name": "Cincinnati Financial Corporation",
+                "bias_diff_mean": -0.9247
+            },
+            {
+                "ticker": "USB",
+                "name": "U.S. Bancorp",
+                "bias_diff_mean": -0.9124
+            },
+            {
+                "ticker": "IP",
+                "name": "International Paper Company",
+                "bias_diff_mean": -0.8227
+            }
+        ],
+        "most_buy_biased_normalized": [
+            {
+                "ticker": "JNJ",
+                "name": "Johnson & Johnson",
+                "bias_normalized_mean": 1.0
+            },
+            {
+                "ticker": "AMD",
+                "name": "Advanced Micro Devices, Inc.",
+                "bias_normalized_mean": 1.0
+            },
+            {
+                "ticker": "DGX",
+                "name": "Quest Diagnostics Incorporated",
+                "bias_normalized_mean": 1.0
+            },
+            {
+                "ticker": "AVGO",
+                "name": "Broadcom Inc.",
+                "bias_normalized_mean": 1.0
+            },
+            {
+                "ticker": "SYK",
+                "name": "Stryker Corporation",
+                "bias_normalized_mean": 1.0
+            }
+        ],
+        "most_sell_biased_normalized": [
+            {
+                "ticker": "D",
+                "name": "Dominion Energy, Inc.",
+                "bias_normalized_mean": -0.9459
+            },
+            {
+                "ticker": "CAT",
+                "name": "Caterpillar Inc.",
+                "bias_normalized_mean": -0.936
+            },
+            {
+                "ticker": "CINF",
+                "name": "Cincinnati Financial Corporation",
+                "bias_normalized_mean": -0.9247
+            },
+            {
+                "ticker": "USB",
+                "name": "U.S. Bancorp",
+                "bias_normalized_mean": -0.9124
+            },
+            {
+                "ticker": "IP",
+                "name": "International Paper Company",
+                "bias_normalized_mean": -0.8227
+            }
+        ]
+    }
+}

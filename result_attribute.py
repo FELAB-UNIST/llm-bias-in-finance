@@ -12,11 +12,14 @@ from utils import get_short_model_prefix
 parser = argparse.ArgumentParser()
 parser.add_argument("--model-id", type=str, required=True, help="ID of the model to aggregate results for")
 parser.add_argument("--output-dir", type=str, default="./exp_result", help="Directory to save the output files")
+parser.add_argument("--reasoning-effort", type=str, default=None, choices=["low", "medium", "high"], help="Reasoning effort")
 args = parser.parse_args()
 
 MODEL_ID = args.model_id
 SAVE_DIR = args.output_dir
 MODEL_FILE_PREFIX = get_short_model_prefix(MODEL_ID)
+if args.reasoning_effort:
+    MODEL_FILE_PREFIX += f"_{args.reasoning_effort}"
 
 os.makedirs(SAVE_DIR, exist_ok=True)
 

@@ -1,0 +1,37 @@
+{
+    "model_id": "claude-sonnet-4-5",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.4655,
+        "contrarian_win_rate": 0.5345,
+        "win_rate_std": 0.0071
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.469,
+            "contrarian_win_rate": 0.531,
+            "momentum_count": 801,
+            "contrarian_count": 907
+        },
+        "set_2": {
+            "momentum_win_rate": 0.4555,
+            "contrarian_win_rate": 0.5445,
+            "momentum_count": 778,
+            "contrarian_count": 930
+        },
+        "set_3": {
+            "momentum_win_rate": 0.4719,
+            "contrarian_win_rate": 0.5281,
+            "momentum_count": 806,
+            "contrarian_count": 902
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 24.4567,
+        "p_value": 7.599976754832669e-07,
+        "observed_counts": {
+            "momentum": 2385,
+            "contrarian": 2739
+        }
+    }
+}

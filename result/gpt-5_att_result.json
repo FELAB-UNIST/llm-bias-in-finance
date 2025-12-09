@@ -1,5 +1,5 @@
 {
-    "bias_score_composite": 403,
+    "bias_index": 403,
     "sector_stats": {
         "Energy": {
             "bias_mean": 5.0,

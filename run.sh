@@ -16,31 +16,33 @@
 set -e
 
 # --- Configuration ---
-API_PROVIDER="gemini"  # Options: "openai", "gemini", "together", "anthropic", "xai"
-MODEL_ID="gemini-2.5-flash"
+API_PROVIDER="anthropic"  # Options: "openai", "gemini", "together", "anthropic", "xai"
+MODEL_ID="claude-opus-4-5_medium"
 TEMPERATURE=0.6
-OUTPUT_DIR="./exp_result"
+REASONING_EFFORT="medium"  
+OUTPUT_DIR="./exp_result3"
 MAX_WORKERS=30
 NUM_TRIALS=10
-NUM_SETS=1
+NUM_SETS=2
 
 # --- Experiment 1: Attribute Preference Test ---
 # This experiment tests if the LLM shows a preference for certain stock attributes (e.g., sector, market cap)
 # when presented with an equal number of buy and sell arguments.
 # Runs the attribute preference experiment.
-python bias_attribute.py \
+python bias_attribute2.py \
     --api $API_PROVIDER \
     --model-id $MODEL_ID \
     --temperature $TEMPERATURE \
+    --reasoning-effort $REASONING_EFFORT \
     --output-dir $OUTPUT_DIR \
     --max-workers $MAX_WORKERS \
     --num-trials $NUM_TRIALS \
-    --num-sets $NUM_SETS
+    --num-sets $NUM_SETS \
 
 # Analyzes the results from the attribute preference experiment.
-# python result_attribute.py \
-#     --model-id $MODEL_ID \
-#     --output-dir $OUTPUT_DIR
+python result_attribute.py \
+    --model-id $MODEL_ID \
+    --output-dir $OUTPUT_DIR
 
 # --- Experiment 2: Strategy Preference Test ---
 # This experiment tests if the LLM prefers a "momentum" or "contrarian" investment strategy.

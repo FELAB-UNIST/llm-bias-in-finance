@@ -1,5 +1,5 @@
 {
-    "bias_score_composite": 400,
+    "bias_index": 400,
     "sector_stats": {
         "Technology": {
             "bias_mean": 75.0,

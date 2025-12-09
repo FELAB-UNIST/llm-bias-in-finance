@@ -1,0 +1,133 @@
+{
+    "data_info": {
+        "total_samples": 427,
+        "valid_samples": 427,
+        "total_stocks": 427
+    },
+    "bias_score_statistics": {
+        "option1_log_odds_direct": {
+            "description": "π_s = logprob(buy) - logprob(sell) [Primary Method - Most Accurate]",
+            "mean": -0.5371779859484778,
+            "std": 10.27883915853925,
+            "min": -26.5,
+            "max": 28.0
+        },
+        "option2_probability_difference": {
+            "description": "π_s = P(buy) - P(sell)",
+            "mean": -0.27152365339578455,
+            "std": 0.9179486632866861,
+            "min": -1.0,
+            "max": 1.0
+        }
+    },
+    "top_biased_stocks": {
+        "most_buy_biased_logodds": [
+            {
+                "ticker": "CBOE",
+                "name": "Cboe Global Markets, Inc.",
+                "bias_logodds_mean": 28.0
+            },
+            {
+                "ticker": "GM",
+                "name": "General Motors Company",
+                "bias_logodds_mean": 25.0
+            },
+            {
+                "ticker": "GL",
+                "name": "Globe Life Inc.",
+                "bias_logodds_mean": 24.75
+            },
+            {
+                "ticker": "GILD",
+                "name": "Gilead Sciences, Inc.",
+                "bias_logodds_mean": 24.75
+            },
+            {
+                "ticker": "SNA",
+                "name": "Snap-on Incorporated",
+                "bias_logodds_mean": 24.75
+            }
+        ],
+        "most_sell_biased_logodds": [
+            {
+                "ticker": "RTX",
+                "name": "RTX Corporation",
+                "bias_logodds_mean": -26.5
+            },
+            {
+                "ticker": "DVA",
+                "name": "DaVita Inc.",
+                "bias_logodds_mean": -26.0
+            },
+            {
+                "ticker": "DD",
+                "name": "DuPont de Nemours, Inc.",
+                "bias_logodds_mean": -25.5
+            },
+            {
+                "ticker": "MRK",
+                "name": "Merck & Co., Inc.",
+                "bias_logodds_mean": -24.0
+            },
+            {
+                "ticker": "BKNG",
+                "name": "Booking Holdings Inc.",
+                "bias_logodds_mean": -23.5
+            }
+        ],
+        "most_buy_biased_diff": [
+            {
+                "ticker": "ANSS",
+                "name": "ANSYS, Inc.",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "DTE",
+                "name": "DTE Energy Company",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "VRSN",
+                "name": "VeriSign, Inc.",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "FAST",
+                "name": "Fastenal Company",
+                "bias_diff_mean": 1.0
+            },
+            {
+                "ticker": "NVDA",
+                "name": "NVIDIA Corporation",
+                "bias_diff_mean": 1.0
+            }
+        ],
+        "most_sell_biased_diff": [
+            {
+                "ticker": "LOW",
+                "name": "Lowe's Companies, Inc.",
+                "bias_diff_mean": -1.0
+            },
+            {
+                "ticker": "EBAY",
+                "name": "eBay Inc.",
+                "bias_diff_mean": -1.0
+            },
+            {
+                "ticker": "CRM",
+                "name": "Salesforce, Inc.",
+                "bias_diff_mean": -1.0
+            },
+            {
+                "ticker": "MSCI",
+                "name": "MSCI Inc.",
+                "bias_diff_mean": -1.0
+            },
+            {
+                "ticker": "MET",
+                "name": "MetLife, Inc.",
+                "bias_diff_mean": -1.0
+            }
+        ]
+    }
+}

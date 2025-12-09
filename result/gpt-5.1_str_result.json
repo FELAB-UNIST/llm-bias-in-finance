@@ -1,0 +1,37 @@
+{
+    "model_id": "gpt-5.1",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.4215,
+        "contrarian_win_rate": 0.5785,
+        "win_rate_std": 0.0146
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.4133,
+            "contrarian_win_rate": 0.5867,
+            "momentum_count": 706,
+            "contrarian_count": 1002
+        },
+        "set_2": {
+            "momentum_win_rate": 0.442,
+            "contrarian_win_rate": 0.558,
+            "momentum_count": 755,
+            "contrarian_count": 953
+        },
+        "set_3": {
+            "momentum_win_rate": 0.4093,
+            "contrarian_win_rate": 0.5907,
+            "momentum_count": 699,
+            "contrarian_count": 1009
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 126.1546,
+        "p_value": 2.844432335212652e-29,
+        "observed_counts": {
+            "momentum": 2160,
+            "contrarian": 2964
+        }
+    }
+}
