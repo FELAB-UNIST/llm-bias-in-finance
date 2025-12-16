@@ -4,9 +4,9 @@
 # Script to run LLM bias testing experiments.
 #
 # Parameters:
-#   API_PROVIDER: The LLM provider to use. Options: "openai", "gemini", "together", "anthropic", "xai".
-#   MODEL_ID: The specific model ID from the chosen provider.
+#   MODEL_ID: OpenRouter model ID (e.g., "openai/gpt-4.1", "anthropic/claude-sonnet-4")
 #   TEMPERATURE: The temperature setting for the LLM's generation.
+#   REASONING_EFFORT: Reasoning effort level ("low", "medium", "high") for reasoning models. Leave empty for non-reasoning models.
 #   OUTPUT_DIR: The directory where result files will be saved.
 #   MAX_WORKERS: The number of concurrent threads for API calls.
 #   NUM_TRIALS: The number of trials to run for each stock in the volume experiment.
@@ -16,41 +16,47 @@
 set -e
 
 # --- Configuration ---
-API_PROVIDER="anthropic"  # Options: "openai", "gemini", "together", "anthropic", "xai"
-MODEL_ID="claude-opus-4-5_medium"
+MODEL_ID="deepseek/deepseek-chat-v3-0324"  # OpenRouter model ID
 TEMPERATURE=0.6
-REASONING_EFFORT="medium"  
-OUTPUT_DIR="./exp_result3"
+REASONING_EFFORT=""  # "low", "medium", "high" for reasoning models, empty for regular models
+OUTPUT_DIR="./result"
 MAX_WORKERS=30
-NUM_TRIALS=10
-NUM_SETS=2
+NUM_TRIALS=3
+NUM_SETS=1
 
 # --- Experiment 1: Attribute Preference Test ---
 # This experiment tests if the LLM shows a preference for certain stock attributes (e.g., sector, market cap)
 # when presented with an equal number of buy and sell arguments.
 # Runs the attribute preference experiment.
-python bias_attribute2.py \
-    --api $API_PROVIDER \
+
+# Build reasoning effort argument if set
+REASONING_ARG=""
+if [ -n "$REASONING_EFFORT" ]; then
+    REASONING_ARG="--reasoning-effort $REASONING_EFFORT"
+fi
+
+python bias_attribute.py \
     --model-id $MODEL_ID \
     --temperature $TEMPERATURE \
-    --reasoning-effort $REASONING_EFFORT \
+    $REASONING_ARG \
     --output-dir $OUTPUT_DIR \
     --max-workers $MAX_WORKERS \
     --num-trials $NUM_TRIALS \
-    --num-sets $NUM_SETS \
+    --num-sets $NUM_SETS
 
 # Analyzes the results from the attribute preference experiment.
-python result_attribute.py \
-    --model-id $MODEL_ID \
-    --output-dir $OUTPUT_DIR
+# python result_attribute.py \
+#     --model-id $MODEL_ID \
+#     $REASONING_ARG \
+#     --output-dir $OUTPUT_DIR
 
 # --- Experiment 2: Strategy Preference Test ---
 # This experiment tests if the LLM prefers a "momentum" or "contrarian" investment strategy.
 # Runs the strategy preference experiment.
 # python bias_strategy.py \
-#     --api $API_PROVIDER \
 #     --model-id $MODEL_ID \
 #     --temperature $TEMPERATURE \
+#     $REASONING_ARG \
 #     --output-dir $OUTPUT_DIR \
 #     --max-workers $MAX_WORKERS \
 #     --num-sets $NUM_SETS
@@ -58,6 +64,7 @@ python result_attribute.py \
 # # Analyzes the results from the strategy preference experiment.
 # python result_strategy.py \
 #     --model-id $MODEL_ID \
+#     $REASONING_ARG \
 #     --output-dir $OUTPUT_DIR
 
 echo "All experiments and analyses are complete."

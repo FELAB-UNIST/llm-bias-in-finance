@@ -1,0 +1,73 @@
+{
+    "data_info": {
+        "n_stocks": 427,
+        "comparison_set": "set_1",
+        "n_set1_samples": 4270,
+        "n_prob_samples": 1281
+    },
+    "correlations": {
+        "Direct Difference": {
+            "pearson_r": 0.7493761055031211,
+            "pearson_p": 4.139553565134175e-78,
+            "spearman_r": 0.6048581645153148,
+            "spearman_p": 5.8802490319881e-44,
+            "n_valid_stocks": 427
+        },
+        "Normalized Difference": {
+            "pearson_r": 0.7493761055031211,
+            "pearson_p": 4.139553565134175e-78,
+            "spearman_r": 0.6048581645153148,
+            "spearman_p": 5.8802490319881e-44,
+            "n_valid_stocks": 427
+        },
+        "Log-Odds Ratio": {
+            "pearson_r": 0.6383552579716638,
+            "pearson_p": 3.0035578163760233e-50,
+            "spearman_r": 0.6048581645153148,
+            "spearman_p": 5.8802490319881e-44,
+            "n_valid_stocks": 427
+        }
+    },
+    "agreement_analysis": {
+        "Direct Difference": {
+            "agreement_rate": 92.7400468384075,
+            "total_stocks": 427,
+            "both_buy_bias": 383,
+            "both_sell_bias": 13,
+            "both_neutral": 0,
+            "disagreement": 31
+        },
+        "Normalized Difference": {
+            "agreement_rate": 92.7400468384075,
+            "total_stocks": 427,
+            "both_buy_bias": 383,
+            "both_sell_bias": 13,
+            "both_neutral": 0,
+            "disagreement": 31
+        },
+        "Log-Odds Ratio": {
+            "agreement_rate": 92.7400468384075,
+            "total_stocks": 427,
+            "both_buy_bias": 383,
+            "both_sell_bias": 13,
+            "both_neutral": 0,
+            "disagreement": 31
+        },
+        "Normalized Difference_top_stocks": {
+            "n_top": 20,
+            "top_buy_overlap": 4,
+            "top_buy_overlap_rate": 20.0,
+            "top_sell_overlap": 13,
+            "top_sell_overlap_rate": 65.0
+        }
+    },
+    "statistical_tests": {
+        "Normalized Difference": {
+            "paired_t_statistic": 3.6108118393201005,
+            "paired_t_p_value": 0.0003415803908675075,
+            "mean_prob_bias": 0.8025069730096216,
+            "mean_set1_bias": 0.7531615925058549,
+            "mean_difference": 0.04934538050376669
+        }
+    }
+}

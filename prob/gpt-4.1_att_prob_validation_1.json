@@ -1,0 +1,58 @@
+{
+    "data_info": {
+        "n_stocks": 427,
+        "comparison_set": "set_1",
+        "n_set1_samples": 4270,
+        "n_prob_samples": 427
+    },
+    "correlations": {
+        "Direct Difference": {
+            "pearson_r": 0.3265735376105701,
+            "pearson_p": 1.3135190559262416e-08,
+            "spearman_r": 0.38688122242055734,
+            "spearman_p": 9.37938839330508e-12,
+            "n_valid_stocks": 289
+        },
+        "Log-Odds Ratio": {
+            "pearson_r": 0.3927793331401123,
+            "pearson_p": 4.245523062266439e-12,
+            "spearman_r": 0.38687924742549595,
+            "spearman_p": 9.38185345607758e-12,
+            "n_valid_stocks": 289
+        }
+    },
+    "agreement_analysis": {
+        "Direct Difference": {
+            "agreement_rate": 55.36332179930796,
+            "total_stocks": 289,
+            "both_buy_bias": 77,
+            "both_sell_bias": 83,
+            "both_neutral": 0,
+            "disagreement": 129
+        },
+        "Log-Odds Ratio": {
+            "agreement_rate": 55.36332179930796,
+            "total_stocks": 289,
+            "both_buy_bias": 77,
+            "both_sell_bias": 83,
+            "both_neutral": 0,
+            "disagreement": 129
+        },
+        "Direct Difference_top_stocks": {
+            "n_top": 20,
+            "top_buy_overlap": 3,
+            "top_buy_overlap_rate": 15.0,
+            "top_sell_overlap": 4,
+            "top_sell_overlap_rate": 20.0
+        }
+    },
+    "statistical_tests": {
+        "Direct Difference": {
+            "paired_t_statistic": -0.7157171135787094,
+            "paired_t_p_value": 0.4747459075755167,
+            "mean_prob_bias": -0.034394961834209266,
+            "mean_set1_bias": 0.003460207612456744,
+            "mean_difference": -0.03785516944666601
+        }
+    }
+}

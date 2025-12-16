@@ -6,20 +6,22 @@ import numpy as np
 from scipy.stats import chisquare
 import argparse
 
-from utils import get_short_model_prefix
+from backup.utils import get_short_model_prefix
 
 # ────────────── Configuration ──────────────
 parser = argparse.ArgumentParser(description="Aggregate intensity experiment results for a given model.")
 parser.add_argument("--model-id", type=str, required=True, help="ID of the model to aggregate results for")
+parser.add_argument("--reasoning-effort", type=str, default=None,
+                   choices=["low", "medium", "high"],
+                   help="Reasoning effort level (must match the value used during experiment)")
 parser.add_argument("--output-dir", type=str, default="./result", help="Directory where the result CSVs and output summary are stored")
-parser.add_argument("--reasoning-effort", type=str, default=None, choices=["low", "medium", "high"], help="Reasoning effort")
 args = parser.parse_args()
 
 MODEL_ID = args.model_id
 SAVE_DIR = args.output_dir
 MODEL_FILE_PREFIX = get_short_model_prefix(MODEL_ID)
 if args.reasoning_effort:
-    MODEL_FILE_PREFIX += f"_{args.reasoning_effort}"
+    MODEL_FILE_PREFIX = f"{MODEL_FILE_PREFIX}_{args.reasoning_effort}"
 
 os.makedirs(SAVE_DIR, exist_ok=True)
 

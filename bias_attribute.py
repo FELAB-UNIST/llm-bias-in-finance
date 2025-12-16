@@ -6,8 +6,8 @@ from typing import Dict, List
 import json
 import time
 
-from llm_clients import LLMClient, OpenAIClient, GeminiClient, TogetherClient, AnthropicClient, XAIClient
-from utils import parse_json_from_text
+from llm_clients import LLMClient
+from backup.utils import parse_json_from_text
 
 
 # ────────────── Configuration ──────────────
@@ -50,11 +50,11 @@ def run_experiment(llm_client: LLMClient,
     
     os.makedirs(output_dir, exist_ok=True)
 
-    # Set output path
-    effort_suffix = ""
-    if hasattr(llm_client, 'reasoning_effort') and llm_client.reasoning_effort:
-        effort_suffix = f"_{llm_client.reasoning_effort}"
-    output_path = os.path.join(output_dir, f"{llm_client.short_model_id}{effort_suffix}_att_set_{set_number}.csv")
+    # Set output path with reasoning effort suffix if provided
+    model_suffix = llm_client.short_model_id
+    if llm_client.reasoning_effort:
+        model_suffix = f"{model_suffix}_{llm_client.reasoning_effort}"
+    output_path = os.path.join(output_dir, f"{model_suffix}_att_set_{set_number}.csv")
 
     # Load data
     ticker_df = pd.read_csv(ticker_path)
@@ -193,11 +193,6 @@ def run_experiment(llm_client: LLMClient,
         "total_time_seconds": round(total_time, 2),
         "average_latency_seconds": round(sum(individual_latencies) / len(individual_latencies), 2) if individual_latencies else 0,
         "average_ttft_seconds": round(sum(individual_ttfts) / len(individual_ttfts), 2) if individual_ttfts else 0,
-        "min_latency_seconds": round(min(individual_latencies), 2) if individual_latencies else 0,
-        "max_latency_seconds": round(max(individual_latencies), 2) if individual_latencies else 0,
-        "min_ttft_seconds": round(min(individual_ttfts), 2) if individual_ttfts else 0,
-        "max_ttft_seconds": round(max(individual_ttfts), 2) if individual_ttfts else 0,
-        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
     }
     
     # Process and save results
@@ -226,14 +221,14 @@ def run_experiment(llm_client: LLMClient,
 if __name__ == "__main__":
     import argparse
     
-    parser = argparse.ArgumentParser(description="Run equal evidence experiment with different LLMs")
-    parser.add_argument("--api", type=str, required=True, 
-                       choices=["openai", "gemini", "together", "anthropic", "xai"],
-                       help="Which API to use")
-    parser.add_argument("--model-id", type=str, default=None,
-                       help="Specific model ID (optional)")
-    parser.add_argument("--temperature", type=float, default=0.1,
-                       help="Temperature for generation")
+    parser = argparse.ArgumentParser(description="Run equal evidence experiment with LLMs via OpenRouter")
+    parser.add_argument("--model-id", type=str, required=True,
+                       help="OpenRouter model ID (e.g., 'openai/gpt-4.1', 'anthropic/claude-sonnet-4')")
+    parser.add_argument("--temperature", type=float, default=0.6,
+                       help="Temperature for generation (ignored if reasoning-effort is set)")
+    parser.add_argument("--reasoning-effort", type=str, default=None,
+                       choices=["low", "medium", "high"],
+                       help="Reasoning effort level for reasoning models (e.g., o1, o3, gpt-5)")
     parser.add_argument("--max-workers", type=int, default=10,
                        help="Maximum number of concurrent workers")
     parser.add_argument("--output-dir", type=str, default="./result",
@@ -242,26 +237,20 @@ if __name__ == "__main__":
                        help="Number of experiment sets to run")
     parser.add_argument("--num-trials", type=int, default=5,
                        help="Number of trials per experiment set")
-    parser.add_argument("--reasoning-effort", type=str, default=None,
-                       help="Reasoning effort for supported models")
     args = parser.parse_args()
     
-    # Create client based on model choice
-    if args.api == "openai":
-        model_id = args.model_id
-        client = OpenAIClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
-    elif args.api == "gemini":
-        model_id = args.model_id
-        client = GeminiClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
-    elif args.api == "together":
-        model_id = args.model_id
-        client = TogetherClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
-    elif args.api == "anthropic":
-        model_id = args.model_id
-        client = AnthropicClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
-    elif args.api == "xai":
-        model_id = args.model_id
-        client = XAIClient(model_id=model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
+    # Create unified LLMClient via OpenRouter
+    client = LLMClient(
+        model_id=args.model_id,
+        temperature=args.temperature,
+        reasoning_effort=args.reasoning_effort
+    )
+    
+    print(f"Using model: {args.model_id}")
+    if args.reasoning_effort:
+        print(f"Reasoning effort: {args.reasoning_effort}")
+    else:
+        print(f"Temperature: {args.temperature}")
         
     
     all_metrics = []
@@ -277,9 +266,13 @@ if __name__ == "__main__":
         all_metrics.append(metrics)
     
     # Save summary metrics
-    summary_path = os.path.join(args.output_dir, f"{client.short_model_id}_{args.reasoning_effort}_att_metrics.json")
+    model_suffix = client.short_model_id
+    if args.reasoning_effort:
+        model_suffix = f"{model_suffix}_{args.reasoning_effort}"
+    summary_path = os.path.join(args.output_dir, f"{model_suffix}_att_metrics.json")
     summary = {
         "model": client.short_model_id,
+        "reasoning_effort": args.reasoning_effort,
         "total_sets": args.num_sets,
         "total_prompts": sum(m["total_prompts"] for m in all_metrics),
         "total_cost_usd": round(sum(m["total_cost_usd"] for m in all_metrics), 4),
@@ -291,11 +284,6 @@ if __name__ == "__main__":
         "average_time_per_set_seconds": round(sum(m["total_time_seconds"] for m in all_metrics) / len(all_metrics), 2),
         "average_latency_seconds": round(sum(m["average_latency_seconds"] * m["total_prompts"] for m in all_metrics) / sum(m["total_prompts"] for m in all_metrics), 2) if all_metrics else 0,
         "average_ttft_seconds": round(sum(m["average_ttft_seconds"] * m["total_prompts"] for m in all_metrics) / sum(m["total_prompts"] for m in all_metrics), 2) if all_metrics else 0,
-        "min_latency_seconds": round(min(m["min_latency_seconds"] for m in all_metrics), 2) if all_metrics else 0,
-        "max_latency_seconds": round(max(m["max_latency_seconds"] for m in all_metrics), 2) if all_metrics else 0,
-        "min_ttft_seconds": round(min(m["min_ttft_seconds"] for m in all_metrics), 2) if all_metrics else 0,
-        "max_ttft_seconds": round(max(m["max_ttft_seconds"] for m in all_metrics), 2) if all_metrics else 0,
-        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S")
     }
     with open(summary_path, 'w') as f:
         json.dump(summary, f, indent=2)

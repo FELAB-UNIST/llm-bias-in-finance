@@ -15,14 +15,15 @@ This repository contains a suite of experiments designed to identify and analyze
 ## 🚀 Getting Started
 
 ### Prerequisites
-- An API key for your chosen LLM provider (OpenAI, Gemini, Together, Anthropic, Xai).
-- Set up the following environment variables with your API keys:
+- An [OpenRouter](https://openrouter.ai/) API key. OpenRouter provides unified access to multiple LLM providers (OpenAI, Anthropic, Google, etc.) through a single API.
+- Set up your OpenRouter API key as an environment variable:
 ```bash
-export OPENAI_API_KEY="your-openai-api-key"
-export GEMINI_API_KEY="your-gemini-api-key"
-export TOGETHER_API_KEY="your-together-api-key"
-export ANTHROPIC_API_KEY="your-anthropic-api-key"
-export XAI_API_KEY="your-xai-api-key"
+export OPENROUTER_API_KEY="your-openrouter-api-key"
+```
+
+Or create a `.env` file in the project root:
+```
+OPENROUTER_API_KEY=your-openrouter-api-key
 ```
 
 ### Installation
@@ -33,7 +34,7 @@ export XAI_API_KEY="your-xai-api-key"
     ```
 2.  Install the required Python packages:
     ```bash
-    pip install pandas scipy numpy openai google-genai together anthropic
+    pip install pandas scipy numpy requests python-dotenv tqdm
     ```
 
 ## 🧪 Experiments
@@ -56,9 +57,9 @@ This experiment aims to determine if an LLM has an inherent preference for a par
 All experiments can be executed using the main shell script `run.sh`.
 
 1.  **Configure the experiment**: Open `run.sh` and modify the configuration variables at the top of the file to suit your needs:
-    -   `API_PROVIDER`: "openai", "gemini", or "together".
-    -   `MODEL_ID`: The specific model you want to test (e.g., "gpt-4.1").
+    -   `MODEL_ID`: OpenRouter model ID (e.g., `openai/gpt-4.1`, `anthropic/claude-sonnet-4`, `google/gemini-2.5-flash`). See [OpenRouter Models](https://openrouter.ai/models) for the full list.
     -   `TEMPERATURE`: The model's generation temperature.
+    -   `REASONING_EFFORT`: For reasoning models (e.g., o3, gpt-5), set to `"low"`, `"medium"`, or `"high"`. Leave empty for non-reasoning models.
     -   `OUTPUT_DIR`: Directory to save results.
     -   `MAX_WORKERS`: Number of concurrent API calls.
     -   `NUM_TRIALS`: Number of trials per stock in the attribute test.
@@ -69,6 +70,19 @@ All experiments can be executed using the main shell script `run.sh`.
     bash run.sh
     ```
 The script will run both the attribute and strategy preference experiments sequentially. It will first generate the raw data and then immediately process it to produce the final analysis files.
+
+### Supported Models
+This project uses [OpenRouter](https://openrouter.ai/) as a unified API gateway, supporting models from multiple providers:
+
+| Provider | Example Model IDs |
+|----------|------------------|
+| OpenAI | `openai/gpt-4.1`, `openai/gpt-4.1-mini`, `openai/o4-mini` |
+| Anthropic | `anthropic/claude-sonnet-4`, `anthropic/claude-opus-4` |
+| Google | `google/gemini-2.5-flash`, `google/gemini-2.5-pro` |
+| Meta | `meta-llama/llama-4-maverick` |
+| xAI | `x-ai/grok-3` |
+
+For reasoning models (like `openai/o4-mini`), use the `REASONING_EFFORT` parameter instead of `TEMPERATURE`.
 
 ## 📊 Results
 

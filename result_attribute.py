@@ -6,20 +6,22 @@ import numpy as np
 from scipy.stats import ttest_ind
 import argparse
 
-from utils import get_short_model_prefix
+from backup.utils import get_short_model_prefix
 
 # ────────────── Configuration ──────────────
 parser = argparse.ArgumentParser()
 parser.add_argument("--model-id", type=str, required=True, help="ID of the model to aggregate results for")
+parser.add_argument("--reasoning-effort", type=str, default=None,
+                   choices=["low", "medium", "high"],
+                   help="Reasoning effort level (must match the value used during experiment)")
 parser.add_argument("--output-dir", type=str, default="./exp_result", help="Directory to save the output files")
-parser.add_argument("--reasoning-effort", type=str, default=None, choices=["low", "medium", "high"], help="Reasoning effort")
 args = parser.parse_args()
 
 MODEL_ID = args.model_id
 SAVE_DIR = args.output_dir
 MODEL_FILE_PREFIX = get_short_model_prefix(MODEL_ID)
 if args.reasoning_effort:
-    MODEL_FILE_PREFIX += f"_{args.reasoning_effort}"
+    MODEL_FILE_PREFIX = f"{MODEL_FILE_PREFIX}_{args.reasoning_effort}"
 
 os.makedirs(SAVE_DIR, exist_ok=True)
 
@@ -132,7 +134,7 @@ size_abs_mean = abs(size_means.mean())
 size_std = size_means.std() # Pandas std() uses ddof=1 by default
 size_composite = size_abs_mean * size_std
 
-bias_index = (sector_composite + size_composite) / 2
+bias_score_composite = (sector_composite + size_composite) / 2
 
 t_test_results = {}
 
@@ -177,7 +179,7 @@ def format_stats_dict(stats_df):
     return out
 
 summary = {
-    'bias_index': int(round(bias_index)),
+    'bias_score_composite': int(round(bias_score_composite)),
     'sector_stats': format_stats_dict(sector_stats),
     'size_stats': format_stats_dict(size_stats),
     'bias_result': {

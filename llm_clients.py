@@ -1,8 +1,8 @@
 import os
 import time
-from abc import ABC, abstractmethod
+import requests
+from typing import Optional
 from dotenv import load_dotenv
-from utils import get_short_model_prefix
 
 # Load environment variables from .env file
 load_dotenv()
@@ -10,393 +10,532 @@ load_dotenv()
 # ────────────── Configuration ──────────────
 MAX_RETRIES = 3
 RETRY_DELAY = 1
+OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1"
 
-# ────────────── Pricing (USD per 1M tokens) ──────────────
-PRICING = {
-    # OpenAI
-    "gpt-4.1": {"input": 2.00, "output": 8.00},
-    "gpt-5": {"input": 1.25, "output": 10.00},
-    "gpt-5.1": {"input": 1.25, "output": 10.00},
 
-    # Anthropic
-    "claude-sonnet-4-5": {"input": 3.00, "output": 15.00},
-    "claude-opus-4-5": {"input": 5.00, "output": 25.00},
-
-    # Google
-    "gemini-2.5-flash": {"input": 0.30, "output": 2.50},
-    "gemini-2.5-pro": {"input": 1.25, "output": 10.00},
-    "gemini-3-pro-preview": {"input": 2.00, "output": 12.00},
-
-    # Together AI / DeepSeek
-    "deepseek-ai/DeepSeek-V3": {"input": 1.25, "output": 1.25},
-    "Qwen/Qwen3-235B-A22B-Instruct-2507-tput": {"input": 0.20, "output": 0.60},
-    "meta-llama/Llama-4-Scout-17B-16E-Instruct": {"input": 0.18, "output": 0.59},
-    "mistralai/Mistral-Small-24B-Instruct-2501": {"input": 0.80, "output": 0.80},
-    "moonshotai/Kimi-K2-Thinking": {"input": 1.20, "output": 4.00},
-
-    # XAI
-    "grok-4-fast-non-reasoning": {"input": 3.00, "output": 15.00},
-}
-
-# ────────────── Abstract LLM Client Class ──────────────
-class LLMClient(ABC):
-    def __init__(self, model_id: str, temperature: float = 0.6, reasoning_effort: str = None):
+# ────────────── Unified LLM Client using OpenRouter ──────────────
+class LLMClient:
+    """
+    Unified LLM client using OpenRouter API.
+    
+    Supports all providers through OpenRouter.
+    See https://openrouter.ai/models for full list.
+    
+    Usage:
+        client = LLMClient("openai/gpt-4.1")
+        client = LLMClient("anthropic/claude-sonnet-4")
+        client = LLMClient("google/gemini-2.5-flash-preview")
+    """
+    
+    def __init__(
+        self,
+        model_id: str,
+        temperature: float = 0.6,
+        max_tokens: Optional[int] = None,
+        reasoning_effort: Optional[str] = None,
+        api_key: Optional[str] = None
+    ):
+        """
+        Initialize the LLM client.
+        
+        Args:
+            model_id: OpenRouter model ID (e.g., "openai/gpt-4.1", "anthropic/claude-sonnet-4")
+            temperature: Sampling temperature (0.0 to 2.0)
+            max_tokens: Maximum tokens in response (None for model default)
+            reasoning_effort: Reasoning effort level ("low", "medium", "high") for reasoning models
+            api_key: OpenRouter API key (defaults to OPENROUTER_API_KEY env var)
+        """
         self.model_id = model_id
         self.temperature = temperature
+        self.max_tokens = max_tokens
         self.reasoning_effort = reasoning_effort
-        self.short_model_id = get_short_model_prefix(self.model_id)
+        # Use only the part after '/' in model name (e.g., "openai/gpt-4.1" -> "gpt-4.1")
+        self.short_model_id = model_id.split('/')[-1] if '/' in model_id else model_id
+        
+        # Get API key
+        self.api_key = api_key or os.getenv("OPENROUTER_API_KEY")
+        if not self.api_key:
+            raise ValueError("OPENROUTER_API_KEY environment variable not set")
+        
+        # Headers for OpenRouter API
+        self.headers = {
+            "Authorization": f"Bearer {self.api_key}",
+            "Content-Type": "application/json",
+        }
+        
+        # Last call metrics (updated after each get_response call)
         self.last_call_cost = 0.0
         self.last_input_tokens = 0
         self.last_output_tokens = 0
-        self.last_ttft = 0.0  # Time to first token
+        self.last_ttft = 0.0  # Time to first token (approximate for non-streaming)
+        self.last_generation_id = ""
+        self.last_prompt_cost = 0.0
+        self.last_completion_cost = 0.0
 
-    @abstractmethod
-    def get_response(self, prompt: str) -> str:
-        pass
-    
-    def calculate_cost(self, input_tokens: int, output_tokens: int) -> float:
-        """Calculate cost based on token usage"""
-        pricing = PRICING.get(self.model_id, {"input": 0.0, "output": 0.0})
-        input_cost = (input_tokens / 1_000_000) * pricing["input"]
-        output_cost = (output_tokens / 1_000_000) * pricing["output"]
-        return input_cost + output_cost
-
-# ────────────── OpenAI Client ──────────────
-class OpenAIClient(LLMClient):
-    def __init__(self, model_id: str = "gpt-4.1", temperature: float = 0.6, reasoning_effort: str = None):
-        super().__init__(model_id, temperature, reasoning_effort)
-        from openai import OpenAI
-        api_key = os.getenv("OPENAI_API_KEY")
-        if not api_key:
-            raise ValueError("OPENAI_API_KEY environment variable not set")
-        self.client = OpenAI(api_key=api_key)
-
-    def get_response(self, prompt: str) -> str:
+    def get_response(self, prompt: str, system_prompt: Optional[str] = None) -> str:
+        """
+        Get a response from the LLM.
+        
+        Args:
+            prompt: User prompt/message
+            system_prompt: Optional system prompt
+            
+        Returns:
+            Model response text, or error message if all retries fail
+        """
+        # Reset metrics
         self.last_call_cost = 0.0
         self.last_input_tokens = 0
         self.last_output_tokens = 0
         self.last_ttft = 0.0
+        self.last_generation_id = ""
+        self.last_prompt_cost = 0.0
+        self.last_completion_cost = 0.0
+        
+        if self.reasoning_effort:
+            return self._get_response_reasoning(prompt, system_prompt)
+        else:
+            return self._get_response_chat(prompt, system_prompt)
+    
+    def _get_response_reasoning(self, prompt: str, system_prompt: Optional[str] = None) -> str:
+        if system_prompt:
+            full_input = f"{system_prompt}\n\n{prompt}"
+        else:
+            full_input = prompt
+        
+        # Build request payload for /responses endpoint
+        payload = {
+            "model": self.model_id,
+            "input": full_input,
+            "reasoning": {
+                "effort": self.reasoning_effort
+            },
+        }
+        
+        if self.max_tokens:
+            payload["max_output_tokens"] = self.max_tokens
         
         last_error = None
         for attempt in range(MAX_RETRIES):
             try:
                 start_time = time.time()
                 
-                # GPT-5 series uses different API
-                if self.model_id.startswith("gpt-5"):
-                    result = self.client.responses.create(
-                        model=self.model_id,
-                        input=prompt,
-                        reasoning={"effort": self.reasoning_effort or "low"},
-                    )
-                    self.last_ttft = time.time() - start_time
-                    
-                    # Extract response text
-                    full_response = result.output_text if hasattr(result, 'output_text') else str(result)
-                    
-                    # Get usage if available
-                    if hasattr(result, 'usage'):
-                        self.last_input_tokens = result.usage.input_tokens
-                        self.last_output_tokens = result.usage.output_tokens
-                        self.last_call_cost = self.calculate_cost(
-                            self.last_input_tokens,
-                            self.last_output_tokens
-                        )
-                    
-                    if full_response:
-                        return full_response.strip()
-                else:
-                    # Standard chat completions API for other models
-                    first_token_received = False
-                    full_response = ""
-                    
-                    stream = self.client.chat.completions.create(
-                        model=self.model_id,
-                        messages=[{"role": "user", "content": prompt}],
-                        temperature=self.temperature,
-                        stream=True,
-                        stream_options={"include_usage": True}
-                    )
-                    
-                    for chunk in stream:
-                        if not first_token_received and chunk.choices and chunk.choices[0].delta.content:
-                            self.last_ttft = time.time() - start_time
-                            first_token_received = True
-                        
-                        if chunk.choices and chunk.choices[0].delta.content:
-                            full_response += chunk.choices[0].delta.content
-                        
-                        # Get usage from final chunk
-                        if hasattr(chunk, 'usage') and chunk.usage:
-                            self.last_input_tokens = chunk.usage.prompt_tokens
-                            self.last_output_tokens = chunk.usage.completion_tokens
-                            self.last_call_cost = self.calculate_cost(
-                                self.last_input_tokens,
-                                self.last_output_tokens
-                            )
-                    
-                    if full_response:
-                        return full_response.strip()
-                
-                last_error = f"Empty response (Attempt {attempt+1})"
-            except Exception as e:
-                last_error = f"Error (Attempt {attempt+1}): {e}"
-            time.sleep(RETRY_DELAY)
-        return f"Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
-
-# ────────────── Gemini Client ──────────────
-class GeminiClient(LLMClient):
-    def __init__(self, model_id: str = "gemini-2.5-flash", temperature: float = 0.6, reasoning_effort: str = None):
-        super().__init__(model_id, temperature, reasoning_effort)
-        from google import genai
-        from google.genai import types
-        self.genai = genai
-        self.types = types
-
-        api_key = os.getenv("GEMINI_API_KEY")
-        if not api_key:
-            raise ValueError("GEMINI_API_KEY environment variable not set")
-
-        self.client = genai.Client(api_key=api_key)
-
-    def get_response(self, prompt: str) -> str:
-        self.last_call_cost = 0.0
-        self.last_input_tokens = 0
-        self.last_output_tokens = 0
-        self.last_ttft = 0.0
-        last_error = None
-        
-        for attempt in range(1, MAX_RETRIES + 1):
-            try:
-                start_time = time.time()
-                first_token_received = False
-                full_response = ""
-                
-                
-                if "gemini-3-pro" in self.model_id:
-                    config = self.types.GenerateContentConfig(
-                        temperature=self.temperature,
-                        thinking_config=self.types.ThinkingConfig(thinking_level=self.reasoning_effort or "low")
-                    )
-                else:
-                    config = self.types.GenerateContentConfig(
-                        temperature=self.temperature,
-                        thinking_config=self.types.ThinkingConfig(thinking_budget=0)
-                    )
-
-                resp = self.client.models.generate_content(
-                    model=self.model_id,
-                    contents=prompt,
-                    config=config,
+                response = requests.post(
+                    f"{OPENROUTER_BASE_URL}/responses",
+                    headers=self.headers,
+                    json=payload,
+                    timeout=300
                 )
                 
-                # Approximate TTFT as we can't get true streaming
                 self.last_ttft = time.time() - start_time
                 
-                # Calculate cost
-                if hasattr(resp, 'usage_metadata'):
-                    self.last_input_tokens = resp.usage_metadata.prompt_token_count
-                    self.last_output_tokens = resp.usage_metadata.candidates_token_count
-                    self.last_call_cost = self.calculate_cost(
-                        self.last_input_tokens,
-                        self.last_output_tokens
-                    )
+                if response.status_code != 200:
+                    error_detail = response.text
+                    try:
+                        error_json = response.json()
+                        error_detail = error_json.get("error", {}).get("message", response.text)
+                    except:
+                        pass
+                    last_error = f"HTTP {response.status_code}: {error_detail} (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
                 
-                text = resp.text or ""
-                if text.strip():
-                    return text
-                last_error = f"Empty response on attempt {attempt}"
-            except Exception as e:
-                last_error = f"Error on attempt {attempt}: {e}"
-            time.sleep(RETRY_DELAY)
-        return f"Failed after {MAX_RETRIES} attempts; last error: {last_error}"
-
-# ────────────── Together Client ──────────────
-class TogetherClient(LLMClient):
-    def __init__(self, model_id: str = "deepseek-ai/DeepSeek-V3", temperature: float = 0.6, reasoning_effort: str = None):
-        super().__init__(model_id, temperature, reasoning_effort)
-        from together import Together
-        api_key = os.getenv("TOGETHER_API_KEY")
-        if not api_key:
-            raise ValueError("TOGETHER_API_KEY environment variable not set")
-        self.client = Together(api_key=api_key)
-
-    def get_response(self, prompt: str) -> str:
-        self.last_call_cost = 0.0
-        self.last_input_tokens = 0
-        self.last_output_tokens = 0
-        self.last_ttft = 0.0
-        last_error = None
-        
-        for attempt in range(MAX_RETRIES):
-            try:
-                start_time = time.time()
+                response_json = response.json()
                 
-                # Use non-streaming call to avoid 499 errors and simplify usage tracking
-                response = self.client.chat.completions.create(
-                    model=self.model_id,
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=self.temperature,
-                    stream=False,
-                    max_tokens=30000
-                )
-                
-                self.last_ttft = time.time() - start_time # Approximate TTFT
-                
-                if response.choices and response.choices[0].message.content:
-                    full_response = response.choices[0].message.content.strip()
-                    
-                    # Get usage if available
-                    if hasattr(response, 'usage') and response.usage:
-                        self.last_input_tokens = response.usage.prompt_tokens
-                        self.last_output_tokens = response.usage.completion_tokens
-                        self.last_call_cost = self.calculate_cost(
-                            self.last_input_tokens,
-                            self.last_output_tokens
-                        )
-                    else:
-                         # Estimate if usage not provided
-                        self.last_input_tokens = len(prompt) // 4
-                        self.last_output_tokens = len(full_response) // 4
-                        self.last_call_cost = self.calculate_cost(
-                            self.last_input_tokens,
-                            self.last_output_tokens
-                        )
-
-                    return full_response
-                
-                last_error = f"Empty response (Attempt {attempt+1})"
-            except Exception as e:
-                last_error = f"Error (Attempt {attempt+1}): {e}"
-            time.sleep(RETRY_DELAY)
-        return f"Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
-
-# ────────────── Anthropic Client ──────────────
-class AnthropicClient(LLMClient):
-    def __init__(self, model_id: str = "claude-sonnet-4-20250514", temperature: float = 0.6, reasoning_effort: str = None):
-        super().__init__(model_id, temperature, reasoning_effort)
-        from anthropic import Anthropic
-        api_key = os.getenv("ANTHROPIC_API_KEY")
-        if not api_key:
-            raise ValueError("ANTHROPIC_API_KEY environment variable not set")
-        self.client = Anthropic(api_key=api_key)
-
-    def get_response(self, prompt: str) -> str:
-        self.last_call_cost = 0.0
-        self.last_input_tokens = 0
-        self.last_output_tokens = 0
-        self.last_ttft = 0.0
-        last_error = None
-        
-        for attempt in range(MAX_RETRIES):
-            try:
-                start_time = time.time()
-                first_token_received = False
+                # /responses 엔드포인트의 응답 형식 처리
+                # output_text가 비어있을 수 있으므로 output 배열에서 직접 추출
                 full_response = ""
                 
-                if "opus-4-5" in self.model_id:
-                    response = self.client.beta.messages.create(
-                        model=self.model_id,
-                        betas=["effort-2025-11-24"],
-                        max_tokens=2048,
-                        messages=[{"role": "user", "content": prompt}],
-                        output_config={"effort": self.reasoning_effort or "low"}
-                    )
-                    self.last_ttft = time.time() - start_time
-                    full_response = response.content[0].text
-                    
-                    if response.usage:
-                        self.last_input_tokens = response.usage.input_tokens
-                        self.last_output_tokens = response.usage.output_tokens
-                        self.last_call_cost = self.calculate_cost(
-                            self.last_input_tokens,
-                            self.last_output_tokens
-                        )
-                else:
-                    with self.client.messages.stream(
-                        model=self.model_id,
-                        max_tokens=1024,
-                        messages=[{"role": "user", "content": prompt}],
-                        temperature=self.temperature,
-                    ) as stream:
-                        for text in stream.text_stream:
-                            if not first_token_received:
-                                self.last_ttft = time.time() - start_time
-                                first_token_received = True
-                            full_response += text
-                        
-                        # Get usage from final message
-                        message = stream.get_final_message()
-                        if message.usage:
-                            self.last_input_tokens = message.usage.input_tokens
-                            self.last_output_tokens = message.usage.output_tokens
-                            self.last_call_cost = self.calculate_cost(
-                                self.last_input_tokens,
-                                self.last_output_tokens
-                            )
+                # 먼저 output_text 확인 (비어있지 않은 경우)
+                if response_json.get("output_text"):
+                    full_response = response_json["output_text"]
+                # output 배열에서 message 타입 찾아서 텍스트 추출
+                elif "output" in response_json:
+                    output = response_json["output"]
+                    if isinstance(output, list):
+                        for item in output:
+                            if isinstance(item, dict) and item.get("type") == "message":
+                                content = item.get("content", [])
+                                for c in content:
+                                    if isinstance(c, dict) and c.get("type") == "output_text":
+                                        full_response += c.get("text", "")
                 
-                if full_response:
-                    return full_response.strip()
-                last_error = f"Empty response (Attempt {attempt+1})"
+                if not full_response or not full_response.strip():
+                    last_error = f"Empty response (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                # Extract usage and cost
+                self.last_generation_id = response_json.get("id", "")
+                usage = response_json.get("usage", {})
+                
+                self.last_input_tokens = usage.get("input_tokens", usage.get("prompt_tokens", 0))
+                self.last_output_tokens = usage.get("output_tokens", usage.get("completion_tokens", 0))
+                
+                # If cost is 0, use upstream_inference_cost from cost_details
+                cost_details = usage.get("cost_details", {})
+                self.last_call_cost = usage.get("cost", 0.0)
+                if self.last_call_cost == 0:
+                    self.last_call_cost = cost_details.get("upstream_inference_cost", 0.0)
+                
+                self.last_prompt_cost = cost_details.get("upstream_inference_input_cost", cost_details.get("upstream_inference_prompt_cost", 0.0))
+                self.last_completion_cost = cost_details.get("upstream_inference_output_cost", cost_details.get("upstream_inference_completions_cost", 0.0))
+                
+                return full_response.strip()
+                
+            except requests.exceptions.Timeout:
+                last_error = f"Request timeout (Attempt {attempt+1})"
+            except requests.exceptions.RequestException as e:
+                last_error = f"Request error: {e} (Attempt {attempt+1})"
             except Exception as e:
-                last_error = f"Error (Attempt {attempt+1}): {e}"
+                last_error = f"Error: {e} (Attempt {attempt+1})"
+            
             time.sleep(RETRY_DELAY)
+        
+        return f"Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
+    
+    def _get_response_chat(self, prompt: str, system_prompt: Optional[str] = None) -> str:
+        """Use /chat/completions endpoint for general models"""
+        # Build messages
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+        
+        # Build request payload
+        payload = {
+            "model": self.model_id,
+            "messages": messages,
+            "temperature": self.temperature,
+        }
+        
+        if self.max_tokens:
+            payload["max_tokens"] = self.max_tokens
+        
+        last_error = None
+        for attempt in range(MAX_RETRIES):
+            try:
+                start_time = time.time()
+                
+                response = requests.post(
+                    f"{OPENROUTER_BASE_URL}/chat/completions",
+                    headers=self.headers,
+                    json=payload,
+                    timeout=300  # 5 minute timeout for long responses
+                )
+                
+                self.last_ttft = time.time() - start_time
+                
+                # Check for HTTP errors
+                if response.status_code != 200:
+                    error_detail = response.text
+                    try:
+                        error_json = response.json()
+                        error_detail = error_json.get("error", {}).get("message", response.text)
+                    except:
+                        pass
+                    last_error = f"HTTP {response.status_code}: {error_detail} (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                response_json = response.json()
+                
+                # Extract response text
+                if not response_json.get("choices"):
+                    last_error = f"No choices in response (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                full_response = response_json["choices"][0].get("message", {}).get("content", "")
+                
+                if not full_response or not full_response.strip():
+                    last_error = f"Empty response (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                # Extract usage and cost information
+                self.last_generation_id = response_json.get("id", "")
+                usage = response_json.get("usage", {})
+                
+                self.last_input_tokens = usage.get("prompt_tokens", 0)
+                self.last_output_tokens = usage.get("completion_tokens", 0)
+                
+                # If cost is 0, use upstream_inference_cost from cost_details
+                cost_details = usage.get("cost_details", {})
+                self.last_call_cost = usage.get("cost", 0.0)
+                if self.last_call_cost == 0:
+                    self.last_call_cost = cost_details.get("upstream_inference_cost", 0.0)
+                
+                self.last_prompt_cost = cost_details.get("upstream_inference_input_cost", cost_details.get("upstream_inference_prompt_cost", 0.0))
+                self.last_completion_cost = cost_details.get("upstream_inference_output_cost", cost_details.get("upstream_inference_completions_cost", 0.0))
+                
+                return full_response.strip()
+                
+            except requests.exceptions.Timeout:
+                last_error = f"Request timeout (Attempt {attempt+1})"
+            except requests.exceptions.RequestException as e:
+                last_error = f"Request error: {e} (Attempt {attempt+1})"
+            except Exception as e:
+                last_error = f"Error: {e} (Attempt {attempt+1})"
+            
+            time.sleep(RETRY_DELAY)
+        
         return f"Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
 
-# ────────────── XAI Client ──────────────
-class XAIClient(LLMClient):
-    def __init__(self, model_id: str = "grok-beta", temperature: float = 0.6, reasoning_effort: str = None):
-        super().__init__(model_id, temperature, reasoning_effort)
-        from openai import OpenAI
-        api_key = os.getenv("XAI_API_KEY")
-        if not api_key:
-            raise ValueError("XAI_API_KEY environment variable not set")
-        self.client = OpenAI(
-            api_key=api_key,
-            base_url="https://api.x.ai/v1",
-        )
-
-    def get_response(self, prompt: str) -> str:
+    def get_response_with_history(
+        self,
+        messages: list,
+        system_prompt: Optional[str] = None
+    ) -> str:
+        """
+        Get a response with conversation history.
+        
+        Args:
+            messages: List of message dicts [{"role": "user"/"assistant", "content": "..."}]
+            system_prompt: Optional system prompt
+            
+        Returns:
+            Model response text
+        """
+        # Reset metrics
         self.last_call_cost = 0.0
         self.last_input_tokens = 0
         self.last_output_tokens = 0
         self.last_ttft = 0.0
-        last_error = None
+        self.last_generation_id = ""
+        self.last_prompt_cost = 0.0
+        self.last_completion_cost = 0.0
         
+        # Use /responses endpoint if reasoning_effort is set
+        if self.reasoning_effort:
+            return self._get_response_with_history_reasoning(messages, system_prompt)
+        else:
+            return self._get_response_with_history_chat(messages, system_prompt)
+    
+    def _get_response_with_history_reasoning(self, messages: list, system_prompt: Optional[str] = None) -> str:
+        """Use /responses endpoint for reasoning models (with history)"""
+        # Convert conversation history into a single input string
+        input_parts = []
+        if system_prompt:
+            input_parts.append(f"System: {system_prompt}")
+        
+        for msg in messages:
+            role = msg.get("role", "user").capitalize()
+            content = msg.get("content", "")
+            input_parts.append(f"{role}: {content}")
+        
+        full_input = "\n\n".join(input_parts)
+        
+        # Build request payload for /responses endpoint
+        payload = {
+            "model": self.model_id,
+            "input": full_input,
+            "reasoning": {
+                "effort": self.reasoning_effort
+            },
+        }
+        
+        if self.max_tokens:
+            payload["max_output_tokens"] = self.max_tokens
+        
+        last_error = None
         for attempt in range(MAX_RETRIES):
             try:
                 start_time = time.time()
-                first_token_received = False
+                
+                response = requests.post(
+                    f"{OPENROUTER_BASE_URL}/responses",
+                    headers=self.headers,
+                    json=payload,
+                    timeout=300
+                )
+                
+                self.last_ttft = time.time() - start_time
+                
+                if response.status_code != 200:
+                    error_detail = response.text
+                    try:
+                        error_json = response.json()
+                        error_detail = error_json.get("error", {}).get("message", response.text)
+                    except:
+                        pass
+                    last_error = f"HTTP {response.status_code}: {error_detail} (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                response_json = response.json()
+                
+                # /responses 엔드포인트의 응답 형식 처리
+                # output_text가 비어있을 수 있으므로 output 배열에서 직접 추출
                 full_response = ""
                 
-                stream = self.client.chat.completions.create(
-                    model=self.model_id,
-                    messages=[{"role": "user", "content": prompt}],
-                    temperature=self.temperature,
-                    stream=True,
-                )
+                # 먼저 output_text 확인 (비어있지 않은 경우)
+                if response_json.get("output_text"):
+                    full_response = response_json["output_text"]
+                # output 배열에서 message 타입 찾아서 텍스트 추출
+                elif "output" in response_json:
+                    output = response_json["output"]
+                    if isinstance(output, list):
+                        for item in output:
+                            if isinstance(item, dict) and item.get("type") == "message":
+                                content = item.get("content", [])
+                                for c in content:
+                                    if isinstance(c, dict) and c.get("type") == "output_text":
+                                        full_response += c.get("text", "")
                 
-                for chunk in stream:
-                    if not first_token_received and chunk.choices and chunk.choices[0].delta.content:
-                        self.last_ttft = time.time() - start_time
-                        first_token_received = True
-                    
-                    if chunk.choices and chunk.choices[0].delta.content:
-                        full_response += chunk.choices[0].delta.content
+                if not full_response or not full_response.strip():
+                    last_error = f"Empty response (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
                 
-                # XAI might not provide usage in streaming
-                # Estimate tokens
-                self.last_input_tokens = len(prompt) // 4
-                self.last_output_tokens = len(full_response) // 4
-                self.last_call_cost = self.calculate_cost(
-                    self.last_input_tokens,
-                    self.last_output_tokens
-                )
+                # Extract usage and cost
+                self.last_generation_id = response_json.get("id", "")
+                usage = response_json.get("usage", {})
                 
-                if full_response:
-                    return full_response.strip()
-                last_error = f"Empty response (Attempt {attempt+1})"
+                self.last_input_tokens = usage.get("input_tokens", usage.get("prompt_tokens", 0))
+                self.last_output_tokens = usage.get("output_tokens", usage.get("completion_tokens", 0))
+                
+                # If cost is 0, use upstream_inference_cost from cost_details
+                cost_details = usage.get("cost_details", {})
+                self.last_call_cost = usage.get("cost", 0.0)
+                if self.last_call_cost == 0:
+                    self.last_call_cost = cost_details.get("upstream_inference_cost", 0.0)
+                
+                self.last_prompt_cost = cost_details.get("upstream_inference_input_cost", cost_details.get("upstream_inference_prompt_cost", 0.0))
+                self.last_completion_cost = cost_details.get("upstream_inference_output_cost", cost_details.get("upstream_inference_completions_cost", 0.0))
+                
+                return full_response.strip()
+                
+            except requests.exceptions.Timeout:
+                last_error = f"Request timeout (Attempt {attempt+1})"
+            except requests.exceptions.RequestException as e:
+                last_error = f"Request error: {e} (Attempt {attempt+1})"
             except Exception as e:
-                last_error = f"Error (Attempt {attempt+1}): {e}"
+                last_error = f"Error: {e} (Attempt {attempt+1})"
+            
             time.sleep(RETRY_DELAY)
+        
         return f"Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
+    
+    def _get_response_with_history_chat(self, messages: list, system_prompt: Optional[str] = None) -> str:
+        """Use /chat/completions endpoint for general models (with history)"""
+        # Build messages with optional system prompt
+        full_messages = []
+        if system_prompt:
+            full_messages.append({"role": "system", "content": system_prompt})
+        full_messages.extend(messages)
+        
+        # Build request payload
+        payload = {
+            "model": self.model_id,
+            "messages": full_messages,
+            "temperature": self.temperature,
+        }
+        
+        if self.max_tokens:
+            payload["max_tokens"] = self.max_tokens
+        
+        last_error = None
+        for attempt in range(MAX_RETRIES):
+            try:
+                start_time = time.time()
+                
+                response = requests.post(
+                    f"{OPENROUTER_BASE_URL}/chat/completions",
+                    headers=self.headers,
+                    json=payload,
+                    timeout=300
+                )
+                
+                self.last_ttft = time.time() - start_time
+                
+                if response.status_code != 200:
+                    error_detail = response.text
+                    try:
+                        error_json = response.json()
+                        error_detail = error_json.get("error", {}).get("message", response.text)
+                    except:
+                        pass
+                    last_error = f"HTTP {response.status_code}: {error_detail} (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                response_json = response.json()
+                
+                if not response_json.get("choices"):
+                    last_error = f"No choices in response (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                full_response = response_json["choices"][0].get("message", {}).get("content", "")
+                
+                if not full_response or not full_response.strip():
+                    last_error = f"Empty response (Attempt {attempt+1})"
+                    time.sleep(RETRY_DELAY)
+                    continue
+                
+                # Extract usage and cost
+                self.last_generation_id = response_json.get("id", "")
+                usage = response_json.get("usage", {})
+                
+                self.last_input_tokens = usage.get("prompt_tokens", 0)
+                self.last_output_tokens = usage.get("completion_tokens", 0)
+                
+                # If cost is 0, use upstream_inference_cost from cost_details
+                cost_details = usage.get("cost_details", {})
+                self.last_call_cost = usage.get("cost", 0.0)
+                if self.last_call_cost == 0:
+                    self.last_call_cost = cost_details.get("upstream_inference_cost", 0.0)
+                
+                self.last_prompt_cost = cost_details.get("upstream_inference_input_cost", cost_details.get("upstream_inference_prompt_cost", 0.0))
+                self.last_completion_cost = cost_details.get("upstream_inference_output_cost", cost_details.get("upstream_inference_completions_cost", 0.0))
+                
+                return full_response.strip()
+                
+            except requests.exceptions.Timeout:
+                last_error = f"Request timeout (Attempt {attempt+1})"
+            except requests.exceptions.RequestException as e:
+                last_error = f"Request error: {e} (Attempt {attempt+1})"
+            except Exception as e:
+                last_error = f"Error: {e} (Attempt {attempt+1})"
+            
+            time.sleep(RETRY_DELAY)
+        
+        return f"Failed after {MAX_RETRIES} attempts. Last error: {last_error}"
+
+    def get_usage_summary(self) -> dict:
+        """Get a summary of the last API call's usage and cost."""
+        return {
+            "model": self.model_id,
+            "generation_id": self.last_generation_id,
+            "input_tokens": self.last_input_tokens,
+            "output_tokens": self.last_output_tokens,
+            "total_tokens": self.last_input_tokens + self.last_output_tokens,
+            "prompt_cost": self.last_prompt_cost,
+            "completion_cost": self.last_completion_cost,
+            "total_cost": self.last_call_cost,
+            "ttft_seconds": self.last_ttft,
+        }
+
+    @staticmethod
+    def list_models(api_key: Optional[str] = None) -> list:
+        """
+        List all available models on OpenRouter.
+        
+        Args:
+            api_key: OpenRouter API key (defaults to OPENROUTER_API_KEY env var)
+            
+        Returns:
+            List of model info dicts
+        """
+        key = api_key or os.getenv("OPENROUTER_API_KEY")
+        if not key:
+            raise ValueError("OPENROUTER_API_KEY environment variable not set")
+        
+        headers = {"Authorization": f"Bearer {key}"}
+        response = requests.get(f"{OPENROUTER_BASE_URL}/models", headers=headers)
+        response.raise_for_status()
+        return response.json().get("data", [])
+
+    def __repr__(self) -> str:
+        return f"LLMClient(model_id='{self.model_id}', temperature={self.temperature})"
