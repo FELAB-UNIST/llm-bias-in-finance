@@ -6,7 +6,6 @@ import numpy as np
 from scipy.stats import chisquare
 import argparse
 
-from backup.utils import get_short_model_prefix
 
 # ────────────── Configuration ──────────────
 parser = argparse.ArgumentParser(description="Aggregate intensity experiment results for a given model.")
@@ -19,7 +18,8 @@ args = parser.parse_args()
 
 MODEL_ID = args.model_id
 SAVE_DIR = args.output_dir
-MODEL_FILE_PREFIX = get_short_model_prefix(MODEL_ID)
+MODEL_FILE_PREFIX = MODEL_ID.split('/')[-1]
+
 if args.reasoning_effort:
     MODEL_FILE_PREFIX = f"{MODEL_FILE_PREFIX}_{args.reasoning_effort}"
 

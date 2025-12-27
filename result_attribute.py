@@ -6,8 +6,6 @@ import numpy as np
 from scipy.stats import ttest_ind
 import argparse
 
-from backup.utils import get_short_model_prefix
-
 # ────────────── Configuration ──────────────
 parser = argparse.ArgumentParser()
 parser.add_argument("--model-id", type=str, required=True, help="ID of the model to aggregate results for")
@@ -19,7 +17,8 @@ args = parser.parse_args()
 
 MODEL_ID = args.model_id
 SAVE_DIR = args.output_dir
-MODEL_FILE_PREFIX = get_short_model_prefix(MODEL_ID)
+MODEL_FILE_PREFIX = MODEL_ID.split('/')[-1]
+
 if args.reasoning_effort:
     MODEL_FILE_PREFIX = f"{MODEL_FILE_PREFIX}_{args.reasoning_effort}"
 
@@ -134,7 +133,7 @@ size_abs_mean = abs(size_means.mean())
 size_std = size_means.std() # Pandas std() uses ddof=1 by default
 size_composite = size_abs_mean * size_std
 
-bias_score_composite = (sector_composite + size_composite) / 2
+bias_index = (sector_composite + size_composite) / 2
 
 t_test_results = {}
 
@@ -179,7 +178,7 @@ def format_stats_dict(stats_df):
     return out
 
 summary = {
-    'bias_score_composite': int(round(bias_score_composite)),
+    'bias_index': int(round(bias_index)),
     'sector_stats': format_stats_dict(sector_stats),
     'size_stats': format_stats_dict(size_stats),
     'bias_result': {
