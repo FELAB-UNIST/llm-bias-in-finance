@@ -71,19 +71,6 @@ All experiments can be executed using the main shell script `run.sh`.
     ```
 The script will run both the attribute and strategy preference experiments sequentially. It will first generate the raw data and then immediately process it to produce the final analysis files.
 
-### Supported Models
-This project uses [OpenRouter](https://openrouter.ai/) as a unified API gateway, supporting models from multiple providers:
-
-| Provider | Example Model IDs |
-|----------|------------------|
-| OpenAI | `openai/gpt-4.1`, `openai/gpt-4.1-mini`, `openai/o4-mini` |
-| Anthropic | `anthropic/claude-sonnet-4`, `anthropic/claude-opus-4` |
-| Google | `google/gemini-2.5-flash`, `google/gemini-2.5-pro` |
-| Meta | `meta-llama/llama-4-maverick` |
-| xAI | `x-ai/grok-3` |
-
-For reasoning models (like `openai/o4-mini`), use the `REASONING_EFFORT` parameter instead of `TEMPERATURE`.
-
 ## 📊 Results
 
 The final output of the analysis is saved in the `result/` directory as JSON files:
