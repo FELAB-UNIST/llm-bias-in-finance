@@ -1,0 +1,18 @@
+{
+  "model": "DeepSeek-V3",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 3.6153,
+  "total_input_tokens": 2548080,
+  "total_output_tokens": 344148,
+  "total_tokens": 2892228,
+  "average_latency_seconds": 3.38,
+  "average_ttft_seconds": 0.35,
+  "min_latency_seconds": 0.96,
+  "max_latency_seconds": 19.41,
+  "min_ttft_seconds": 0.0,
+  "max_ttft_seconds": 14.09,
+  "timestamp": "2025-10-20 16:01:46",
+  "average_cost_usd": 0.008466744730679156,
+  "total_latency_seconds": 483.83
+}

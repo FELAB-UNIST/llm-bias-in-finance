@@ -1,0 +1,18 @@
+{
+  "model": "gpt-4.1",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 6.6969,
+  "total_input_tokens": 1902862,
+  "total_output_tokens": 361391,
+  "total_tokens": 2264253,
+  "average_latency_seconds": 2.51,
+  "average_ttft_seconds": 0.31,
+  "min_latency_seconds": 1.2,
+  "max_latency_seconds": 13.03,
+  "min_ttft_seconds": 0.0,
+  "max_ttft_seconds": 3.72,
+  "timestamp": "2025-10-20 16:40:16",
+  "average_cost_usd": 0.01568360655737705,
+  "total_latency_seconds": 366.48
+}

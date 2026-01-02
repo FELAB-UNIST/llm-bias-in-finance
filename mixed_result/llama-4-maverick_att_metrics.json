@@ -1,0 +1,15 @@
+{
+  "model": "llama-4-maverick",
+  "reasoning_effort": null,
+  "total_sets": 2,
+  "total_prompts": 8540,
+  "total_cost_usd": 1.408,
+  "average_cost_per_set_usd": 0.704,
+  "total_input_tokens": 4102083,
+  "total_output_tokens": 656519,
+  "total_tokens": 4758602,
+  "total_time_seconds": 1252.0,
+  "average_time_per_set_seconds": 626.0,
+  "average_latency_seconds": 5.72,
+  "average_ttft_seconds": 5.67
+}

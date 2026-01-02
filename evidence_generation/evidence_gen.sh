@@ -7,33 +7,38 @@
 
 set -e
 
-API_PROVIDER="gemini"  # Options: "openai", "gemini", "together", "anthropic", "xai"
-MODEL_ID="gemini-2.5-pro"
+MODEL_ID="minimax/minimax-m2"
 TEMPERATURE=1.0
-OUTPUT_DIR="./data"
+OUTPUT_DIR="./data/mini"
 MAX_WORKERS=30
-EVIDENCE_TYPE="both"  # Options: "qual", "quant", "both"
+EVIDENCE_TYPE="quant"  # Options: "qual", "quant", "both"
+REASONING_EFFORT="high"  # Options: "low", "medium", "high" (only for reasoning models)
 
 # --- Volume Evidence Generation ---
 echo "Running volume evidence generation..."
+
+REASONING_ARG=""
+if [ -n "$REASONING_EFFORT" ]; then
+    REASONING_ARG="--reasoning-effort $REASONING_EFFORT"
+fi
+
 python evidence_generation_volume.py \
     --type $EVIDENCE_TYPE \
-    --api $API_PROVIDER \
     --model-id $MODEL_ID \
     --temperature $TEMPERATURE \
     --output-dir $OUTPUT_DIR \
     --max-workers $MAX_WORKERS \
+    $REASONING_ARG \
 
 echo "Volume evidence generation complete."
 
 # --- Intensity Evidence Generation ---
-echo "Running intensity evidence generation..."
-python evidence_generation_intensity.py \
-    --api $API_PROVIDER \
-    --model-id $MODEL_ID \
-    --temperature $TEMPERATURE \
-    --output-dir $OUTPUT_DIR \
-    --max-workers $MAX_WORKERS \
+# echo "Running intensity evidence generation..."
+# python evidence_generation_intensity.py \
+#     --model-id $MODEL_ID \
+#     --temperature $TEMPERATURE \
+#     --output-dir $OUTPUT_DIR \
+#     --max-workers $MAX_WORKERS \
 
 # echo "Intensity evidence generation complete."
 

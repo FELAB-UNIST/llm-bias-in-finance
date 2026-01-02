@@ -1,0 +1,15 @@
+{
+  "model": "deepseek-chat-v3-0324",
+  "reasoning_effort": null,
+  "total_sets": 2,
+  "total_prompts": 8540,
+  "total_cost_usd": 1.3633,
+  "average_cost_per_set_usd": 0.6816,
+  "total_input_tokens": 4014999,
+  "total_output_tokens": 524782,
+  "total_tokens": 4539781,
+  "total_time_seconds": 632.84,
+  "average_time_per_set_seconds": 316.42,
+  "average_latency_seconds": 2.94,
+  "average_ttft_seconds": 2.9
+}

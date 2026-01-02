@@ -1,0 +1,37 @@
+{
+    "model_id": "mistralai/Mistral-Small-24B-Instruct-2501",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.3515,
+        "contrarian_win_rate": 0.6485,
+        "win_rate_std": 0.0224
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.3425,
+            "contrarian_win_rate": 0.6575,
+            "momentum_count": 585,
+            "contrarian_count": 1123
+        },
+        "set_2": {
+            "momentum_win_rate": 0.3823,
+            "contrarian_win_rate": 0.6177,
+            "momentum_count": 653,
+            "contrarian_count": 1055
+        },
+        "set_3": {
+            "momentum_win_rate": 0.3296,
+            "contrarian_win_rate": 0.6704,
+            "momentum_count": 563,
+            "contrarian_count": 1145
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 452.0851,
+        "p_value": 2.5371413150888077e-100,
+        "observed_counts": {
+            "momentum": 1801,
+            "contrarian": 3323
+        }
+    }
+}

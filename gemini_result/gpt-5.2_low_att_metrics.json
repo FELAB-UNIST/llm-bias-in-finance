@@ -1,0 +1,19 @@
+{
+  "model": "gpt-5.2",
+  "total_sets": 2,
+  "total_prompts": 8540,
+  "total_cost_usd": 30.7469,
+  "average_cost_per_set_usd": 15.3735,
+  "total_input_tokens": 4176069,
+  "total_output_tokens": 1674196,
+  "total_tokens": 5850265,
+  "total_time_seconds": 1800.43,
+  "average_time_per_set_seconds": 900.21,
+  "average_latency_seconds": 6.3,
+  "average_ttft_seconds": 6.3,
+  "min_latency_seconds": 3.09,
+  "max_latency_seconds": 62.91,
+  "min_ttft_seconds": 3.09,
+  "max_ttft_seconds": 62.91,
+  "timestamp": "2025-12-12 23:35:54"
+}

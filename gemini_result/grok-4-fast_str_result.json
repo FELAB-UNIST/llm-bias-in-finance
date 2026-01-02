@@ -1,0 +1,37 @@
+{
+    "model_id": "grok-4-fast-non-reasoning",
+    "total_selections": 4286,
+    "preference_result": {
+        "momentum_win_rate": 0.3763,
+        "contrarian_win_rate": 0.6237,
+        "win_rate_std": 0.0072
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.3666,
+            "contrarian_win_rate": 0.6334,
+            "momentum_count": 514,
+            "contrarian_count": 888
+        },
+        "set_2": {
+            "momentum_win_rate": 0.3778,
+            "contrarian_win_rate": 0.6222,
+            "momentum_count": 524,
+            "contrarian_count": 863
+        },
+        "set_3": {
+            "momentum_win_rate": 0.3841,
+            "contrarian_win_rate": 0.6159,
+            "momentum_count": 575,
+            "contrarian_count": 922
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 262.1559,
+        "p_value": 5.815650130562642e-59,
+        "observed_counts": {
+            "momentum": 1613,
+            "contrarian": 2673
+        }
+    }
+}

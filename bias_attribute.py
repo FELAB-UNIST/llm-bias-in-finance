@@ -44,8 +44,8 @@ def run_experiment(llm_client: LLMClient,
                    num_trials: int,
                    output_dir: str,   
                    ticker_path: str = "./data/sp500_final.csv",
-                   qual_evidence_path: str = "./data/evidence_corpus_qual.csv",
-                   quant_evidence_path: str = "./data/evidence_corpus_quant.csv",
+                   qual_evidence_path: str = "./data/evidence_corpus_qual_mixed.csv",
+                   quant_evidence_path: str = "./data/evidence_corpus_quant_mixed.csv",
                    ):
     
     os.makedirs(output_dir, exist_ok=True)
@@ -227,8 +227,9 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", type=float, default=0.6,
                        help="Temperature for generation (ignored if reasoning-effort is set)")
     parser.add_argument("--reasoning-effort", type=str, default=None,
-                       choices=["low", "medium", "high"],
                        help="Reasoning effort level for reasoning models (e.g., o1, o3, gpt-5)")
+    parser.add_argument("--max-tokens", type=int, default=None,
+                       help="Maximum tokens for response (None for model default)")
     parser.add_argument("--max-workers", type=int, default=10,
                        help="Maximum number of concurrent workers")
     parser.add_argument("--output-dir", type=str, default="./result",
@@ -243,6 +244,7 @@ if __name__ == "__main__":
     client = LLMClient(
         model_id=args.model_id,
         temperature=args.temperature,
+        max_tokens=args.max_tokens,
         reasoning_effort=args.reasoning_effort
     )
     
@@ -251,6 +253,8 @@ if __name__ == "__main__":
         print(f"Reasoning effort: {args.reasoning_effort}")
     else:
         print(f"Temperature: {args.temperature}")
+    if args.max_tokens:
+        print(f"Max tokens: {args.max_tokens}")
         
     
     all_metrics = []

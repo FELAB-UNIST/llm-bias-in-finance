@@ -1,0 +1,15 @@
+{
+  "model": "mistral-large-2512",
+  "reasoning_effort": null,
+  "total_sets": 2,
+  "total_prompts": 8540,
+  "total_cost_usd": 3.5432,
+  "average_cost_per_set_usd": 1.7716,
+  "total_input_tokens": 4176664,
+  "total_output_tokens": 969883,
+  "total_tokens": 5146547,
+  "total_time_seconds": 703.05,
+  "average_time_per_set_seconds": 351.52,
+  "average_latency_seconds": 3.27,
+  "average_ttft_seconds": 3.24
+}

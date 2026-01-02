@@ -1,0 +1,13 @@
+{
+  "model": "gpt-5.2_none",
+  "class_type": "bias_score",
+  "target_group": "top_10_abs",
+  "total_prompts": 2308,
+  "total_cost_usd": 5.7581,
+  "total_input_tokens": 1371569,
+  "total_output_tokens": 239848,
+  "total_tokens": 1611417,
+  "total_time_seconds": 478.95,
+  "average_latency_seconds": 4.09,
+  "average_ttft_seconds": 3.12
+}

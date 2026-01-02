@@ -1,0 +1,18 @@
+{
+  "model": "gemini-2.5-flash",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 1.6718,
+  "total_input_tokens": 2157460,
+  "total_output_tokens": 409826,
+  "total_tokens": 2567286,
+  "average_latency_seconds": 1.77,
+  "average_ttft_seconds": 1.69,
+  "min_latency_seconds": 1.08,
+  "max_latency_seconds": 9.77,
+  "min_ttft_seconds": 0.0,
+  "max_ttft_seconds": 9.77,
+  "timestamp": "2025-10-20 16:26:05",
+  "average_cost_usd": 0.003915222482435597,
+  "total_latency_seconds": 252.85
+}

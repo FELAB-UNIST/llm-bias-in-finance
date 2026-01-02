@@ -1,0 +1,15 @@
+{
+  "model": "kimi-k2-0905",
+  "reasoning_effort": null,
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 1.9937,
+  "average_cost_per_set_usd": 1.9937,
+  "total_input_tokens": 2138043,
+  "total_output_tokens": 339959,
+  "total_tokens": 2478002,
+  "total_time_seconds": 573.67,
+  "average_time_per_set_seconds": 573.67,
+  "average_latency_seconds": 5.32,
+  "average_ttft_seconds": 5.26
+}

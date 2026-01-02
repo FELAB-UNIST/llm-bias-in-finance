@@ -1,0 +1,15 @@
+{
+  "model": "gpt-5.2",
+  "reasoning_effort": "none",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 9.3807,
+  "average_cost_per_set_usd": 9.3807,
+  "total_input_tokens": 1999548,
+  "total_output_tokens": 420109,
+  "total_tokens": 2419657,
+  "total_time_seconds": 309.07,
+  "average_time_per_set_seconds": 309.07,
+  "average_latency_seconds": 2.88,
+  "average_ttft_seconds": 2.83
+}

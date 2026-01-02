@@ -1,0 +1,18 @@
+{
+  "model": "Llama-4-Scout-17B",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 0.6508,
+  "total_input_tokens": 2545160,
+  "total_output_tokens": 326636,
+  "total_tokens": 2871796,
+  "average_latency_seconds": 2.16,
+  "average_ttft_seconds": 0.44,
+  "min_latency_seconds": 0.57,
+  "max_latency_seconds": 30.03,
+  "min_ttft_seconds": 0.0,
+  "max_ttft_seconds": 28.6,
+  "timestamp": "2025-10-20 16:26:16",
+  "average_cost_usd": 0.001524121779859485,
+  "total_latency_seconds": 308.08
+}

@@ -1,0 +1,18 @@
+{
+  "model": "Mistral-Small-24B",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 2.2921,
+  "total_input_tokens": 2546767,
+  "total_output_tokens": 318391,
+  "total_tokens": 2865158,
+  "average_latency_seconds": 1.05,
+  "average_ttft_seconds": 0.16,
+  "min_latency_seconds": 0.59,
+  "max_latency_seconds": 4.59,
+  "min_ttft_seconds": 0.0,
+  "max_ttft_seconds": 2.55,
+  "timestamp": "2025-10-20 16:20:31",
+  "average_cost_usd": 0.005367915690866511,
+  "total_latency_seconds": 151.15
+}

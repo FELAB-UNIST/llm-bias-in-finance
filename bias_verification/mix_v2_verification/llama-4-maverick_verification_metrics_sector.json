@@ -1,0 +1,13 @@
+{
+  "model": "llama-4-maverick",
+  "class_type": "sector",
+  "target_group": "Technology",
+  "total_prompts": 3268,
+  "total_cost_usd": 0.646,
+  "total_input_tokens": 1930461,
+  "total_output_tokens": 281515,
+  "total_tokens": 2211976,
+  "total_time_seconds": 331.96,
+  "average_latency_seconds": 2.34,
+  "average_ttft_seconds": 1.46
+}

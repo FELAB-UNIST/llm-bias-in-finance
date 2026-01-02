@@ -1,0 +1,13 @@
+{
+  "model": "mistral-large-2512",
+  "class_type": "bias_score",
+  "target_group": "bottom_10_abs",
+  "total_prompts": 1042,
+  "total_cost_usd": 0.505,
+  "total_input_tokens": 635474,
+  "total_output_tokens": 124822,
+  "total_tokens": 760296,
+  "total_time_seconds": 95.22,
+  "average_latency_seconds": 3.53,
+  "average_ttft_seconds": 3.44
+}

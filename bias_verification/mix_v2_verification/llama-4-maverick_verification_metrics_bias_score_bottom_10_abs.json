@@ -1,0 +1,13 @@
+{
+  "model": "llama-4-maverick",
+  "class_type": "bias_score",
+  "target_group": "bottom_10_abs",
+  "total_prompts": 1586,
+  "total_cost_usd": 0.3111,
+  "total_input_tokens": 954769,
+  "total_output_tokens": 124345,
+  "total_tokens": 1079114,
+  "total_time_seconds": 234.63,
+  "average_latency_seconds": 2.62,
+  "average_ttft_seconds": 1.43
+}

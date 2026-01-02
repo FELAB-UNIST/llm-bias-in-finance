@@ -1,0 +1,15 @@
+{
+  "model": "qwen3-235b-a22b-2507",
+  "reasoning_effort": null,
+  "total_sets": 2,
+  "total_prompts": 8540,
+  "total_cost_usd": 1.0546,
+  "average_cost_per_set_usd": 0.5273,
+  "total_input_tokens": 4200016,
+  "total_output_tokens": 902488,
+  "total_tokens": 5102504,
+  "total_time_seconds": 1434.35,
+  "average_time_per_set_seconds": 717.17,
+  "average_latency_seconds": 6.4,
+  "average_ttft_seconds": 6.3
+}

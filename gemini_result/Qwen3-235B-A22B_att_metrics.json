@@ -1,0 +1,18 @@
+{
+  "model": "Qwen3-235B-A22B",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 0.8388,
+  "total_input_tokens": 2545506,
+  "total_output_tokens": 549566,
+  "total_tokens": 3095072,
+  "average_latency_seconds": 4.56,
+  "average_ttft_seconds": 0.38,
+  "min_latency_seconds": 1.02,
+  "max_latency_seconds": 146.19,
+  "min_ttft_seconds": 0.0,
+  "max_ttft_seconds": 60.6,
+  "timestamp": "2025-10-20 16:13:09",
+  "average_cost_usd": 0.0019644028103044495,
+  "total_latency_seconds": 654.04
+}

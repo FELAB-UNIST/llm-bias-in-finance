@@ -1,0 +1,18 @@
+{
+  "model": "claude-sonnet-4-5",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 15.9697,
+  "total_input_tokens": 2310086,
+  "total_output_tokens": 602631,
+  "total_tokens": 2912717,
+  "average_latency_seconds": 5.79,
+  "average_ttft_seconds": 1.07,
+  "min_latency_seconds": 3.89,
+  "max_latency_seconds": 65.82,
+  "min_ttft_seconds": 0.0,
+  "max_ttft_seconds": 25.16,
+  "timestamp": "2025-10-20 16:05:00",
+  "average_cost_usd": 0.03739976580796253,
+  "total_latency_seconds": 827.99
+}

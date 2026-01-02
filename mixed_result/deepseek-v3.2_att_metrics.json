@@ -1,0 +1,15 @@
+{
+  "model": "deepseek-v3.2",
+  "reasoning_effort": null,
+  "total_sets": 2,
+  "total_prompts": 8540,
+  "total_cost_usd": 1.2968,
+  "average_cost_per_set_usd": 0.6484,
+  "total_input_tokens": 4049347,
+  "total_output_tokens": 517922,
+  "total_tokens": 4567269,
+  "total_time_seconds": 1035.4,
+  "average_time_per_set_seconds": 517.7,
+  "average_latency_seconds": 4.31,
+  "average_ttft_seconds": 4.08
+}

@@ -1,0 +1,15 @@
+{
+  "model": "gemini-3-flash-preview",
+  "reasoning_effort": "minimal",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 2.0216,
+  "average_cost_per_set_usd": 2.0216,
+  "total_input_tokens": 2083334,
+  "total_output_tokens": 326640,
+  "total_tokens": 2409974,
+  "total_time_seconds": 251.76,
+  "average_time_per_set_seconds": 251.76,
+  "average_latency_seconds": 2.34,
+  "average_ttft_seconds": 2.29
+}

@@ -1,0 +1,12 @@
+rank,model,bias_index
+1,gpt-5.2_none,38
+2,gemini-3-flash-preview,132
+3,gpt-4.1,139
+4,qwen3-235b-a22b-2507,152
+5,deepseek-v3.2,187
+6,glm-4.7,262
+7,grok-4.1-fast,393
+8,kimi-k2-0905,445
+9,llama-4-maverick,503
+10,mistral-large-2512,681
+11,deepseek-chat-v3-0324,734

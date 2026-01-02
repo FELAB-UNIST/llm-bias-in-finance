@@ -5,8 +5,10 @@ import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import numpy as np
 import re
+import sys
+import os
 import argparse
-from llm_clients import LLMClient, OpenAIClient, GeminiClient, TogetherClient, AnthropicClient, XAIClient
+from llm_clients import LLMClient
 
 # Load data
 df = pd.read_csv('./data/sp500_final.csv')
@@ -139,9 +141,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate synthetic evidence for stock recommendations")
     parser.add_argument("--output-dir", type=str, default="./data",
                        help="Output directory for generated files")
-    parser.add_argument("--api", type=str, required=True, 
-                       choices=["openai", "gemini", "together", "anthropic", "xai"],
-                       help="Which API to use")
     parser.add_argument("--model-id", type=str, default=None,
                        help="Specific model ID (optional)")
     parser.add_argument("--temperature", type=float, default=0.6,
@@ -150,6 +149,9 @@ if __name__ == "__main__":
                        help="Maximum number of concurrent workers")
     parser.add_argument("--limit", type=int, default=None,
                        help="Limit the number of items to process")
+    parser.add_argument("--reasoning-effort", type=str, default=None,
+                       choices=["low", "medium", "high"],
+                       help="Reasoning effort for reasoning models")
     
     args = parser.parse_args()
     
@@ -157,16 +159,7 @@ if __name__ == "__main__":
     os.makedirs(args.output_dir, exist_ok=True)
     
     # Create client based on model choice
-    if args.api == "openai":
-        client = OpenAIClient(model_id=args.model_id, temperature=args.temperature)
-    elif args.api == "gemini":
-        client = GeminiClient(model_id=args.model_id, temperature=args.temperature)
-    elif args.api == "together":
-        client = TogetherClient(model_id=args.model_id, temperature=args.temperature)
-    elif args.api == "anthropic":
-        client = AnthropicClient(model_id=args.model_id, temperature=args.temperature)
-    elif args.api == "xai":
-        client = XAIClient(model_id=args.model_id, temperature=args.temperature)
+    client = LLMClient(model_id=args.model_id, temperature=args.temperature, reasoning_effort=args.reasoning_effort)
     
     print(f"Using model: {client.model_id}")
     

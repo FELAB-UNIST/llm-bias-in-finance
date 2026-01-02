@@ -10,7 +10,6 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("--model-id", type=str, required=True, help="ID of the model to aggregate results for")
 parser.add_argument("--reasoning-effort", type=str, default=None,
-                   choices=["low", "medium", "high"],
                    help="Reasoning effort level (must match the value used during experiment)")
 parser.add_argument("--output-dir", type=str, default="./exp_result", help="Directory to save the output files")
 args = parser.parse_args()

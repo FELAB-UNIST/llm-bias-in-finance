@@ -16,18 +16,14 @@
 set -e
 
 # --- Configuration ---
-MODEL_ID="deepseek/deepseek-chat-v3-0324"  # OpenRouter model ID
-TEMPERATURE=0.6
+MODEL_ID="meta-llama/llama-4-maverick"  # OpenRouter model ID
 REASONING_EFFORT=""  # "low", "medium", "high" for reasoning models, empty for regular models
-OUTPUT_DIR="./result"
-MAX_WORKERS=30
-NUM_TRIALS=3
-NUM_SETS=1
-
-# --- Experiment 1: Attribute Preference Test ---
-# This experiment tests if the LLM shows a preference for certain stock attributes (e.g., sector, market cap)
-# when presented with an equal number of buy and sell arguments.
-# Runs the attribute preference experiment.
+OUTPUT_DIR="./exp_result"
+MAX_WORKERS=40
+NUM_TRIALS=10
+NUM_SETS=2
+TEMPERATURE=0.6
+MAX_TOKENS="1024"  # Maximum tokens for response, empty for model default
 
 # Build reasoning effort argument if set
 REASONING_ARG=""
@@ -35,20 +31,33 @@ if [ -n "$REASONING_EFFORT" ]; then
     REASONING_ARG="--reasoning-effort $REASONING_EFFORT"
 fi
 
+# Build max tokens argument if set (only if reasoning effort is not set)
+MAX_TOKENS_ARG=""
+if [ -n "$MAX_TOKENS" ] && [ -z "$REASONING_EFFORT" ]; then
+    MAX_TOKENS_ARG="--max-tokens $MAX_TOKENS"
+fi
+
+
+# --- Experiment 1: Attribute Preference Test ---
+# This experiment tests if the LLM shows a preference for certain stock attributes (e.g., sector, market cap)
+# when presented with an equal number of buy and sell arguments.
+# Runs the attribute preference experiment.
+
 python bias_attribute.py \
     --model-id $MODEL_ID \
     --temperature $TEMPERATURE \
     $REASONING_ARG \
+    $MAX_TOKENS_ARG \
     --output-dir $OUTPUT_DIR \
     --max-workers $MAX_WORKERS \
     --num-trials $NUM_TRIALS \
     --num-sets $NUM_SETS
 
 # Analyzes the results from the attribute preference experiment.
-# python result_attribute.py \
-#     --model-id $MODEL_ID \
-#     $REASONING_ARG \
-#     --output-dir $OUTPUT_DIR
+python result_attribute.py \
+    --model-id $MODEL_ID \
+    $REASONING_ARG \
+    --output-dir $OUTPUT_DIR
 
 # --- Experiment 2: Strategy Preference Test ---
 # This experiment tests if the LLM prefers a "momentum" or "contrarian" investment strategy.

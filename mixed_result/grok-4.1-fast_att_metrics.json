@@ -1,0 +1,15 @@
+{
+  "model": "grok-4.1-fast",
+  "reasoning_effort": null,
+  "total_sets": 2,
+  "total_prompts": 8540,
+  "total_cost_usd": 1.0567,
+  "average_cost_per_set_usd": 0.5283,
+  "total_input_tokens": 5273607,
+  "total_output_tokens": 477833,
+  "total_tokens": 5751440,
+  "total_time_seconds": 367.62,
+  "average_time_per_set_seconds": 183.81,
+  "average_latency_seconds": 1.71,
+  "average_ttft_seconds": 1.67
+}

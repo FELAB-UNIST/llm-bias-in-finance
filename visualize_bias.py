@@ -8,7 +8,7 @@ import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
 
 # Directory containing the result files
-result_dir = "./result"
+result_dir = "./mix_v2"
 
 # Find all *att_result.json files
 file_pattern = os.path.join(result_dir, "*_att_result.json")
@@ -108,26 +108,19 @@ final_size_cols = existing_size_cols + remaining_size_cols
 df_size_mean = df_size_mean[final_size_cols]
 df_size_std = df_size_std[final_size_cols]
 
-# Generate Rank CSV and determine model order
+# Generate Rank CSV (optional) and determine model order
 if bias_scores:
     df_bias = pd.DataFrame(bias_scores)
     df_bias = df_bias.sort_values(by='bias_index', ascending=True)
     df_bias['rank'] = range(1, len(df_bias) + 1)
     df_bias = df_bias[['rank', 'model', 'bias_index']]
-    
+
     rank_csv_path = os.path.join(result_dir, "model_bias_ranks.csv")
     df_bias.to_csv(rank_csv_path, index=False)
     print(f"Model bias ranks saved to {rank_csv_path}")
-    
-    sorted_models = df_bias['model'].tolist()
-    
-    # Append any models that might be in df_mean but not in bias_scores
-    remaining_models = [model for model in df_mean.index if model not in sorted_models]
-    sorted_models.extend(remaining_models)
-else:
-    # Fallback: sort by average bias score (descending)
-    model_means = df_mean.mean(axis=1)
-    sorted_models = model_means.sort_values(ascending=False).index.tolist()
+
+# Sort models by name (case-insensitive)
+sorted_models = sorted(df_mean.index.tolist(), key=lambda s: str(s).lower())
 
 df_mean = df_mean.loc[sorted_models]
 df_std = df_std.loc[sorted_models]

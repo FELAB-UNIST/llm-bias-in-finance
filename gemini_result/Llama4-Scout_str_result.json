@@ -1,0 +1,37 @@
+{
+    "model_id": "meta-llama/Llama-4-Scout-17B-16E-Instruct",
+    "total_selections": 5123,
+    "preference_result": {
+        "momentum_win_rate": 0.2916,
+        "contrarian_win_rate": 0.7084,
+        "win_rate_std": 0.0246
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.2769,
+            "contrarian_win_rate": 0.7231,
+            "momentum_count": 473,
+            "contrarian_count": 1235
+        },
+        "set_2": {
+            "momentum_win_rate": 0.2717,
+            "contrarian_win_rate": 0.7283,
+            "momentum_count": 464,
+            "contrarian_count": 1244
+        },
+        "set_3": {
+            "momentum_win_rate": 0.3263,
+            "contrarian_win_rate": 0.6737,
+            "momentum_count": 557,
+            "contrarian_count": 1150
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 889.757,
+        "p_value": 1.6540348543169292e-195,
+        "observed_counts": {
+            "momentum": 1494,
+            "contrarian": 3629
+        }
+    }
+}

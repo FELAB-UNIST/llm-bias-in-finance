@@ -1,0 +1,37 @@
+{
+    "model_id": "gemini-3-pro-preview",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.5574,
+        "contrarian_win_rate": 0.4426,
+        "win_rate_std": 0.0017
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.5591,
+            "contrarian_win_rate": 0.4409,
+            "momentum_count": 955,
+            "contrarian_count": 753
+        },
+        "set_2": {
+            "momentum_win_rate": 0.558,
+            "contrarian_win_rate": 0.442,
+            "momentum_count": 953,
+            "contrarian_count": 755
+        },
+        "set_3": {
+            "momentum_win_rate": 0.555,
+            "contrarian_win_rate": 0.445,
+            "momentum_count": 948,
+            "contrarian_count": 760
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 67.4754,
+        "p_value": 2.1333128354502482e-16,
+        "observed_counts": {
+            "momentum": 2856,
+            "contrarian": 2268
+        }
+    }
+}
