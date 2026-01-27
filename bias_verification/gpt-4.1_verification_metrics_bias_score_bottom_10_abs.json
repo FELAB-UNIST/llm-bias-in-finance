@@ -1,0 +1,13 @@
+{
+  "model": "gpt-4.1",
+  "class_type": "bias_score",
+  "target_group": "bottom_10_abs",
+  "total_prompts": 126,
+  "total_cost_usd": 0.2405,
+  "total_input_tokens": 75375,
+  "total_output_tokens": 11220,
+  "total_tokens": 86595,
+  "total_time_seconds": 11.89,
+  "average_latency_seconds": 3.1,
+  "average_ttft_seconds": 2.94
+}

@@ -1,0 +1,13 @@
+{
+  "model": "deepseek-chat-v3-0324",
+  "class_type": "bias_score",
+  "target_group": "bottom_10_abs",
+  "total_prompts": 1084,
+  "total_cost_usd": 0.2474,
+  "total_input_tokens": 636895,
+  "total_output_tokens": 67691,
+  "total_tokens": 704586,
+  "total_time_seconds": 83.24,
+  "average_latency_seconds": 2.99,
+  "average_ttft_seconds": 2.85
+}

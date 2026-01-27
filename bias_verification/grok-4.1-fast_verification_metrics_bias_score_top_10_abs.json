@@ -1,0 +1,13 @@
+{
+  "model": "grok-4.1-fast",
+  "class_type": "bias_score",
+  "target_group": "top_10_abs",
+  "total_prompts": 2430,
+  "total_cost_usd": 0.3523,
+  "total_input_tokens": 1741706,
+  "total_output_tokens": 141388,
+  "total_tokens": 1883094,
+  "total_time_seconds": 282.04,
+  "average_latency_seconds": 2.3,
+  "average_ttft_seconds": 2.12
+}

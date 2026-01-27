@@ -1,0 +1,13 @@
+{
+  "model": "gemini-3-flash-preview",
+  "class_type": "bias_score",
+  "target_group": "bottom_10_abs",
+  "total_prompts": 736,
+  "total_cost_usd": 0.4177,
+  "total_input_tokens": 475031,
+  "total_output_tokens": 60074,
+  "total_tokens": 535105,
+  "total_time_seconds": 44.91,
+  "average_latency_seconds": 2.36,
+  "average_ttft_seconds": 2.3
+}

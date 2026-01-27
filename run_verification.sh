@@ -15,10 +15,10 @@
 set -e
 
 # --- Configuration ---
-MODEL_ID="mistralai/mistral-large-2512"  # OpenRouter model ID
+MODEL_ID="deepseek/deepseek-chat-v3-0324"  # OpenRouter model ID
 REASONING_EFFORT=""  # "low", "medium", "high" for reasoning models, empty for regular models
-INPUT_DIR="./mix_v2"
-OUTPUT_DIR="./mix_v2_verification"
+INPUT_DIR="./mixed_result"
+OUTPUT_DIR="./bias_verification"
 MAX_WORKERS=40
 NUM_TRIALS=1
 TEMPERATURE=0.6

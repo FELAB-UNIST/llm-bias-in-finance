@@ -1,0 +1,13 @@
+{
+  "model": "glm-4.7",
+  "class_type": "bias_score",
+  "target_group": "top_10_abs",
+  "total_prompts": 2408,
+  "total_cost_usd": 1.2179,
+  "total_input_tokens": 1434438,
+  "total_output_tokens": 226091,
+  "total_tokens": 1660529,
+  "total_time_seconds": 389.9,
+  "average_latency_seconds": 5.68,
+  "average_ttft_seconds": 5.51
+}

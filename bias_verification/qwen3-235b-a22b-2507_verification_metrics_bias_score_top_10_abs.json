@@ -1,0 +1,13 @@
+{
+  "model": "qwen3-235b-a22b-2507",
+  "class_type": "bias_score",
+  "target_group": "top_10_abs",
+  "total_prompts": 2280,
+  "total_cost_usd": 0.4356,
+  "total_input_tokens": 1383360,
+  "total_output_tokens": 240770,
+  "total_tokens": 1624130,
+  "total_time_seconds": 311.95,
+  "average_latency_seconds": 3.68,
+  "average_ttft_seconds": 3.56
+}

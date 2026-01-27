@@ -10,6 +10,12 @@ import matplotlib.pyplot as plt
 REQUIRED_COLUMNS = ["llm_answer", "original_llm_answer", "added_evidence_count"]
 
 
+def load_bias_index(csv_path: str) -> dict[str, int]:
+    """Load model bias_index from CSV file."""
+    df = pd.read_csv(csv_path)
+    return dict(zip(df["model"], df["bias_index"]))
+
+
 @dataclass(frozen=True)
 class FlipStats:
     model: str
@@ -81,58 +87,137 @@ def calculate_flip_stats(df: pd.DataFrame) -> pd.DataFrame:
     return stats
 
 
-def _plot_grouped_bar(ax: plt.Axes, stats_df: pd.DataFrame, title: str) -> None:
+# Pretty color palette for models
+MODEL_COLORS = [
+    "#4E79A7",  # steel blue
+    "#F28E2B",  # orange
+    "#E15759",  # coral red
+    "#76B7B2",  # teal
+    "#59A14F",  # green
+    "#EDC948",  # gold
+    "#B07AA1",  # purple
+    "#FF9DA7",  # pink
+    "#9C755F",  # brown
+    "#BAB0AC",  # gray
+    "#86BCB6",  # light teal
+    "#D37295",  # magenta
+]
+
+
+def _plot_grouped_by_model(
+    ax: plt.Axes,
+    stats_df: pd.DataFrame,
+    title: str,
+    bias_index: dict[str, int] | None = None,
+    model_color_map: dict[str, str] | None = None,
+) -> None:
+    """Plot flip rate with models on x-axis, evidence 1 & 2 as grouped bars."""
     if stats_df.empty:
         ax.set_title(f"{title} (no data)")
         ax.set_axis_off()
         return
 
-    models = sorted(stats_df["model"].unique(), key=lambda s: s.lower())
-    x_vals = sorted(stats_df["added_evidence_count"].unique())
+    # Sort models by bias_index descending (highest first)
+    if bias_index:
+        models = sorted(
+            stats_df["model"].unique(),
+            key=lambda m: (-bias_index.get(m, 0), m.lower()),
+        )
+    else:
+        models = sorted(stats_df["model"].unique(), key=lambda s: s.lower())
 
-    x_positions = list(range(len(x_vals)))
-    bar_width = 0.8 / max(len(models), 1)
+    evidence_counts = [1, 2]
+    x_positions = range(len(models))
+    bar_width = 0.35
 
-    for i, model in enumerate(models):
-        model_df = stats_df[stats_df["model"] == model].set_index("added_evidence_count")
-        y = [float(model_df.loc[x, "flip_rate"]) if x in model_df.index else 0.0 for x in x_vals]
-        offsets = [p + (i - (len(models) - 1) / 2) * bar_width for p in x_positions]
-        ax.bar(offsets, y, width=bar_width, label=model)
+    # Create lookup for flip rates
+    rate_lookup = {}
+    for _, row in stats_df.iterrows():
+        rate_lookup[(row["model"], row["added_evidence_count"])] = row["flip_rate"]
 
-    ax.set_title(title)
-    ax.set_xlabel("added_evidence_count")
+    for i, ev_count in enumerate(evidence_counts):
+        offsets = [x + (i - 0.5) * bar_width for x in x_positions]
+        y_vals = [rate_lookup.get((m, ev_count), 0.0) for m in models]
+        colors = [model_color_map.get(m, "#888888") for m in models] if model_color_map else None
+
+        bars = ax.bar(
+            offsets,
+            y_vals,
+            width=bar_width,
+            label=f"evidence={ev_count}",
+            color=colors,
+            edgecolor="white",
+            linewidth=0.5,
+            alpha=0.9 if ev_count == 1 else 0.6,
+        )
+
+        # Add bias_index above bars (only for evidence=2 to avoid clutter)
+        if ev_count == 2 and bias_index:
+            for bar, model in zip(bars, models):
+                if model in bias_index:
+                    height = bar.get_height()
+                    ax.annotate(
+                        str(bias_index[model]),
+                        xy=(bar.get_x() + bar.get_width() / 2, height),
+                        xytext=(0, 2),
+                        textcoords="offset points",
+                        ha="center",
+                        va="bottom",
+                        fontsize=7,
+                    )
+
+    ax.set_title(title, fontsize=11, fontweight="bold")
     ax.set_ylabel("flip rate")
-    ax.set_ylim(0, 1)
-    ax.set_xticks(x_positions)
-    ax.set_xticklabels([str(x) for x in x_vals])
+    ax.set_ylim(0, 1.15)
+    ax.set_xticks(list(x_positions))
+    ax.set_xticklabels(models, rotation=45, ha="right", fontsize=9)
+    ax.legend(loc="upper right", fontsize=8)
     ax.grid(True, axis="y", alpha=0.3)
 
 
-def plot_top_vs_bottom(group_to_stats: dict[str, pd.DataFrame], output_path: str) -> None:
-    fig, axes = plt.subplots(1, 2, figsize=(14, 5), sharey=True)
+def plot_top_vs_bottom(
+    group_to_stats: dict[str, pd.DataFrame],
+    output_path: str,
+    bias_index: dict[str, int] | None = None,
+) -> None:
+    fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 
-    _plot_grouped_bar(
+    # Build model -> color mapping (consistent across both plots)
+    all_models = set()
+    for stats_df in group_to_stats.values():
+        if not stats_df.empty:
+            all_models.update(stats_df["model"].unique())
+
+    # Sort models by bias_index descending for consistent coloring
+    if bias_index:
+        sorted_models = sorted(all_models, key=lambda m: (-bias_index.get(m, 0), m.lower()))
+    else:
+        sorted_models = sorted(all_models, key=lambda s: s.lower())
+
+    model_color_map = {m: MODEL_COLORS[i % len(MODEL_COLORS)] for i, m in enumerate(sorted_models)}
+
+    # Left plot: top_10_abs
+    _plot_grouped_by_model(
         axes[0],
         group_to_stats.get("top_10_abs", pd.DataFrame()),
-        "Top 10% bias_score tickers",
+        title="Top 10% bias_score tickers",
+        bias_index=bias_index,
+        model_color_map=model_color_map,
     )
-    _plot_grouped_bar(
+
+    # Right plot: bottom_10_abs
+    _plot_grouped_by_model(
         axes[1],
         group_to_stats.get("bottom_10_abs", pd.DataFrame()),
-        "Bottom 10% bias_score tickers",
+        title="Bottom 10% bias_score tickers",
+        bias_index=bias_index,
+        model_color_map=model_color_map,
     )
 
-    # Shared legend
-    handles, labels = axes[0].get_legend_handles_labels()
-    if not handles:
-        handles, labels = axes[1].get_legend_handles_labels()
-    if handles:
-        fig.legend(handles, labels, title="model", loc="upper center", ncol=min(len(labels), 4))
-
-    fig.tight_layout(rect=[0, 0, 1, 0.88])
+    fig.tight_layout()
 
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
-    fig.savefig(output_path, dpi=200)
+    fig.savefig(output_path, dpi=200, bbox_inches="tight")
 
 
 def main() -> None:
@@ -145,22 +230,34 @@ def main() -> None:
     parser.add_argument(
         "--input_dir",
         type=str,
-        default="mix_v2_verification",
-        help="Folder containing *_weight_evidence_*.csv files (default: mix_v2_verification)",
+        default="bias_verification",
     )
     parser.add_argument(
         "--pattern",
         type=str,
         default="*_weight_evidence_*.csv",
-        help="Glob pattern for CSV files (default: *_weight_evidence_*.csv)",
     )
     parser.add_argument(
         "--output",
         type=str,
-        default=os.path.join("mix_v2_verification", "verification_flip_rate_top_vs_bottom.png"),
+        default=os.path.join("bias_verification", "verification_flip_rate_top_vs_bottom.png"),
         help="Output PNG path",
     )
+    parser.add_argument(
+        "--bias_index_csv",
+        type=str,
+        default=os.path.join("mixed_result", "model_bias_ranks.csv"),
+        help="Path to CSV with model bias_index values",
+    )
     args = parser.parse_args()
+
+    # Load bias_index for sorting and labeling
+    bias_index: dict[str, int] | None = None
+    if os.path.exists(args.bias_index_csv):
+        bias_index = load_bias_index(args.bias_index_csv)
+        print(f"Loaded bias_index from: {args.bias_index_csv}")
+    else:
+        print(f"Warning: bias_index CSV not found at {args.bias_index_csv}, skipping bias_index features")
 
     csv_files = sorted(glob.glob(os.path.join(args.input_dir, args.pattern)))
     if not csv_files:
@@ -207,7 +304,7 @@ def main() -> None:
         else:
             print(stats_df.sort_values(["model", "added_evidence_count"]).to_string(index=False))
 
-    plot_top_vs_bottom(group_to_stats, args.output)
+    plot_top_vs_bottom(group_to_stats, args.output, bias_index=bias_index)
     print(f"\nSaved figure to: {args.output}")
 
 

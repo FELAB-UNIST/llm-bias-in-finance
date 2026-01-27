@@ -1,0 +1,13 @@
+{
+  "model": "deepseek-v3.2",
+  "class_type": "bias_score",
+  "target_group": "bottom_10_abs",
+  "total_prompts": 830,
+  "total_cost_usd": 0.1517,
+  "total_input_tokens": 491903,
+  "total_output_tokens": 48801,
+  "total_tokens": 540704,
+  "total_time_seconds": 90.7,
+  "average_latency_seconds": 3.61,
+  "average_ttft_seconds": 3.46
+}

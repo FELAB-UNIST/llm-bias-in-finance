@@ -1,0 +1,13 @@
+{
+  "model": "kimi-k2-0905",
+  "class_type": "bias_score",
+  "target_group": "top_10_abs",
+  "total_prompts": 2466,
+  "total_cost_usd": 1.3779,
+  "total_input_tokens": 1547113,
+  "total_output_tokens": 209568,
+  "total_tokens": 1756681,
+  "total_time_seconds": 614.2,
+  "average_latency_seconds": 8.54,
+  "average_ttft_seconds": 8.35
+}

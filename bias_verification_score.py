@@ -439,9 +439,9 @@ if __name__ == "__main__":
                        help="Maximum number of concurrent workers")
     parser.add_argument("--num-trials", type=int, default=10,
                        help="Number of trials to run")
-    parser.add_argument("--qual-evidence", type=str, default="./data/evidence_corpus_qual_mixed_v2.csv",
+    parser.add_argument("--qual-evidence", type=str, default="./data/evidence_corpus_qual_mixed.csv",
                        help="Path to qualitative evidence CSV")
-    parser.add_argument("--quant-evidence", type=str, default="./data/evidence_corpus_quant_mixed_v2.csv",
+    parser.add_argument("--quant-evidence", type=str, default="./data/evidence_corpus_quant_mixed.csv",
                        help="Path to quantitative evidence CSV")
     parser.add_argument("--output-dir", type=str, default="./result",
                        help="Output directory for results")
