@@ -1,0 +1,42 @@
+{
+    "model_id": "minimax/minimax-m3",
+    "total_selections": 5116,
+    "preference_result": {
+        "momentum_win_rate": 0.5811,
+        "contrarian_win_rate": 0.4189,
+        "win_rate_std": 0.0193
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.6045,
+            "contrarian_win_rate": 0.3955,
+            "momentum_count": 1030,
+            "contrarian_count": 674
+        },
+        "set_2": {
+            "momentum_win_rate": 0.5818,
+            "contrarian_win_rate": 0.4182,
+            "momentum_count": 992,
+            "contrarian_count": 713
+        },
+        "set_3": {
+            "momentum_win_rate": 0.5571,
+            "contrarian_win_rate": 0.4429,
+            "momentum_count": 951,
+            "contrarian_count": 756
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 134.656,
+        "p_value": 3.926313862747199e-31,
+        "observed_counts": {
+            "momentum": 2973,
+            "contrarian": 2143
+        }
+    },
+    "cost_latency": {
+        "total_cost_usd": 1.5563,
+        "total_time_seconds": 608.79,
+        "average_ttft_seconds": 4.36
+    }
+}

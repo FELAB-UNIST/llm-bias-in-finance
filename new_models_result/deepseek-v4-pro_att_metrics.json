@@ -1,0 +1,13 @@
+{
+  "set_number": 1,
+  "model": "deepseek-v4-pro",
+  "total_prompts": 4270,
+  "total_cost_usd": 3.4376,
+  "total_input_tokens": 1879624,
+  "total_output_tokens": 314808,
+  "total_tokens": 2194432,
+  "total_time_seconds": 508.31,
+  "average_latency_seconds": 3.47,
+  "average_ttft_seconds": 3.38,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

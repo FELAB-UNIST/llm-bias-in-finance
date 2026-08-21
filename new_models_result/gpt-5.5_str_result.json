@@ -1,0 +1,42 @@
+{
+    "model_id": "openai/gpt-5.5",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.5377,
+        "contrarian_win_rate": 0.4623,
+        "win_rate_std": 0.0015
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.5381,
+            "contrarian_win_rate": 0.4619,
+            "momentum_count": 919,
+            "contrarian_count": 789
+        },
+        "set_2": {
+            "momentum_win_rate": 0.5392,
+            "contrarian_win_rate": 0.4608,
+            "momentum_count": 921,
+            "contrarian_count": 787
+        },
+        "set_3": {
+            "momentum_win_rate": 0.5357,
+            "contrarian_win_rate": 0.4643,
+            "momentum_count": 915,
+            "contrarian_count": 793
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 29.0781,
+        "p_value": 6.951969632177372e-08,
+        "observed_counts": {
+            "momentum": 2755,
+            "contrarian": 2369
+        }
+    },
+    "cost_latency": {
+        "total_cost_usd": 12.3948,
+        "total_time_seconds": 269.9,
+        "average_ttft_seconds": 1.88
+    }
+}

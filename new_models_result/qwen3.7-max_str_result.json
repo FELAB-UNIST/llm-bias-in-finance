@@ -1,0 +1,42 @@
+{
+    "model_id": "qwen/qwen3.7-max",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.3796,
+        "contrarian_win_rate": 0.6204,
+        "win_rate_std": 0.0116
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.3665,
+            "contrarian_win_rate": 0.6335,
+            "momentum_count": 626,
+            "contrarian_count": 1082
+        },
+        "set_2": {
+            "momentum_win_rate": 0.3946,
+            "contrarian_win_rate": 0.6054,
+            "momentum_count": 674,
+            "contrarian_count": 1034
+        },
+        "set_3": {
+            "momentum_win_rate": 0.3776,
+            "contrarian_win_rate": 0.6224,
+            "momentum_count": 645,
+            "contrarian_count": 1063
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 297.1811,
+        "p_value": 1.354947291592641e-66,
+        "observed_counts": {
+            "momentum": 1945,
+            "contrarian": 3179
+        }
+    },
+    "cost_latency": {
+        "total_cost_usd": 2.416,
+        "total_time_seconds": 348.41,
+        "average_ttft_seconds": 2.19
+    }
+}

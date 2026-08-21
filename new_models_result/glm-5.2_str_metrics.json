@@ -1,0 +1,15 @@
+{
+  "model": "glm-5.2",
+  "reasoning_effort": null,
+  "total_sets": 3,
+  "total_prompts": 5124,
+  "total_cost_usd": 2.5344,
+  "average_cost_per_set_usd": 0.8448,
+  "total_input_tokens": 1049434,
+  "total_output_tokens": 345789,
+  "total_tokens": 1395223,
+  "total_time_seconds": 675.84,
+  "average_time_per_set_seconds": 225.28,
+  "average_latency_seconds": 4.87,
+  "average_ttft_seconds": 4.72
+}

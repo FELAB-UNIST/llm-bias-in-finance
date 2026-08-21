@@ -1,0 +1,15 @@
+{
+  "model": "minimax-m3",
+  "reasoning_effort": null,
+  "total_sets": 3,
+  "total_prompts": 5124,
+  "total_cost_usd": 1.5563,
+  "average_cost_per_set_usd": 0.5188,
+  "total_input_tokens": 1799037,
+  "total_output_tokens": 932844,
+  "total_tokens": 2731881,
+  "total_time_seconds": 608.79,
+  "average_time_per_set_seconds": 202.93,
+  "average_latency_seconds": 4.54,
+  "average_ttft_seconds": 4.36
+}

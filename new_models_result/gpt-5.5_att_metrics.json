@@ -1,0 +1,13 @@
+{
+  "set_number": 1,
+  "model": "gpt-5.5",
+  "total_prompts": 4270,
+  "total_cost_usd": 18.9498,
+  "total_input_tokens": 1815921,
+  "total_output_tokens": 329007,
+  "total_tokens": 2144928,
+  "total_time_seconds": 426.44,
+  "average_latency_seconds": 2.94,
+  "average_ttft_seconds": 2.79,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

@@ -1,0 +1,13 @@
+{
+  "set_number": 1,
+  "model": "gemini-3.5-flash",
+  "total_prompts": 4270,
+  "total_cost_usd": 7.3935,
+  "total_input_tokens": 1942818,
+  "total_output_tokens": 497692,
+  "total_tokens": 2440510,
+  "total_time_seconds": 342.19,
+  "average_latency_seconds": 2.4,
+  "average_ttft_seconds": 2.01,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

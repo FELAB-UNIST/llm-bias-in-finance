@@ -1,0 +1,13 @@
+{
+  "set_number": 1,
+  "model": "minimax-m3",
+  "corpus": "gemini+kimi (counterbalanced)",
+  "total_prompts": 4270,
+  "total_cost_usd": 1.9025,
+  "total_input_tokens": 2459823,
+  "total_output_tokens": 1013500,
+  "total_tokens": 3473323,
+  "total_time_seconds": 824.31,
+  "average_latency_seconds": 5.68,
+  "average_ttft_seconds": 5.35
+}

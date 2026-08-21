@@ -1,0 +1,13 @@
+{
+  "set_number": 1,
+  "model": "glm-5.2",
+  "total_prompts": 4270,
+  "total_cost_usd": 4.6247,
+  "total_input_tokens": 1883415,
+  "total_output_tokens": 558526,
+  "total_tokens": 2441941,
+  "total_time_seconds": 658.51,
+  "average_latency_seconds": 4.55,
+  "average_ttft_seconds": 4.37,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

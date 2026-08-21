@@ -1,0 +1,14 @@
+{
+  "set_number": 1,
+  "model": "claude-opus-4.8",
+  "corpus": "gemini+kimi (counterbalanced)",
+  "total_prompts": 4270,
+  "total_cost_usd": 43.5439,
+  "total_input_tokens": 2932687,
+  "total_output_tokens": 1155218,
+  "total_tokens": 4087905,
+  "total_time_seconds": 4458.1,
+  "average_latency_seconds": 31.27,
+  "average_ttft_seconds": 5.85,
+  "note": "throttled run (74min); worker=30"
+}

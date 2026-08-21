@@ -1,0 +1,42 @@
+{
+    "model_id": "deepseek/deepseek-v4-pro",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.4617,
+        "contrarian_win_rate": 0.5383,
+        "win_rate_std": 0.0078
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.4543,
+            "contrarian_win_rate": 0.5457,
+            "momentum_count": 776,
+            "contrarian_count": 932
+        },
+        "set_2": {
+            "momentum_win_rate": 0.4725,
+            "contrarian_win_rate": 0.5275,
+            "momentum_count": 807,
+            "contrarian_count": 901
+        },
+        "set_3": {
+            "momentum_win_rate": 0.4584,
+            "contrarian_win_rate": 0.5416,
+            "momentum_count": 783,
+            "contrarian_count": 925
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 29.9891,
+        "p_value": 4.344882618580306e-08,
+        "observed_counts": {
+            "momentum": 2366,
+            "contrarian": 2758
+        }
+    },
+    "cost_latency": {
+        "total_cost_usd": 2.0915,
+        "total_time_seconds": 395.67,
+        "average_ttft_seconds": 2.81
+    }
+}

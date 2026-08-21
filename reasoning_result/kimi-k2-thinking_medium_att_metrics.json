@@ -1,0 +1,15 @@
+{
+  "model": "kimi-k2-thinking",
+  "reasoning_effort": "medium",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "total_cost_usd": 17.0354,
+  "average_cost_per_set_usd": 17.0354,
+  "total_input_tokens": 2105345,
+  "total_output_tokens": 6819037,
+  "total_tokens": 8924382,
+  "total_time_seconds": 4053.55,
+  "average_time_per_set_seconds": 4053.55,
+  "average_latency_seconds": 46.44,
+  "average_ttft_seconds": 45.39
+}

@@ -1,0 +1,42 @@
+{
+    "model_id": "google/gemini-3.5-flash",
+    "total_selections": 4924,
+    "preference_result": {
+        "momentum_win_rate": 0.319,
+        "contrarian_win_rate": 0.681,
+        "win_rate_std": 0.0691
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.2722,
+            "contrarian_win_rate": 0.7278,
+            "momentum_count": 454,
+            "contrarian_count": 1214
+        },
+        "set_2": {
+            "momentum_win_rate": 0.269,
+            "contrarian_win_rate": 0.731,
+            "momentum_count": 438,
+            "contrarian_count": 1190
+        },
+        "set_3": {
+            "momentum_win_rate": 0.4171,
+            "contrarian_win_rate": 0.5829,
+            "momentum_count": 679,
+            "contrarian_count": 949
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 644.9074,
+        "p_value": 2.8619341183830885e-142,
+        "observed_counts": {
+            "momentum": 1571,
+            "contrarian": 3353
+        }
+    },
+    "cost_latency": {
+        "total_cost_usd": 4.0246,
+        "total_time_seconds": 356.59,
+        "average_ttft_seconds": 1.59
+    }
+}

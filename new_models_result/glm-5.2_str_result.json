@@ -1,0 +1,42 @@
+{
+    "model_id": "z-ai/glm-5.2",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.364,
+        "contrarian_win_rate": 0.636,
+        "win_rate_std": 0.0116
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.377,
+            "contrarian_win_rate": 0.623,
+            "momentum_count": 644,
+            "contrarian_count": 1064
+        },
+        "set_2": {
+            "momentum_win_rate": 0.3659,
+            "contrarian_win_rate": 0.6341,
+            "momentum_count": 625,
+            "contrarian_count": 1083
+        },
+        "set_3": {
+            "momentum_win_rate": 0.3489,
+            "contrarian_win_rate": 0.6511,
+            "momentum_count": 596,
+            "contrarian_count": 1112
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 379.242,
+        "p_value": 1.8196611478804529e-84,
+        "observed_counts": {
+            "momentum": 1865,
+            "contrarian": 3259
+        }
+    },
+    "cost_latency": {
+        "total_cost_usd": 2.5344,
+        "total_time_seconds": 675.84,
+        "average_ttft_seconds": 4.72
+    }
+}

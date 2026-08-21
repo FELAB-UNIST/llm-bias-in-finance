@@ -1,0 +1,42 @@
+{
+    "model_id": "anthropic/claude-opus-4.8",
+    "total_selections": 5124,
+    "preference_result": {
+        "momentum_win_rate": 0.4536,
+        "contrarian_win_rate": 0.5464,
+        "win_rate_std": 0.0206
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.4245,
+            "contrarian_win_rate": 0.5755,
+            "momentum_count": 725,
+            "contrarian_count": 983
+        },
+        "set_2": {
+            "momentum_win_rate": 0.4696,
+            "contrarian_win_rate": 0.5304,
+            "momentum_count": 802,
+            "contrarian_count": 906
+        },
+        "set_3": {
+            "momentum_win_rate": 0.4666,
+            "contrarian_win_rate": 0.5334,
+            "momentum_count": 797,
+            "contrarian_count": 911
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 44.2186,
+        "p_value": 2.936806452223263e-11,
+        "observed_counts": {
+            "momentum": 2324,
+            "contrarian": 2800
+        }
+    },
+    "cost_latency": {
+        "total_cost_usd": 30.1291,
+        "total_time_seconds": 571.19,
+        "average_ttft_seconds": 4.19
+    }
+}
