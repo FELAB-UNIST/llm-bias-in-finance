@@ -2,12 +2,25 @@ import os
 import pandas as pd
 from tqdm.auto import tqdm
 import concurrent.futures
-from typing import Dict, List
+from typing import Dict, List, Optional
 import json
 import time
 
 from llm_clients import LLMClient
-from backup.utils import parse_json_from_text
+
+
+def parse_json_from_text(text: str) -> Optional[Dict]:
+    """텍스트에서 첫 번째 완전한 JSON 객체를 추출하여 파싱"""
+    if not text:
+        return None
+    start = text.find("{")
+    if start < 0:
+        return None
+    try:
+        obj, _ = json.JSONDecoder().raw_decode(text[start:])
+        return obj
+    except json.JSONDecodeError:
+        return None
 
 
 # ────────────── Configuration ──────────────

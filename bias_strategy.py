@@ -2,12 +2,25 @@ import os
 import pandas as pd
 from tqdm.auto import tqdm
 import concurrent.futures
-from typing import Dict
+from typing import Dict, Optional
 import json
 import time
 
 from llm_clients import LLMClient
-from backup.utils import parse_json_from_text
+
+
+def parse_json_from_text(text: str) -> Optional[Dict]:
+    """텍스트에서 첫 번째 완전한 JSON 객체를 추출하여 파싱"""
+    if not text:
+        return None
+    start = text.find("{")
+    if start < 0:
+        return None
+    try:
+        obj, _ = json.JSONDecoder().raw_decode(text[start:])
+        return obj
+    except json.JSONDecodeError:
+        return None
 
 # ────────────── Configuration ──────────────
 MAX_WORKERS = 10
@@ -188,7 +201,7 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", type=float, default=0.6,
                        help="Temperature for generation (ignored if reasoning-effort is set)")
     parser.add_argument("--reasoning-effort", type=str, default=None,
-                       choices=["low", "medium", "high"],
+                       choices=["minimal", "low", "medium", "high"],
                        help="Reasoning effort level for reasoning models (e.g., o1, o3, gpt-5)")
     parser.add_argument("--max-workers", type=int, default=10,
                        help="Maximum number of concurrent workers")

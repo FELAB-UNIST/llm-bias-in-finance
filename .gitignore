@@ -7,3 +7,6 @@ llm_clients_internal_code.py
 backup
 /test/
 .vscode/
+resource/
+temp/
+mixed_result/viz/

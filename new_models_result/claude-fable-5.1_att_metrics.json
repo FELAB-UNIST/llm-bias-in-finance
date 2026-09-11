@@ -1,0 +1,14 @@
+{
+  "set_number": 1,
+  "model": "claude-fable-5.1",
+  "reasoning_effort": "low",
+  "total_prompts": 4270,
+  "total_cost_usd": 75.1018,
+  "total_input_tokens": 2845769,
+  "total_output_tokens": 932883,
+  "total_tokens": 3778652,
+  "total_time_seconds": 1005.39,
+  "average_latency_seconds": 7.03,
+  "average_ttft_seconds": 6.59,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

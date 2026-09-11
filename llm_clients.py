@@ -95,10 +95,7 @@ class LLMClient:
         self.last_prompt_cost = 0.0
         self.last_completion_cost = 0.0
         
-        if self.reasoning_effort:
-            return self._get_response_reasoning(prompt, system_prompt)
-        else:
-            return self._get_response_chat(prompt, system_prompt)
+        return self._get_response_chat(prompt, system_prompt)
     
     def _get_response_reasoning(self, prompt: str, system_prompt: Optional[str] = None) -> str:
         if system_prompt:
@@ -208,16 +205,17 @@ class LLMClient:
             messages.append({"role": "system", "content": system_prompt})
         messages.append({"role": "user", "content": prompt})
         
-        # Build request payload
+        # Build request payload (reasoning handled here; effort if set, else off)
         payload = {
             "model": self.model_id,
             "messages": messages,
             "temperature": self.temperature,
-            "reasoning": {
-                "enabled": False
-            },
         }
-        
+        if self.reasoning_effort:
+            payload["reasoning"] = {"enabled": True, "effort": self.reasoning_effort}
+        else:
+            payload["reasoning"] = {"enabled": False}
+
         if self.max_tokens:
             payload["max_tokens"] = self.max_tokens
         

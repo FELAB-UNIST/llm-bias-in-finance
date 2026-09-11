@@ -24,35 +24,22 @@ if args.reasoning_effort:
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 # path 준비
-combined_csv_path = os.path.join(SAVE_DIR, f'{MODEL_FILE_PREFIX}_att_combined.csv')
-file_pattern       = os.path.join(SAVE_DIR, f'{MODEL_FILE_PREFIX}_att_set_*.csv')
+file_pattern = os.path.join(SAVE_DIR, f'{MODEL_FILE_PREFIX}_att_set_*.csv')
 
-# ────────────── Load & Combine Data ──────────────
-created_combined = False
+# ────────────── Load Data (JSON aggregation only; no combined CSV) ──────────────
+file_paths = sorted(glob.glob(file_pattern))
+if not file_paths:
+    print(f"Error: No individual set CSV files found.\nLooked for sets: '{file_pattern}'")
+    exit(1)
 
-if os.path.exists(combined_csv_path):
-    df = pd.read_csv(combined_csv_path)
-    print(f"Found existing combined CSV: {combined_csv_path}")
-else:
-    file_paths = sorted(glob.glob(file_pattern))  
-    if not file_paths:
-        print(
-            "Error: No existing combined CSV and no individual set CSV files found.\n"
-            f"Looked for combined: '{combined_csv_path}'\n"
-            f"Looked for sets: '{file_pattern}'"
-        )
-        exit(1)
+df_list = []
+for i, path in enumerate(file_paths):
+    temp_df = pd.read_csv(path)
+    temp_df['set'] = i + 1
+    df_list.append(temp_df)
 
-    df_list = []
-    for i, path in enumerate(file_paths):
-        temp_df = pd.read_csv(path)
-        temp_df['set'] = i + 1
-        df_list.append(temp_df)
-
-    df = pd.concat(df_list, ignore_index=True)
-    df.to_csv(combined_csv_path, index=False)
-    created_combined = True
-    print(f"Combined {len(file_paths)} CSV files into a single DataFrame and saved to:\n  {combined_csv_path}")
+df = pd.concat(df_list, ignore_index=True)
+print(f"Loaded {len(file_paths)} set CSV file(s) into a DataFrame with {len(df)} rows.")
 
 # ────────────── Data Analysis ──────────────
 df['is_buy'] = df['llm_answer'].str.lower() == 'buy'
@@ -193,16 +180,14 @@ summary_path = os.path.join(SAVE_DIR, f'{MODEL_FILE_PREFIX}_att_result.json')
 with open(summary_path, 'w', encoding='utf-8') as f:
     json.dump(summary, f, indent=4, ensure_ascii=False)
 
-# ────────────── Cleanup ──────────────
-if created_combined:
-    file_paths = glob.glob(file_pattern)
-    removed = 0
-    for path in file_paths:
-        try:
-            os.remove(path)
-            removed += 1
-        except OSError as e:
-            print(f"Error removing file {path}: {e}")
-    print(f"\nCleanup complete. Removed {removed} individual CSV files.")
-else:
-    print("\nSkipped cleanup: used existing combined CSV (no set files removed).")
+# ────────────── Archive per-set CSVs (move to sub dir instead of deleting) ──────────────
+archive_dir = os.path.join(SAVE_DIR, "att_sets")
+os.makedirs(archive_dir, exist_ok=True)
+moved = 0
+for path in file_paths:
+    try:
+        os.rename(path, os.path.join(archive_dir, os.path.basename(path)))
+        moved += 1
+    except OSError as e:
+        print(f"Error archiving file {path}: {e}")
+print(f"\nArchive complete. Moved {moved} individual CSV files to {archive_dir}.")

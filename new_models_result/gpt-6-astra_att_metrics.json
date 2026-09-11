@@ -1,0 +1,14 @@
+{
+  "set_number": 1,
+  "model": "gpt-6-astra",
+  "reasoning_effort": "low",
+  "total_prompts": 4270,
+  "total_cost_usd": 32.1761,
+  "total_input_tokens": 1772653,
+  "total_output_tokens": 288992,
+  "total_tokens": 2061645,
+  "total_time_seconds": 514.69,
+  "average_latency_seconds": 3.57,
+  "average_ttft_seconds": 3.31,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

@@ -1,0 +1,14 @@
+{
+  "set_number": 1,
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "low",
+  "total_prompts": 4270,
+  "total_cost_usd": 7.3795,
+  "total_input_tokens": 1726720,
+  "total_output_tokens": 392264,
+  "total_tokens": 2118984,
+  "total_time_seconds": 363.51,
+  "average_latency_seconds": 4.0,
+  "average_ttft_seconds": 3.62,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

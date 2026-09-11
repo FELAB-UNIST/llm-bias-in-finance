@@ -11,7 +11,7 @@ import argparse
 parser = argparse.ArgumentParser(description="Aggregate intensity experiment results for a given model.")
 parser.add_argument("--model-id", type=str, required=True, help="ID of the model to aggregate results for")
 parser.add_argument("--reasoning-effort", type=str, default=None,
-                   choices=["low", "medium", "high"],
+                   choices=["minimal", "low", "medium", "high"],
                    help="Reasoning effort level (must match the value used during experiment)")
 parser.add_argument("--output-dir", type=str, default="./result", help="Directory where the result CSVs and output summary are stored")
 args = parser.parse_args()
@@ -41,8 +41,6 @@ for i, path in enumerate(file_paths, 1):
     df_list.append(temp_df)
 
 df = pd.concat(df_list, ignore_index=True)
-combined_csv_path = os.path.join(SAVE_DIR, f'{MODEL_FILE_PREFIX}_str_combined.csv')
-df.to_csv(combined_csv_path, index=False)
 print(f"Combined {len(file_paths)} CSV files into a single DataFrame with {len(df)} rows.")
 
 # ────────────── Data Analysis ──────────────
@@ -132,11 +130,13 @@ with open(summary_path, 'w', encoding='utf-8') as f:
     json.dump(summary, f, indent=4, ensure_ascii=False)
 
 
-# ────────────── Cleanup ──────────────
+# ────────────── Archive per-set CSVs (move to sub dir instead of deleting) ──────────────
+archive_dir = os.path.join(SAVE_DIR, "str_sets")
+os.makedirs(archive_dir, exist_ok=True)
 for path in file_paths:
     try:
-        os.remove(path)
+        os.rename(path, os.path.join(archive_dir, os.path.basename(path)))
     except OSError as e:
-        print(f"Error removing file {path}: {e}")
+        print(f"Error archiving file {path}: {e}")
 
-print(f"\nCleanup complete. Removed {len(file_paths)} individual CSV files.")
+print(f"\nArchive complete. Moved {len(file_paths)} individual CSV files to {archive_dir}.")

@@ -18,11 +18,14 @@ num_trials = 10
 
 # ────────────── Helper Functions ──────────────
 def parse_json_from_text(text: str) -> Optional[Dict]:
-    m = re.search(r"\{.*\}", text, re.DOTALL)
-    if not m:
+    if not text:
+        return None
+    start = text.find("{")
+    if start < 0:
         return None
     try:
-        return json.loads(m.group(0))
+        obj, _ = json.JSONDecoder().raw_decode(text[start:])
+        return obj
     except json.JSONDecodeError:
         return None
 

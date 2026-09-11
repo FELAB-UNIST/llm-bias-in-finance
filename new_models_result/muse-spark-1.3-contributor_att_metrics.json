@@ -1,0 +1,14 @@
+{
+  "set_number": 1,
+  "model": "muse-spark-1.3-contributor",
+  "reasoning_effort": "low",
+  "total_prompts": 4270,
+  "total_cost_usd": 0.9654,
+  "total_input_tokens": 1874950,
+  "total_output_tokens": 3891989,
+  "total_tokens": 5766939,
+  "total_time_seconds": 1419.54,
+  "average_latency_seconds": 9.91,
+  "average_ttft_seconds": 9.71,
+  "corpus": "gemini+kimi (counterbalanced)"
+}

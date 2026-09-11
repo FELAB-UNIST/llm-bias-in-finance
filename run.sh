@@ -16,12 +16,12 @@
 set -e
 
 # --- Configuration ---
-MODEL_ID="meta-llama/llama-4-maverick"  # OpenRouter model ID
+MODEL_ID="qwen/qwen3-30b-a3b-instruct-2507"  # OpenRouter model ID
 REASONING_EFFORT=""  # "low", "medium", "high" for reasoning models, empty for regular models
-OUTPUT_DIR="./exp_result"
-MAX_WORKERS=40
+OUTPUT_DIR="./test_result2"
+MAX_WORKERS=50
 NUM_TRIALS=10
-NUM_SETS=2
+NUM_SETS=3
 TEMPERATURE=0.6
 MAX_TOKENS="1024"  # Maximum tokens for response, empty for model default
 
@@ -31,12 +31,11 @@ if [ -n "$REASONING_EFFORT" ]; then
     REASONING_ARG="--reasoning-effort $REASONING_EFFORT"
 fi
 
-# Build max tokens argument if set (only if reasoning effort is not set)
+# # Build max tokens argument if set (only if reasoning effort is not set)
 MAX_TOKENS_ARG=""
 if [ -n "$MAX_TOKENS" ] && [ -z "$REASONING_EFFORT" ]; then
     MAX_TOKENS_ARG="--max-tokens $MAX_TOKENS"
 fi
-
 
 # --- Experiment 1: Attribute Preference Test ---
 # This experiment tests if the LLM shows a preference for certain stock attributes (e.g., sector, market cap)
@@ -52,7 +51,7 @@ python bias_attribute.py \
     --max-workers $MAX_WORKERS \
     --num-trials $NUM_TRIALS \
     --num-sets $NUM_SETS
-
+  
 # Analyzes the results from the attribute preference experiment.
 python result_attribute.py \
     --model-id $MODEL_ID \
