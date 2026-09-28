@@ -238,7 +238,11 @@ if __name__ == "__main__":
     parser.add_argument("--model-id", type=str, required=True,
                        help="OpenRouter model ID (e.g., 'openai/gpt-4.1', 'anthropic/claude-sonnet-4')")
     parser.add_argument("--temperature", type=float, default=0.6,
-                       help="Temperature for generation (ignored if reasoning-effort is set)")
+                       help="Temperature for generation (omit with --omit-temperature)")
+    parser.add_argument("--omit-temperature", action="store_true",
+                       help="Omit temperature for models that do not accept it")
+    parser.add_argument("--qual-evidence-path", type=str, default="./data/evidence_corpus_qual_mixed.csv")
+    parser.add_argument("--quant-evidence-path", type=str, default="./data/evidence_corpus_quant_mixed.csv")
     parser.add_argument("--reasoning-effort", type=str, default=None,
                        help="Reasoning effort level for reasoning models (e.g., o1, o3, gpt-5)")
     parser.add_argument("--max-tokens", type=int, default=None,
@@ -256,7 +260,7 @@ if __name__ == "__main__":
     # Create unified LLMClient via OpenRouter
     client = LLMClient(
         model_id=args.model_id,
-        temperature=args.temperature,
+        temperature=None if args.omit_temperature else args.temperature,
         max_tokens=args.max_tokens,
         reasoning_effort=args.reasoning_effort
     )
@@ -278,7 +282,9 @@ if __name__ == "__main__":
             output_dir=args.output_dir,
             max_workers=args.max_workers,
             set_number=i,
-            num_trials=args.num_trials
+            num_trials=args.num_trials,
+            qual_evidence_path=args.qual_evidence_path,
+            quant_evidence_path=args.quant_evidence_path,
         )
         all_metrics.append(metrics)
     

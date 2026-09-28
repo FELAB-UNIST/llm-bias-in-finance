@@ -33,7 +33,7 @@ class LLMClient:
     def __init__(
         self,
         model_id: str,
-        temperature: float = 0.6,
+        temperature: Optional[float] = 0.6,
         max_tokens: Optional[int] = None,
         reasoning_effort: Optional[str] = None,
         api_key: Optional[str] = None
@@ -209,8 +209,9 @@ class LLMClient:
         payload = {
             "model": self.model_id,
             "messages": messages,
-            "temperature": self.temperature,
         }
+        if self.temperature is not None:
+            payload["temperature"] = self.temperature
         if self.reasoning_effort:
             payload["reasoning"] = {"enabled": True, "effort": self.reasoning_effort}
         else:
