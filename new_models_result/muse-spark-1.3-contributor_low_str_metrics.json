@@ -1,0 +1,33 @@
+{
+  "model": "muse-spark-1.3-contributor",
+  "reasoning_effort": "low",
+  "total_sets": 1,
+  "total_prompts": 1708,
+  "valid_decisions": 1708,
+  "invalid_decisions": 0,
+  "attempt_count": 1708,
+  "total_cost_usd": 0.2538857,
+  "average_cost_per_set_usd": 0.2538857,
+  "openrouter_cost_usd": 0.2538857,
+  "byok_upstream_cost_usd": 0,
+  "byok_generations": 0,
+  "total_input_tokens": 364815,
+  "total_output_tokens": 1087021,
+  "total_reasoning_tokens_reported": 954880,
+  "total_time_seconds": 178.54,
+  "average_time_per_set_seconds": 178.54,
+  "average_latency_seconds": 5.842,
+  "average_ttft_seconds": null,
+  "timing_note": "Nonstreaming. Active wall time includes concurrent work; the five models run concurrently.",
+  "source_prompts": "new_models_result/str_sets/deepseek-v4-pro_str_set_1.csv",
+  "corpus": "evidence_corpus_view",
+  "providers": {
+    "Meta": 1708
+  },
+  "returned_models": {
+    "meta/muse-spark-1.3-contributor": 1708
+  },
+  "first_request_kst": "2026-11-25T02:45:39.112995+09:00",
+  "last_response_kst": "2026-11-25T02:48:37.656226+09:00",
+  "total_tokens": 1451836
+}

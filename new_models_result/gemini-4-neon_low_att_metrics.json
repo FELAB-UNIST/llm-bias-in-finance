@@ -1,0 +1,34 @@
+{
+  "model": "gemini-4-neon",
+  "reasoning_effort": "low",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "valid_decisions": 4270,
+  "invalid_decisions": 0,
+  "attempt_count": 4273,
+  "total_cost_usd": 46.924611,
+  "average_cost_per_set_usd": 46.924611,
+  "openrouter_cost_usd": 46.924611,
+  "byok_upstream_cost_usd": 0,
+  "byok_generations": 0,
+  "total_input_tokens": 2150272,
+  "total_output_tokens": 2698253,
+  "total_reasoning_tokens_reported": 2308786,
+  "total_time_seconds": 1824.41,
+  "average_time_per_set_seconds": 1824.41,
+  "average_latency_seconds": 7.858,
+  "average_ttft_seconds": null,
+  "timing_note": "Nonstreaming. Active wall time includes concurrent work; attribute and strategy tasks overlap.",
+  "source_prompts": "new_models_result/att_sets/claude-fable-5.1_att_set_1.csv",
+  "corpus": "gemini+kimi (counterbalanced)",
+  "providers": {
+    "Google": 4216,
+    "Google AI Studio": 54
+  },
+  "returned_models": {
+    "google/gemini-4-neon": 4270
+  },
+  "first_request_kst": "2026-11-25T01:03:12.088107+09:00",
+  "last_response_kst": "2026-11-25T01:37:48.034295+09:00",
+  "total_tokens": 4848525
+}

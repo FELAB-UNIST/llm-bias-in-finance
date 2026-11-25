@@ -1,0 +1,25 @@
+{
+    "model_id": "minimax/minimax-m3.1-flash",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.4573,
+        "contrarian_win_rate": 0.5427,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.4573,
+            "contrarian_win_rate": 0.5427,
+            "momentum_count": 781,
+            "contrarian_count": 927
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 12.4801,
+        "p_value": 0.0004113115706961367,
+        "observed_counts": {
+            "momentum": 781,
+            "contrarian": 927
+        }
+    }
+}

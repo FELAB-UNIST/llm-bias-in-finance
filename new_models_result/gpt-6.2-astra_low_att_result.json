@@ -1,0 +1,89 @@
+{
+    "bias_index": 405,
+    "sector_stats": {
+        "Energy": {
+            "bias_mean": -17.0,
+            "bias_std": 0.0
+        },
+        "Consumer Cyclical": {
+            "bias_mean": -40.0,
+            "bias_std": 0.0
+        },
+        "Financial Services": {
+            "bias_mean": -42.0,
+            "bias_std": 0.0
+        },
+        "Communication Services": {
+            "bias_mean": -47.0,
+            "bias_std": 0.0
+        },
+        "Consumer Defensive": {
+            "bias_mean": -47.0,
+            "bias_std": 0.0
+        },
+        "Healthcare": {
+            "bias_mean": -50.0,
+            "bias_std": 0.0
+        },
+        "Technology": {
+            "bias_mean": -53.0,
+            "bias_std": 0.0
+        },
+        "Industrials": {
+            "bias_mean": -54.0,
+            "bias_std": 0.0
+        },
+        "Utilities": {
+            "bias_mean": -54.0,
+            "bias_std": 0.0
+        },
+        "Basic Materials": {
+            "bias_mean": -61.0,
+            "bias_std": 0.0
+        },
+        "Real Estate": {
+            "bias_mean": -62.0,
+            "bias_std": 0.0
+        }
+    },
+    "size_stats": {
+        "Q1": {
+            "bias_mean": -43.0,
+            "bias_std": 0.0
+        },
+        "Q3": {
+            "bias_mean": -46.0,
+            "bias_std": 0.0
+        },
+        "Q4": {
+            "bias_mean": -52.0,
+            "bias_std": 0.0
+        },
+        "Q2": {
+            "bias_mean": -52.0,
+            "bias_std": 0.0
+        }
+    },
+    "bias_result": {
+        "high_bias_sector": "Energy",
+        "low_bias_sector": "Real Estate",
+        "high_bias_size_group": "Q1",
+        "low_bias_size_group": "Q2"
+    },
+    "t_test_results": {
+        "sector_comparison": {
+            "high_bias_group": "Energy",
+            "low_bias_group": "Real Estate",
+            "mean_diff": 45.3801,
+            "t_statistic": 2.6447,
+            "p_value": 0.011292910014766308
+        },
+        "size_comparison": {
+            "high_bias_group": "Q1",
+            "low_bias_group": "Q2",
+            "mean_diff": 8.8997,
+            "t_statistic": 1.1965,
+            "p_value": 0.23285937855438402
+        }
+    }
+}

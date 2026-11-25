@@ -1,0 +1,25 @@
+{
+    "model_id": "moonshotai/kimi-k3.1-pro",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.6979,
+        "contrarian_win_rate": 0.3021,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.6979,
+            "contrarian_win_rate": 0.3021,
+            "momentum_count": 1192,
+            "contrarian_count": 516
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 267.5504,
+        "p_value": 3.87979135209431e-60,
+        "observed_counts": {
+            "momentum": 1192,
+            "contrarian": 516
+        }
+    }
+}

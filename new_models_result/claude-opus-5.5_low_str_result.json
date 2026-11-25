@@ -1,0 +1,25 @@
+{
+    "model_id": "anthropic/claude-opus-5.5",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.6007,
+        "contrarian_win_rate": 0.3993,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.6007,
+            "contrarian_win_rate": 0.3993,
+            "momentum_count": 1026,
+            "contrarian_count": 682
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 69.2834,
+        "p_value": 8.5285573043802e-17,
+        "observed_counts": {
+            "momentum": 1026,
+            "contrarian": 682
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+  "model": "gpt-6-astra",
+  "reasoning_effort": "low",
+  "total_sets": 1,
+  "total_prompts": 1708,
+  "valid_decisions": 1708,
+  "invalid_decisions": 0,
+  "attempt_count": 1708,
+  "total_cost_usd": 8.60449,
+  "average_cost_per_set_usd": 8.60449,
+  "openrouter_cost_usd": 0.0,
+  "byok_upstream_cost_usd": 8.60449,
+  "byok_generations": 1708,
+  "total_input_tokens": 360764,
+  "total_output_tokens": 99937,
+  "total_reasoning_tokens_reported": 6954,
+  "total_time_seconds": 86.97,
+  "average_time_per_set_seconds": 86.97,
+  "average_latency_seconds": 3.0,
+  "average_ttft_seconds": null,
+  "timing_note": "Nonstreaming. Active wall time includes concurrent work; the five models run concurrently.",
+  "source_prompts": "new_models_result/str_sets/deepseek-v4-pro_str_set_1.csv",
+  "corpus": "evidence_corpus_view",
+  "providers": {
+    "OpenAI": 1708
+  },
+  "returned_models": {
+    "openai/gpt-6-astra": 1708
+  },
+  "first_request_kst": "2026-11-25T02:45:39.112976+09:00",
+  "last_response_kst": "2026-11-25T02:47:06.088038+09:00",
+  "total_tokens": 460701
+}

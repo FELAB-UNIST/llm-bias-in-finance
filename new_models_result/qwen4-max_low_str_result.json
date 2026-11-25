@@ -1,0 +1,25 @@
+{
+    "model_id": "qwen/qwen4-max",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.6756,
+        "contrarian_win_rate": 0.3244,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.6756,
+            "contrarian_win_rate": 0.3244,
+            "momentum_count": 1154,
+            "contrarian_count": 554
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 210.7728,
+        "p_value": 9.316586785015635e-48,
+        "observed_counts": {
+            "momentum": 1154,
+            "contrarian": 554
+        }
+    }
+}

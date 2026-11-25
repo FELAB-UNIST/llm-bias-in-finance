@@ -1,0 +1,33 @@
+{
+  "model": "gpt-6.2-astra",
+  "reasoning_effort": "low",
+  "total_sets": 1,
+  "total_prompts": 1708,
+  "valid_decisions": 1708,
+  "invalid_decisions": 0,
+  "attempt_count": 1708,
+  "total_cost_usd": 6.506032,
+  "average_cost_per_set_usd": 6.506032,
+  "openrouter_cost_usd": 0.0,
+  "byok_upstream_cost_usd": 6.506032,
+  "byok_generations": 1708,
+  "total_input_tokens": 360764,
+  "total_output_tokens": 90498,
+  "total_reasoning_tokens_reported": 0,
+  "total_time_seconds": 490.64,
+  "average_time_per_set_seconds": 490.64,
+  "average_latency_seconds": 4.688,
+  "average_ttft_seconds": null,
+  "timing_note": "Nonstreaming. Active wall time includes concurrent work; attribute and strategy tasks overlap.",
+  "source_prompts": "new_models_result/str_sets/deepseek-v4-pro_str_set_1.csv",
+  "corpus": "evidence_corpus_view",
+  "providers": {
+    "OpenAI": 1708
+  },
+  "returned_models": {
+    "openai/gpt-6.2-astra": 1708
+  },
+  "first_request_kst": "2026-11-25T16:56:27.021016+09:00",
+  "last_response_kst": "2026-11-25T17:04:37.666593+09:00",
+  "total_tokens": 451262
+}

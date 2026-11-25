@@ -1,0 +1,25 @@
+{
+    "model_id": "meta/muse-spark-1.3-contributor",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.6874,
+        "contrarian_win_rate": 0.3126,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.6874,
+            "contrarian_win_rate": 0.3126,
+            "momentum_count": 1174,
+            "contrarian_count": 534
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 239.8126,
+        "p_value": 4.320729159900575e-54,
+        "observed_counts": {
+            "momentum": 1174,
+            "contrarian": 534
+        }
+    }
+}

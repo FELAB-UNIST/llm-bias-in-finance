@@ -1,0 +1,25 @@
+{
+    "model_id": "anthropic/claude-fable-5.2",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.5878,
+        "contrarian_win_rate": 0.4122,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.5878,
+            "contrarian_win_rate": 0.4122,
+            "momentum_count": 1004,
+            "contrarian_count": 704
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 52.6932,
+        "p_value": 3.8993717527875884e-13,
+        "observed_counts": {
+            "momentum": 1004,
+            "contrarian": 704
+        }
+    }
+}

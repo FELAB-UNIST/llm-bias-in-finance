@@ -1,0 +1,25 @@
+{
+    "model_id": "z-ai/glm-5.3-flash",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.5843,
+        "contrarian_win_rate": 0.4157,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.5843,
+            "contrarian_win_rate": 0.4157,
+            "momentum_count": 998,
+            "contrarian_count": 710
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 48.5621,
+        "p_value": 3.2000026031766187e-12,
+        "observed_counts": {
+            "momentum": 998,
+            "contrarian": 710
+        }
+    }
+}

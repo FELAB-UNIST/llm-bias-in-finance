@@ -1,0 +1,25 @@
+{
+    "model_id": "deepseek/deepseek-v4.1-flash-1017",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.6189,
+        "contrarian_win_rate": 0.3811,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.6189,
+            "contrarian_win_rate": 0.3811,
+            "momentum_count": 1057,
+            "contrarian_count": 651
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 96.5082,
+        "p_value": 8.887513070100282e-23,
+        "observed_counts": {
+            "momentum": 1057,
+            "contrarian": 651
+        }
+    }
+}

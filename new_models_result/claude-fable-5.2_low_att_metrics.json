@@ -1,0 +1,33 @@
+{
+  "model": "claude-fable-5.2",
+  "reasoning_effort": "low",
+  "total_sets": 1,
+  "total_prompts": 4270,
+  "valid_decisions": 4270,
+  "invalid_decisions": 0,
+  "attempt_count": 4270,
+  "total_cost_usd": 78.21404,
+  "average_cost_per_set_usd": 78.21404,
+  "openrouter_cost_usd": 0.060656,
+  "byok_upstream_cost_usd": 78.153384,
+  "byok_generations": 4267,
+  "total_input_tokens": 3030055,
+  "total_output_tokens": 1349340,
+  "total_reasoning_tokens_reported": 183635,
+  "total_time_seconds": 1550.04,
+  "average_time_per_set_seconds": 1550.04,
+  "average_latency_seconds": 5.487,
+  "average_ttft_seconds": null,
+  "timing_note": "Nonstreaming. Active wall time includes concurrent work; attribute and strategy tasks overlap.",
+  "source_prompts": "new_models_result/att_sets/claude-fable-5.1_att_set_1.csv",
+  "corpus": "gemini+kimi (counterbalanced)",
+  "providers": {
+    "Anthropic": 4270
+  },
+  "returned_models": {
+    "anthropic/claude-fable-5.2": 4270
+  },
+  "first_request_kst": "2026-11-25T01:03:12.363087+09:00",
+  "last_response_kst": "2026-11-25T01:29:26.966529+09:00",
+  "total_tokens": 4379395
+}

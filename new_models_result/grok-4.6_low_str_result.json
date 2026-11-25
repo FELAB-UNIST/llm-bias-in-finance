@@ -1,0 +1,25 @@
+{
+    "model_id": "x-ai/grok-4.6",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.4619,
+        "contrarian_win_rate": 0.5381,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.4619,
+            "contrarian_win_rate": 0.5381,
+            "momentum_count": 789,
+            "contrarian_count": 919
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 9.8946,
+        "p_value": 0.0016576325516149907,
+        "observed_counts": {
+            "momentum": 789,
+            "contrarian": 919
+        }
+    }
+}

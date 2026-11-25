@@ -1,0 +1,33 @@
+{
+  "model": "grok-4.6",
+  "reasoning_effort": "low",
+  "total_sets": 1,
+  "total_prompts": 1708,
+  "valid_decisions": 1708,
+  "invalid_decisions": 0,
+  "attempt_count": 1842,
+  "total_cost_usd": 4.73237,
+  "average_cost_per_set_usd": 4.73237,
+  "openrouter_cost_usd": 4.73237,
+  "byok_upstream_cost_usd": 0,
+  "byok_generations": 0,
+  "total_input_tokens": 708688,
+  "total_output_tokens": 607219,
+  "total_reasoning_tokens_reported": 540478,
+  "total_time_seconds": 522.17,
+  "average_time_per_set_seconds": 522.17,
+  "average_latency_seconds": 6.302,
+  "average_ttft_seconds": null,
+  "timing_note": "Nonstreaming. Active wall time includes concurrent work; the five models run concurrently.",
+  "source_prompts": "new_models_result/str_sets/deepseek-v4-pro_str_set_1.csv",
+  "corpus": "evidence_corpus_view",
+  "providers": {
+    "xAI": 1708
+  },
+  "returned_models": {
+    "x-ai/grok-4.6": 1708
+  },
+  "first_request_kst": "2026-11-25T02:45:39.113078+09:00",
+  "last_response_kst": "2026-11-25T02:58:42.657780+09:00",
+  "total_tokens": 1315907
+}

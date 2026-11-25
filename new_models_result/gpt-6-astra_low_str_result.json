@@ -1,0 +1,25 @@
+{
+    "model_id": "openai/gpt-6-astra",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.8004,
+        "contrarian_win_rate": 0.1996,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.8004,
+            "contrarian_win_rate": 0.1996,
+            "momentum_count": 1367,
+            "contrarian_count": 341
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 616.3208,
+        "p_value": 4.720241238932392e-136,
+        "observed_counts": {
+            "momentum": 1367,
+            "contrarian": 341
+        }
+    }
+}

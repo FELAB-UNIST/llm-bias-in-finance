@@ -1,0 +1,25 @@
+{
+    "model_id": "google/gemini-4-neon",
+    "total_selections": 1708,
+    "preference_result": {
+        "momentum_win_rate": 0.6434,
+        "contrarian_win_rate": 0.3566,
+        "win_rate_std": 0.0
+    },
+    "per_set_stats": {
+        "set_1": {
+            "momentum_win_rate": 0.6434,
+            "contrarian_win_rate": 0.3566,
+            "momentum_count": 1099,
+            "contrarian_count": 609
+        }
+    },
+    "chi_squared_test": {
+        "statistic": 140.5738,
+        "p_value": 1.994091892527068e-32,
+        "observed_counts": {
+            "momentum": 1099,
+            "contrarian": 609
+        }
+    }
+}
